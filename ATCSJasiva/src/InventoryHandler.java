@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 
 public class InventoryHandler {
-	public String HelloWorld;
+	public ArrayList<Car> Cars;
+	
 }
