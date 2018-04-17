@@ -26,33 +26,39 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 public class GUI extends JFrame {
-	private String State = "CustomerLogin";
-	//Constants (Change for your system)
-	private String DATABASENAME = "InventoryDatabase";
-	private String DATABASEDIRECTORY = "/Users/jacovey/Documents/WarehouseProject/";
-	//Login String
-	private String loginStr;
-	//text fields (must be globally accessible)
-	private JTextField LoginStrTF;
-	private JTextField NameField;
-	private JTextField PPUField;
-	private JTextField Location1Field;
-	private JTextField Location2Field;
-	//Inventory Handler (aka "Container")
+	
 	public static InventoryHandler IH;
 	public GUI(InventoryHandler c) {
 		IH = c;
 		//IH.readFile();
 		
-		
+		String[] labels = {"Name: ", "Fax: ", "Email: ", "Address: "};
+		int numPairs = labels.length;
+
+		//Create and populate the panel.
+		JPanel p = new JPanel(new SpringLayout());
+		for (int i = 0; i < numPairs; i++) {
+		    JLabel l = new JLabel(labels[i], JLabel.TRAILING);
+		    p.add(l);
+		    JTextField textField = new JTextField(10);
+		    l.setLabelFor(textField);
+		    p.add(textField);
+		}
+
+		//Lay out the panel.
+		SpringUtilities.makeCompactGrid(p,
+                3, 3, //rows, cols
+                5, 5, //initialX, initialY
+                5, 5);//xPad, yPad
+	
         SpringLayout layout = new SpringLayout();
         this.setLayout(layout);
         this.add(new JLabel("Label: "));
         this.add(new JTextField("Text field", 10));
         
-		
 		
 		JPanel pan1 = new JPanel(); // panels of window
 		JPanel pan2 = new JPanel();
@@ -64,6 +70,20 @@ public class GUI extends JFrame {
 		JButton Rent = new JButton("Rent a Car"); 
 		JButton Cars = new JButton("See our Cars");
 		JButton AboutButton = new JButton("To About page");
+		
+		this.add(pan1); 
+		this.add(p);
+
+		pan1.add(Info);
+		pan1.add(About);
+		pan1.add(AboutButton);
+		pan1.add(Cars);
+		pan1.add(Rent);
+		
+		this.setTitle("Button in Action");
+		this.setSize(900, 375);
+		this.setVisible(true);
+	}
 
 		/*add.addActionListener(new ActionListener() { // add objects to store
 			public void actionPerformed(ActionEvent evt) {
@@ -133,18 +153,7 @@ public class GUI extends JFrame {
 			}
 		});
 		*/
-		this.add(pan1); //adding panels to interface
 
-		pan1.add(Info);
-		pan1.add(About);
-		pan1.add(AboutButton);
-		pan1.add(Cars);
-		pan1.add(Rent);
-		
-		this.setTitle("Button in Action");
-		this.setSize(900, 375);
-		this.setVisible(true);
-	}
 	
 	public static void main (String[] args) {
 		new GUI(IH);
