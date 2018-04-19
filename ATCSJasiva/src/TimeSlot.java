@@ -29,19 +29,26 @@ public class TimeSlot {
 		endTime = EndTime;
 	}
 	public boolean Conflict(TimeSlot ts) {
-		if (!inBetween(startYear, ts.startYear, endYear) && !inBetween(startYear, ts.endYear, endYear)) 
-			if (!inBetween(startMonth, ts.startMonth, endMonth) && !inBetween(startMonth, ts.endMonth, endMonth)) 
-				if (!inBetween(startDay, ts.startDay, endDay) && !inBetween(startDay, ts.endDay, endDay))
-					if (!inBetween(startTime, ts.startTime, endTime) && !inBetween(startTime, ts.endTime, endTime)) {
+		if (!singleConflict(startYear, endYear, ts.startYear, ts.endYear)) 
+			if (!singleConflict(startMonth, endMonth, ts.startMonth, ts.endMonth)) 
+				if (!singleConflict(startDay, endDay, ts.startDay, ts.endDay))
+					if (!singleConflict(startTime, endTime, ts.startTime, ts.endTime)) {
 						return false;
 					}
-					
-					
-
 		return true;
 	}
+	private boolean singleConflict(int start1, int end1, int start2, int end2) {
+		if (!inBetween(start1, start2, end1) && !inBetween(start1, end2, end1) && !contains(start2, start1, end1, end2))
+				return true;
+		return false;
+	}
 	private boolean inBetween(int a, int b, int c) {
-		if (a<=b && b<=c) 
+		if (a<b && b<c) 
+			return true;
+		else return false;
+	}
+	private boolean contains(int a, int b, int c, int d) {
+		if ((a>=b && c>=d) || (d>=b && c>=a))
 			return true;
 		else return false;
 	}
