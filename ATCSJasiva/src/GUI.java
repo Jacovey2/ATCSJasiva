@@ -151,7 +151,10 @@ public class GUI extends JFrame {
 		enter.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent evt) {
 				if (text.get(0).getText().equals("john123")&& text.get(1).getText().equals("1234")) {
-					System.out.println("success");		}
+					System.out.println("success");		
+					}else {
+						System.out.println("Incorrect Username or Password");
+					}
 			}
 		});
 		
@@ -164,12 +167,12 @@ public class GUI extends JFrame {
 		this.add(enter2);
 
 		
-		this.add(Info);
+		/*this.add(Info);
 		this.add(About);
 		this.add(AboutButton);
 		this.add(Cars);
 		this.add(Rent);
-		
+		*/
 		this.setTitle("Button in Action");
 		this.setSize(900, 375);
 		this.setVisible(true);
