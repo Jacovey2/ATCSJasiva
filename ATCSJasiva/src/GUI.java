@@ -2,8 +2,13 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.*;
+import java.awt.*;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -35,56 +40,140 @@ public class GUI extends JFrame {
 		IH = c;
 		//IH.readFile();
 		
-		String[] labels = {"Name: ", "Fax: ", "Email: ", "Address: "};
+        SpringLayout layout = new SpringLayout();
+        this.setLayout(layout); //makes the layout a spring layout
+        //JPanel pan1 = new JPanel(new SpringLayout());
+
+		String[] labels = {"Username: ", "Password: "};
 		int numPairs = labels.length;
 
 		//Create and populate the panel.
 		JPanel p = new JPanel(new SpringLayout());
-		for (int i = 0; i < numPairs; i++) {
+		ArrayList<JTextField> text = new ArrayList<JTextField>();
+		for (int i = 0; i < numPairs; i++) { 
 		    JLabel l = new JLabel(labels[i], JLabel.TRAILING);
 		    p.add(l);
-		    JTextField textField = new JTextField(10);
-		    l.setLabelFor(textField);
-		    p.add(textField);
+		    if(i==1) {
+			    JPasswordField textField = new JPasswordField(10);
+			    text.add(textField);
+			    l.setLabelFor(textField);
+			    p.add(textField);
+		    }else {
+			    JTextField textField = new JTextField(10);
+			    text.add(textField);
+			    l.setLabelFor(textField);
+			    p.add(textField);
+		    }
+
 		}
 
 		//Lay out the panel.
-		SpringUtilities.makeCompactGrid(p,
-                3, 3, //rows, cols
-                5, 5, //initialX, initialY
-                5, 5);//xPad, yPad
-	
-        SpringLayout layout = new SpringLayout();
-        this.setLayout(layout);
-        this.add(new JLabel("Label: "));
-        this.add(new JTextField("Text field", 10));
-        
+		SpringUtilities.makeCompactGrid(p, //parent
+                2,2,//rows, cols,
+                3, 3,  //initX, initY
+                3, 3); //xPad, yPad
 		
-		JPanel pan1 = new JPanel(); // panels of window
+		JLabel old = new JLabel("Existing Users"); //make new labels for both sections
+		JLabel sign = new JLabel("New User");
+		JButton enter = new JButton("Enter");
+		JButton enter2 = new JButton(" Enter");
+		
+		String[] labels2 = {"First Name: ", "Last Name: ", "Username: ", "Password: "};
+		int numPairs2 = labels2.length;
+
+		//Create and populate the panel.
+		JPanel p2 = new JPanel(new SpringLayout());
+		for (int i = 0; i < numPairs2; i++) {
+		    JLabel l = new JLabel(labels2[i], JLabel.TRAILING);
+		    p2.add(l);
+		    JTextField textField = new JTextField(10);
+		    l.setLabelFor(textField);
+		    p2.add(textField);
+		}
+
+		//Lay out the panel.
+		SpringUtilities.makeCompactGrid(p2, //parent
+               4,2,//rows, cols,
+                3, 3,  //initX, initY
+                3, 3); //xPad, yPad
+		
+		layout.putConstraint(SpringLayout.WEST, p2, //puts the two panels 40 pixels apart
+                40,
+                SpringLayout.EAST, p);
+		layout.putConstraint(SpringLayout.NORTH, p2, //puts the second panel 75 pixels from the top
+                75,
+                SpringLayout.SOUTH, this);
+		
+		layout.putConstraint(SpringLayout.NORTH, p, //puts the first panel 75 pixels from the top
+                75,
+                SpringLayout.SOUTH, this);
+		layout.putConstraint(SpringLayout.WEST, p, //puts the first panel 75 pixels from the left screen
+                75,
+                SpringLayout.EAST, this);
+		
+		layout.putConstraint(SpringLayout.SOUTH, old, //puts the label panel above login info
+                -5,
+                SpringLayout.NORTH, p);
+		layout.putConstraint(SpringLayout.SOUTH, sign, //puts other label above login info
+                -5,
+                SpringLayout.NORTH, p2);
+		
+		layout.putConstraint(SpringLayout.WEST, old, //positions labels horizontally
+                40,
+                SpringLayout.WEST, p);
+		layout.putConstraint(SpringLayout.WEST, sign,
+                80,
+                SpringLayout.WEST, p2);
+		
+		layout.putConstraint(SpringLayout.NORTH, enter, //puts the label panel bellow login info
+                5,
+                SpringLayout.SOUTH, p);
+		layout.putConstraint(SpringLayout.NORTH, enter2, //puts other label bellow login info
+                5,
+                SpringLayout.SOUTH, p2);
+		
+		layout.putConstraint(SpringLayout.WEST, enter, //positions labels horizontally
+                100,
+                SpringLayout.WEST, p);
+		layout.putConstraint(SpringLayout.WEST, enter2,
+                105,
+                SpringLayout.WEST, p2);
+		
+		 // panels of window
 		JPanel pan2 = new JPanel();
 		JLabel Info = new JLabel("Our Mission: fgbergbraeig"); // list of all the labels and text fields
 		JLabel About = new JLabel("About");
 		//JScrollPane oth = new JScrollPane(num3);//create scrollbar
-
-
 		JButton Rent = new JButton("Rent a Car"); 
 		JButton Cars = new JButton("See our Cars");
 		JButton AboutButton = new JButton("To About page");
 		
-		this.add(pan1); 
+		enter.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent evt) {
+				if (text.get(0).getText().equals("john123")&& text.get(1).getText().equals("1234")) {
+					System.out.println("success");		}
+			}
+		});
+		
+		//this.add(pan1); 
 		this.add(p);
+		this.add(p2);
+		this.add(old);
+		this.add(sign);
+		this.add(enter);
+		this.add(enter2);
 
-		pan1.add(Info);
-		pan1.add(About);
-		pan1.add(AboutButton);
-		pan1.add(Cars);
-		pan1.add(Rent);
+		
+		this.add(Info);
+		this.add(About);
+		this.add(AboutButton);
+		this.add(Cars);
+		this.add(Rent);
 		
 		this.setTitle("Button in Action");
 		this.setSize(900, 375);
 		this.setVisible(true);
 	}
-
 		/*add.addActionListener(new ActionListener() { // add objects to store
 			public void actionPerformed(ActionEvent evt) {
 				Item item = new Item(Integer.parseInt(loc2.getText()), Integer.parseInt(siz2.getText()),
