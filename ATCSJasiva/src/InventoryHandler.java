@@ -7,7 +7,7 @@ public class InventoryHandler {
 	public boolean addReservation(Car car, Location location, TimeSlot timeSlot) {
 		boolean valid=true;
 		for (Reservation r:Reservations) {
-			if(r.){
+			if(true){
 				
 			}
 		}
