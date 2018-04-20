@@ -74,7 +74,7 @@ public class GUI extends JFrame {
                 3, 3); //xPad, yPad
 		
 		JLabel old = new JLabel("Existing Users"); //make new labels for both sections
-		JLabel sign = new JLabel("New User");
+		//JLabel sign = new JLabel("New User");
 		JButton enter = new JButton("Enter");
 		JButton enter2 = new JButton(" Enter");
 		
@@ -98,16 +98,16 @@ public class GUI extends JFrame {
                 3, 3); //xPad, yPad
 		
 		layout.putConstraint(SpringLayout.WEST, p2, //puts the two panels 40 pixels apart
-                40,
-                SpringLayout.EAST, p);
+                0,
+                SpringLayout.HORIZONTAL_CENTER, this);
 		layout.putConstraint(SpringLayout.NORTH, p2, //puts the second panel 75 pixels from the top
-                75,
-                SpringLayout.SOUTH, this);
+                0,
+                SpringLayout.VERTICAL_CENTER, this);
 		
 		layout.putConstraint(SpringLayout.NORTH, p, //puts the first panel 75 pixels from the top
-                75,
-                SpringLayout.SOUTH, this);
-		layout.putConstraint(SpringLayout.WEST, p, //puts the first panel 75 pixels from the left screen
+                0,
+                SpringLayout.VERTICAL_CENTER, this);
+		/*layout.putConstraint(SpringLayout.WEST, p, //puts the first panel 75 pixels from the left screen
                 75,
                 SpringLayout.EAST, this);
 		
@@ -138,7 +138,7 @@ public class GUI extends JFrame {
 		layout.putConstraint(SpringLayout.WEST, enter2,
                 105,
                 SpringLayout.WEST, p2);
-		
+		*/
 		 // panels of window
 		JPanel pan2 = new JPanel();
 		JLabel Info = new JLabel("Our Mission: fgbergbraeig"); // list of all the labels and text fields
@@ -161,12 +161,12 @@ public class GUI extends JFrame {
 		//this.add(pan1); 
 		this.add(p);
 		this.add(p2);
-		this.add(old);
+		/*this.add(old);
 		this.add(sign);
 		this.add(enter);
 		this.add(enter2);
 
-		
+		*/
 		/*this.add(Info);
 		this.add(About);
 		this.add(AboutButton);
