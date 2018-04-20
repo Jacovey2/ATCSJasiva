@@ -35,9 +35,16 @@ import javax.swing.SwingUtilities;
 
 public class GUI extends JFrame {
 	
-	public static InventoryHandler IH;
+	//public InventoryHandler IH;
+	
+	public static void main (String[] args) {
+		//IH = new InventoryHandler();//stays constant
+		new GUI(new InventoryHandler());
+		
+	}
+	
 	public GUI(InventoryHandler c) {
-		IH = c;
+		
 		//IH.readFile();
 		
         SpringLayout layout = new SpringLayout();
@@ -74,7 +81,7 @@ public class GUI extends JFrame {
                 3, 3); //xPad, yPad
 		
 		JLabel old = new JLabel("Existing Users"); //make new labels for both sections
-		//JLabel sign = new JLabel("New User");
+		JLabel sign = new JLabel("New User");
 		JButton enter = new JButton("Enter");
 		JButton enter2 = new JButton(" Enter");
 		
@@ -83,12 +90,21 @@ public class GUI extends JFrame {
 
 		//Create and populate the panel.
 		JPanel p2 = new JPanel(new SpringLayout());
+		ArrayList<JTextField> text2 = new ArrayList<JTextField>();
 		for (int i = 0; i < numPairs2; i++) {
 		    JLabel l = new JLabel(labels2[i], JLabel.TRAILING);
 		    p2.add(l);
-		    JTextField textField = new JTextField(10);
-		    l.setLabelFor(textField);
-		    p2.add(textField);
+		    if(i==3) {
+			    JPasswordField textField = new JPasswordField(10);
+			    text2.add(textField);
+			    l.setLabelFor(textField);
+			    p2.add(textField);
+		    }else {
+			    JTextField textField = new JTextField(10);
+			    text2.add(textField);
+			    l.setLabelFor(textField);
+			    p2.add(textField);
+		    }
 		}
 
 		//Lay out the panel.
@@ -98,16 +114,16 @@ public class GUI extends JFrame {
                 3, 3); //xPad, yPad
 		
 		layout.putConstraint(SpringLayout.WEST, p2, //puts the two panels 40 pixels apart
-                0,
-                SpringLayout.HORIZONTAL_CENTER, this);
+                40,
+                SpringLayout.EAST, p);
 		layout.putConstraint(SpringLayout.NORTH, p2, //puts the second panel 75 pixels from the top
-                0,
-                SpringLayout.VERTICAL_CENTER, this);
+                75,
+                SpringLayout.SOUTH, this);
 		
 		layout.putConstraint(SpringLayout.NORTH, p, //puts the first panel 75 pixels from the top
-                0,
-                SpringLayout.VERTICAL_CENTER, this);
-		/*layout.putConstraint(SpringLayout.WEST, p, //puts the first panel 75 pixels from the left screen
+                75,
+                SpringLayout.SOUTH, this);
+		layout.putConstraint(SpringLayout.WEST, p, //puts the first panel 75 pixels from the left screen
                 75,
                 SpringLayout.EAST, this);
 		
@@ -138,7 +154,7 @@ public class GUI extends JFrame {
 		layout.putConstraint(SpringLayout.WEST, enter2,
                 105,
                 SpringLayout.WEST, p2);
-		*/
+		
 		 // panels of window
 		JPanel pan2 = new JPanel();
 		JLabel Info = new JLabel("Our Mission: fgbergbraeig"); // list of all the labels and text fields
@@ -158,15 +174,28 @@ public class GUI extends JFrame {
 			}
 		});
 		
+		enter2.addActionListener(new ActionListener() { // add objects to store
+			public void actionPerformed(ActionEvent evt) {
+				for(int i=0; i< c.Users.size(); i++) {
+					if(text2.get(2).getText().equals(c.Users.get(i).getUsername()) || text2.get(3).getText().equals(c.Users.get(i).getPassword())){
+						System.out.println("Invalid Username or Password");
+					}
+				}
+				
+				User user = new User(text2.get(0).getText(),text2.get(1).getText(),text2.get(2).getText(),text2.get(3).getText());
+				c.add(user);
+			}
+		});
+		
 		//this.add(pan1); 
 		this.add(p);
 		this.add(p2);
-		/*this.add(old);
+		this.add(old);
 		this.add(sign);
 		this.add(enter);
 		this.add(enter2);
 
-		*/
+
 		/*this.add(Info);
 		this.add(About);
 		this.add(AboutButton);
@@ -247,10 +276,6 @@ public class GUI extends JFrame {
 		*/
 
 	
-	public static void main (String[] args) {
-		new GUI(IH);
-		IH = new InventoryHandler();//stays constant
-	}
 	
 	/*import java.awt.Color;
 
