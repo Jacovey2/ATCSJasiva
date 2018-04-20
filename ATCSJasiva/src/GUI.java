@@ -250,6 +250,9 @@ public class GUI extends JFrame {
 	public static void main (String[] args) {
 		new GUI(IH);
 		IH = new InventoryHandler();//stays constant
+		TimeSlot TS = new TimeSlot(4,19,2018,800,4,19,2018,1200);
+		TimeSlot TS1 = new TimeSlot(4,19,2018,800,4,19,2018,1500);
+		System.out.print("Time slots conflict: "+TS.Conflict(TS1));
 	}
 	
 	/*import java.awt.Color;

@@ -37,8 +37,8 @@ public class TimeSlot {
 					}
 		return true;
 	}
-	private boolean singleConflict(int start1, int end1, int start2, int end2) {
-		if (!inBetween(start1, start2, end1) && !inBetween(start1, end2, end1) && !contains(start2, start1, end1, end2))
+	private boolean singleConflict(int a, int b, int c, int d) {
+		if ((a>c && c>b) || (a>d && d>b) || (c>a && a>b && b>d) || (a==c && c>b && b>d) || (a>c && c>b && b==d))
 				return true;
 		return false;
 	}
@@ -47,10 +47,13 @@ public class TimeSlot {
 			return true;
 		else return false;
 	}
-	private boolean contains(int a, int b, int c, int d) {
-		if ((a>=b && c>=d) || (d>=b && c>=a))
-			return true;
-		else return false;
+	private boolean contained(int a, int b, int c, int d) {
+		if ((c>=a && b>=d)) {
+			if (!(c==d && a==b && a==c)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	public String ToString () {
 		return "from:"+startMonth+"/"+startDay+"/"+startYear+" "+startTime+"  to:"+endMonth+"/"+endDay+"/"+endYear+" "+endTime;
