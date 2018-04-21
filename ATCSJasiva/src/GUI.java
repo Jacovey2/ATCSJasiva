@@ -46,11 +46,13 @@ public class GUI extends JFrame {
 	public GUI(InventoryHandler c) {
 
 		// IH.readFile();
-
+		String panel = "welcome";
 		SpringLayout layout = new SpringLayout();
 		this.setLayout(layout); // makes the layout a spring layout
-		// JPanel pan1 = new JPanel(new SpringLayout());
-
+		JFrame welcome = new JFrame("welcome page");
+		welcome.setLayout(null);
+		JFrame about = new JFrame("about page");
+		about.setLayout(layout);
 		String[] labels = { "Username: ", "Password: " };
 		int numPairs = labels.length;
 
@@ -141,13 +143,17 @@ public class GUI extends JFrame {
 		layout.putConstraint(SpringLayout.WEST, enter2, 105, SpringLayout.WEST, p2);
 
 		// panels of window
-		JPanel pan2 = new JPanel();
 		JLabel Info = new JLabel("Our Mission: fgbergbraeig"); // list of all the labels and text fields
+        Info.setBounds(200, 100, 150, 30);
 		JLabel About = new JLabel("About");
+		About.setBounds(200, 120,150, 30);
 		// JScrollPane oth = new JScrollPane(num3);//create scrollbar
 		JButton Rent = new JButton("Rent a Car");
+		Rent.setBounds(350, 200, 150, 60);
 		JButton Cars = new JButton("See our Cars");
+		//Cars.setBounds(200, 100,150, 60);
 		JButton AboutButton = new JButton("To About page");
+		AboutButton.setBounds(350, 120,150, 40);
 
 		enter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -193,22 +199,43 @@ public class GUI extends JFrame {
 			}
 		});
 
-		// this.add(pan1);
+		Rent.addActionListener(new ActionListener() { // add objects to store
+			public void actionPerformed(ActionEvent evt) {
+			
+			}
+		});
+
 		this.add(p);
 		this.add(p2);
 		this.add(old);
 		this.add(sign);
 		this.add(enter);
 		this.add(enter2);
-
 		this.setTitle("Button in Action");
 		this.setSize(900, 375);
-		this.setVisible(true);
 
-		/*
-		 * this.add(Info); this.add(About); this.add(AboutButton); this.add(Cars);
-		 * this.add(Rent);
-		 */
+		welcome.add(Rent);
+		welcome.add(Cars);
+		welcome.add(AboutButton);
+		welcome.add(Info);
+		welcome.add(About);
+		welcome.setTitle("Welcome page");
+		welcome.setSize(900, 375);
 
+		if (panel.equals("welcome")) {
+			welcome.setVisible(true);
+			this.setVisible(false);
+			about.setVisible(false);
+		}
+		if (panel.equals("signIn")) {
+			this.setVisible(true);
+			welcome.setVisible(false);
+			about.setVisible(false);
+		}
+		if (panel.equals("About")) {
+			about.setVisible(true);
+			this.setVisible(false);
+			welcome.setVisible(false);
+		}
 	}
 }
