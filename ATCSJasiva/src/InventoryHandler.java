@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 
 public class InventoryHandler {
-	public ArrayList<Reservation> Reservations;
-	public ArrayList<Car> Cars;
-	public ArrayList<User> Users;
+	public ArrayList<Reservation> Reservations = new ArrayList<Reservation>();
+	public ArrayList<Car> Cars = new ArrayList<Car>();
+	public ArrayList<User> Users = new ArrayList<User>();
 	
 	public InventoryHandler() {
 		Users = new ArrayList<User>();
 		Cars = new ArrayList<Car>();
 		Reservations = new ArrayList<Reservation>();
-				}
+	}
 	
 	public boolean addReservation(Car car, Location location, TimeSlot timeSlot, User user) {
 		boolean valid=true;

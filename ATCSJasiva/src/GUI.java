@@ -41,14 +41,22 @@ public class GUI extends JFrame implements ActionListener {
 
 	// Global variables
 	private static String CurrentPanel = "Welcome";
-	private ArrayList<JTextField> signinlogins = new ArrayList<JTextField>(); // used to be TEXT
-	private ArrayList<JTextField> registerLogins = new ArrayList<JTextField>(); // used to be TEXT 2
+	private JTextField signInUsernameField = new JTextField(10);
+	private JTextField registerFirstNameField = new JTextField(10);
+	private JTextField registerLastNameField = new JTextField(10);
+	private JTextField registerUsernameField = new JTextField(10);
+	private JPasswordField signInPasswordField = new JPasswordField(10);
+	private JPasswordField registerPasswordField = new JPasswordField(10);
 	public InventoryHandler c;
 	
+	private static ArrayList<String> usernames = new ArrayList<String>();
+	private static ArrayList<String> passwords = new ArrayList<String>();
+	
+	public static InventoryHandler IH;
 
 	public static void main(String[] args) {
-		// IH = new InventoryHandler();//stays constant
-		new GUI(new InventoryHandler(), CurrentPanel);
+		IH = new InventoryHandler();//stays constant
+		new GUI(IH, CurrentPanel);
 	}
 
 	
@@ -79,23 +87,9 @@ public class GUI extends JFrame implements ActionListener {
 		JLabel registerPasswordLabel = new JLabel("Password: ", JLabel.TRAILING);
 		JLabel existingUserLabel = new JLabel("Existing Users");
 		JLabel registerLabel = new JLabel("New User");
-		JTextField signInUsernameField = new JTextField(10);
-		JTextField registerFirstNameField = new JTextField(10);
-		JTextField registerLastNameField = new JTextField(10);
-		JTextField registerUsernameField = new JTextField(10);
-		JPasswordField signInPasswordField = new JPasswordField(10);
-		JPasswordField registerPasswordField = new JPasswordField(10);
+
 		JButton signInButton = new JButton("Sign in");
 		JButton registerButton = new JButton("Register");
-
-		// add the text feilds to their respective arrayLists
-		signinlogins.add(signInPasswordField);
-		signinlogins.add(signInUsernameField);
-		registerLogins.add(registerFirstNameField);
-		registerLogins.add(registerLastNameField);
-		registerLogins.add(registerUsernameField);
-		registerLogins.add(registerPasswordField);
-
 		// set labels
 		signInPasswordLabel.setLabelFor(signInPasswordField);
 		signInUsernameLabel.setLabelFor(signInUsernameField);
@@ -253,6 +247,7 @@ public class GUI extends JFrame implements ActionListener {
 
 		JFrame bookFrame = new JFrame("Booking"); // about page panel
 		bookFrame.setLayout(null);
+		
 		JLabel pickupLabel = new JLabel("From/Pickup:");
 		JLabel checkLabel = new JLabel("Pickup is the same as drop-off");
 		JLabel dropLabel = new JLabel("To/Drop-Off:");
@@ -345,7 +340,7 @@ public class GUI extends JFrame implements ActionListener {
 			bookFrame.setVisible(false);
 			carInfoFrame.setVisible(false);
 		}
-		if (currentPanel.equals("Car")) {
+		if (currentPanel.equals("Cars")) {
 			carFrame.setVisible(true);
 			aboutFrame.setVisible(false);
 			loginFrame.setVisible(false);
@@ -377,41 +372,46 @@ public class GUI extends JFrame implements ActionListener {
 		System.out.println("Pressed: "+evtString);
 		if (evtString.equals("Sign in")) {
 			boolean valid = false;
-			for (int i = 0; i < c.Users.size(); i++) {
+			if (usernames.size()==0) {
 				//checks if it is a valid combination of user name and password
-				if (signinlogins.get(0).getText().equals(c.Users.get(i).getUsername()) && signinlogins.get(1).getText().equals(c.Users.get(i).getPassword())) { 															
+				if (usernames.indexOf(signInUsernameField.getText())==passwords.indexOf(new String(signInPasswordField.getPassword()))) { 															
 					System.out.println("success");
 					valid = true;
 				}
 			}
 			if (valid == false) 
 				System.out.println("Incorrect Username or Password");
-			for (int i = 0; i < 2; i++)
-				signinlogins.get(i).setText(""); // clears info if it is not valid
+			else {
+				this.dispose();
+				new GUI(c, "Cars");
+			}
 		}
-		if (evtString.equals("Register")) { // create new account button
-			boolean valid = false;
-			if (passwordChecker(registerLogins.get(3).getText(), registerLogins.get(0).getText()) == true) { // checks if password meets
-				for (int i = 0; i < c.Users.size(); i++) {
-					//check if passwords are valid
-					if (registerLogins.get(2).getText().equals(c.Users.get(i).getUsername())|| registerLogins.get(3).getText().equals(c.Users.get(i).getPassword())) { 
-						valid = true;
-					}
-				}
-				if (valid == false) {
+		if (evtString.equals("Register")) { // create new account button 
+			if (passwordChecker(new String(registerPasswordField.getPassword()), registerFirstNameField.getText()) == true) { // checks if password meets requirements
+				//if the user name is not contained within the accumulated user name list
+				if (usernames.isEmpty()) {
 					//create user
-					User user = new User(registerLogins.get(0).getText(), registerLogins.get(1).getText(), registerLogins.get(2).getText(), registerLogins.get(3).getText());
+					User user = new User(registerFirstNameField.getText(), registerLastNameField.getText(), registerUsernameField.getText(), new String(registerPasswordField.getPassword()));
+					//Adds user to Inventory Handler for logging
+					//c.Users.add(user); 
+				}
+				else if (!usernames.contains(registerUsernameField.getText())) {
+					//create user
+					User user = new User(registerFirstNameField.getText(), registerLastNameField.getText(), registerUsernameField.getText(), new String(registerPasswordField.getPassword()));
 					//Adds user to Inventory Handler for logging
 					c.add(user); 
-					for (int i = 0; i < 4; i++) {
-						registerLogins.get(i).setText(""); // clears all text fields
-					}
 				}
+				
+				registerPasswordField.setText(""); 
+				registerUsernameField.setText("");
+				registerFirstNameField.setText(""); 
+				registerLastNameField.setText("");
 			} else {
 				System.out.println("Invalid username or password");
 				for (int i = 2; i < 4; i++) {
 					//clear fields to ease re-trying
-					registerLogins.get(i).setText(""); 
+					registerPasswordField.setText(""); 
+					registerUsernameField.setText("");
 				}
 			}
 		}
