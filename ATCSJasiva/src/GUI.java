@@ -372,12 +372,9 @@ public class GUI extends JFrame implements ActionListener {
 		System.out.println("Pressed: "+evtString);
 		if (evtString.equals("Sign in")) {
 			boolean valid = false;
-			if (usernames.size()==0) {
-				//checks if it is a valid combination of user name and password
-				if (!usernames.isEmpty() && usernames.indexOf(signInUsernameField.getText())==passwords.indexOf(new String(signInPasswordField.getPassword()))) { 															
-					System.out.println("success");
-					valid = true;
-				}
+			if (!usernames.isEmpty() && usernames.indexOf(signInUsernameField.getText())==passwords.indexOf(new String(signInPasswordField.getPassword()))) { 															
+				System.out.println("success");
+				valid = true;
 			}
 			if (valid == false) 
 				System.out.println("Incorrect Username or Password");
@@ -396,6 +393,8 @@ public class GUI extends JFrame implements ActionListener {
 					//c.Users.add(user); 
 					usernames.add(registerUsernameField.getText());
 					passwords.add(new String(registerPasswordField.getPassword()));
+					System.out.println(usernames.get(0));
+					System.out.println(passwords.get(0));
 
 				}
 				else if (!usernames.contains(registerUsernameField.getText())) {
