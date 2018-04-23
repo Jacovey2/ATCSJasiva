@@ -374,7 +374,7 @@ public class GUI extends JFrame implements ActionListener {
 			boolean valid = false;
 			if (usernames.size()==0) {
 				//checks if it is a valid combination of user name and password
-				if (usernames.indexOf(signInUsernameField.getText())==passwords.indexOf(new String(signInPasswordField.getPassword()))) { 															
+				if (!usernames.isEmpty() && usernames.indexOf(signInUsernameField.getText())==passwords.indexOf(new String(signInPasswordField.getPassword()))) { 															
 					System.out.println("success");
 					valid = true;
 				}
@@ -394,12 +394,18 @@ public class GUI extends JFrame implements ActionListener {
 					User user = new User(registerFirstNameField.getText(), registerLastNameField.getText(), registerUsernameField.getText(), new String(registerPasswordField.getPassword()));
 					//Adds user to Inventory Handler for logging
 					//c.Users.add(user); 
+					usernames.add(registerUsernameField.getText());
+					passwords.add(new String(registerPasswordField.getPassword()));
+
 				}
 				else if (!usernames.contains(registerUsernameField.getText())) {
 					//create user
 					User user = new User(registerFirstNameField.getText(), registerLastNameField.getText(), registerUsernameField.getText(), new String(registerPasswordField.getPassword()));
+					
 					//Adds user to Inventory Handler for logging
-					c.add(user); 
+					//c.add(user); 
+					usernames.add(registerUsernameField.getText());
+					passwords.add(new String(registerPasswordField.getPassword()));
 				}
 				
 				registerPasswordField.setText(""); 
