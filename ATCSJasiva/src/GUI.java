@@ -376,8 +376,12 @@ public class GUI extends JFrame implements ActionListener {
 				System.out.println("success");
 				valid = true;
 			}
-			if (valid == false) 
+			if (valid == false) {
 				System.out.println("Incorrect Username or Password");
+				signInUsernameField.setText(""); 
+				signInPasswordField.setText("");
+			}
+				
 			else {
 				this.dispose();
 				new GUI(c, "Cars");
