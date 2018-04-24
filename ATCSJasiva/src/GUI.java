@@ -1,41 +1,8 @@
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.List;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.*;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SpringLayout;
-
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 public class GUI extends JFrame implements ActionListener {
 
@@ -47,7 +14,6 @@ public class GUI extends JFrame implements ActionListener {
 	private JTextField registerUsernameField = new JTextField(10);
 	private JPasswordField signInPasswordField = new JPasswordField(10);
 	private JPasswordField registerPasswordField = new JPasswordField(10);
-	public InventoryHandler c;
 	
 	private static ArrayList<String> usernames = new ArrayList<String>();
 	private static ArrayList<String> passwords = new ArrayList<String>();
@@ -59,10 +25,8 @@ public class GUI extends JFrame implements ActionListener {
 		new GUI(IH, CurrentPanel);
 	}
 
-	
-
 	public GUI(InventoryHandler c, String CurrentPanel) {
-		// If instantiated with a specific state, it will use it, but defaults to
+		// if instantiated with a specific state, it will use it, but defaults to
 		// "Welcome panel"
 		String currentPanel = CurrentPanel;
 		if (CurrentPanel == "") {
@@ -76,7 +40,7 @@ public class GUI extends JFrame implements ActionListener {
 		JFrame loginFrame = new JFrame("Login");
 		loginFrame.setLayout(loginlayout); // makes the layout a spring layout
 
-		// Login Panel setup
+		// login frame setup
 		JPanel signInPanel = new JPanel(new SpringLayout());// used to be P
 		JPanel registerPanel = new JPanel(new SpringLayout());
 		JLabel signInPasswordLabel = new JLabel("Password: ", JLabel.TRAILING);
@@ -87,9 +51,9 @@ public class GUI extends JFrame implements ActionListener {
 		JLabel registerPasswordLabel = new JLabel("Password: ", JLabel.TRAILING);
 		JLabel existingUserLabel = new JLabel("Existing Users");
 		JLabel registerLabel = new JLabel("New User");
-
 		JButton signInButton = new JButton("Sign in");
 		JButton registerButton = new JButton("Register");
+		
 		// set labels
 		signInPasswordLabel.setLabelFor(signInPasswordField);
 		signInUsernameLabel.setLabelFor(signInUsernameField);
@@ -112,11 +76,11 @@ public class GUI extends JFrame implements ActionListener {
 		registerPanel.add(registerPasswordLabel);
 		registerPanel.add(registerPasswordField);
 
-		// Lay out sign in and register panels
+		// lay out sign in and register panels
 		SpringUtilities.makeCompactGrid(signInPanel, 2, 2, 3, 3, 3, 3);
 		SpringUtilities.makeCompactGrid(registerPanel, 4, 2, 3, 3, 3, 3);
 
-		// Specific layouts of the login page
+		// specific layouts of the login page
 		loginlayout.putConstraint(SpringLayout.NORTH, registerPanel, 100, SpringLayout.SOUTH, loginFrame);
 		loginlayout.putConstraint(SpringLayout.NORTH, signInPanel, 100, SpringLayout.SOUTH, loginFrame);
 		loginlayout.putConstraint(SpringLayout.NORTH, signInButton, 5, SpringLayout.SOUTH, signInPanel);
@@ -140,7 +104,7 @@ public class GUI extends JFrame implements ActionListener {
 		loginFrame.setTitle("Login");
 		loginFrame.setSize(900, 500);
 		
-		//Button Setups
+		// button Setups
 		signInButton.addActionListener(this);
 		registerButton.addActionListener(this);
 
@@ -150,75 +114,71 @@ public class GUI extends JFrame implements ActionListener {
 		JFrame welcomeFrame = new JFrame("Welcome");
 		welcomeFrame.setLayout(null);
 
+		// welcome frame setup
 		JLabel missionLabel = new JLabel("Our Mission:");
 		JLabel missionTextLabel = new JLabel("wejfoqregerkgheroughkdsfhaejgferg");
 		JButton rentButton = new JButton("Rent a Car");
 		JButton viewCarsButton = new JButton("See our Cars");
 		JButton AboutButton = new JButton("JASIVA");
-		JScrollPane oth = new JScrollPane(missionTextLabel); // create scrollbar
-
+		JScrollPane missionTextScroll = new JScrollPane(missionTextLabel);
+		
+		// arranging on page
 		missionLabel.setBounds(300, 140, 100, 50);
-		oth.setBounds(300, 150, 300, 70);
+		missionTextScroll.setBounds(300, 150, 300, 70);
 		rentButton.setBounds(500, 275, 150, 60);
 		viewCarsButton.setBounds(250, 275, 150, 60);
+		AboutButton.setBounds(300, 20, 300, 75);
+		
+		// font/appearance changes
 		AboutButton.setForeground(Color.RED);
 		AboutButton.setFont(new Font("Arial", Font.PLAIN, 70));
-		AboutButton.setBounds(300, 20, 300, 75);
+		welcomeFrame.setContentPane(new JLabel(new ImageIcon("backround.jpeg")));
 
 		// adding components to frame and finalizing
-		welcomeFrame.setContentPane(new JLabel(new ImageIcon("backround.jpeg")));
 		welcomeFrame.add(rentButton);
 		welcomeFrame.add(viewCarsButton);
 		welcomeFrame.add(AboutButton);
 		welcomeFrame.add(missionLabel);
-		welcomeFrame.add(oth);
+		welcomeFrame.add(missionTextScroll);
 		welcomeFrame.setTitle("Welcome page");
 		welcomeFrame.setSize(900, 500);
 		
-		//activating buttons
+		// activating buttons
 		rentButton.addActionListener(this);
 		viewCarsButton.addActionListener(this);
 		AboutButton.addActionListener(this);
 		
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		// CAR VIEWER
+		// CAR VIEWER FRAME
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		// car viewer button/labels
-		JFrame carFrame = new JFrame("Cars"); // about page panel
+		JFrame carFrame = new JFrame("Cars"); 
 		carFrame.setLayout(null);
 
+		// car viewer setup
 		JLabel cheapLabel = new JLabel("$100");
 		JLabel lowEndLabel = new JLabel("$200");
 		JLabel mediumLabel = new JLabel("$300");
 		JLabel highEndLabel = new JLabel("$400");
 		JLabel premiumLabel = new JLabel("$1000");
-
-		JButton cheapButton = new JButton(new ImageIcon(
-				((new ImageIcon("cheap.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
-		JButton lowEndButton = new JButton(new ImageIcon(
-				((new ImageIcon("lowend.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
-		JButton mediumButton = new JButton(new ImageIcon(
-				((new ImageIcon("medium.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
-		JButton highEndButton = new JButton(new ImageIcon(
-				((new ImageIcon("highend.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
-		JButton premiumButton = new JButton(new ImageIcon(
-				((new ImageIcon("chiron.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+		JButton cheapButton = new JButton(new ImageIcon(((new ImageIcon("cheap.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+		JButton lowEndButton = new JButton(new ImageIcon(((new ImageIcon("lowend.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+		JButton mediumButton = new JButton(new ImageIcon(((new ImageIcon("medium.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+		JButton highEndButton = new JButton(new ImageIcon(((new ImageIcon("highend.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+		JButton premiumButton = new JButton(new ImageIcon(((new ImageIcon("chiron.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
 		JButton backButton = new JButton("Back");
 		JButton carViewerAboutButton = new JButton("JASIVA");
 
-		//
+		// appearance changes
 		carViewerAboutButton.setForeground(Color.RED);
 		carViewerAboutButton.setFont(new Font("Arial", Font.PLAIN, 70));
+		
+		// arranging components
 		carViewerAboutButton.setBounds(300, 20, 300, 75);
-
-		// Label Bounds
 		cheapLabel.setBounds(200, 180, 100, 100);
 		lowEndLabel.setBounds(400, 180, 100, 100);
 		mediumLabel.setBounds(600, 180, 100, 100);
 		highEndLabel.setBounds(200, 380, 100, 100);
 		premiumLabel.setBounds(400, 380, 100, 100);
-
-		// Button Bounds
 		cheapButton.setBounds(140, 90, 150, 130);
 		lowEndButton.setBounds(340, 90, 150, 130);
 		mediumButton.setBounds(540, 90, 150, 130);
@@ -244,10 +204,10 @@ public class GUI extends JFrame implements ActionListener {
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// BOOKING FRAME
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 		JFrame bookFrame = new JFrame("Booking"); // about page panel
 		bookFrame.setLayout(null);
 		
+		// booking frame setup
 		JLabel pickupLabel = new JLabel("From/Pickup:");
 		JLabel checkLabel = new JLabel("Pickup is the same as drop-off");
 		JLabel dropLabel = new JLabel("To/Drop-Off:");
@@ -260,18 +220,19 @@ public class GUI extends JFrame implements ActionListener {
 		JCheckBox checkField = new JCheckBox();
 		JButton pickCarButton = new JButton("Pick a Car!");
 
-		pickupLabel.setBounds(310, 130, 130, 30);
+		// appearance changes
 		checkLabel.setFont(new Font("Arial", Font.PLAIN, 9));
+
+		// arranging components
+		pickupLabel.setBounds(310, 130, 130, 30);
 		checkLabel.setBounds(370, 155, 170, 30);
 		dropLabel.setBounds(310, 180, 130, 30);
 		startTLabel.setBounds(310, 210, 130, 30);
 		endTLabel.setBounds(310, 240, 130, 30);
-
 		pickupField.setBounds(395, 130, 130, 30);
 		dropField.setBounds(395, 180, 130, 30);
 		startTField.setBounds(395, 210, 130, 30);
 		endTField.setBounds(395, 240, 130, 30);
-
 		checkField.setBounds(495, 157, 25, 25);
 		pickCarButton.setBounds(370, 300, 150, 70);
 
@@ -297,8 +258,11 @@ public class GUI extends JFrame implements ActionListener {
 		JFrame aboutFrame = new JFrame("About");
 		aboutFrame.setLayout(null);
 
+		// about frame setup
 		JLabel aboutText = new JLabel("wejfoqregerkgheroughkdsfhaejgferg");
 		JScrollPane aboutTextScroll = new JScrollPane(aboutText);// create scroll bar
+		
+		// arranging components
 		aboutTextScroll.setBounds(190, 100, 500, 300);
 
 		// adding components to frame and finalizing
@@ -369,7 +333,10 @@ public class GUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent evt) {
 		
 		String evtString = evt.getActionCommand();
+		// print out the command for debugging
 		System.out.println("Pressed: "+evtString);
+		
+		// sign in to jasiva
 		if (evtString.equals("Sign in")) {
 			boolean valid = false;
 			if (!usernames.isEmpty() && usernames.indexOf(signInUsernameField.getText())==passwords.indexOf(new String(signInPasswordField.getPassword()))) { 															
@@ -381,106 +348,92 @@ public class GUI extends JFrame implements ActionListener {
 				signInUsernameField.setText(""); 
 				signInPasswordField.setText("");
 			}
-				
 			else {
 				this.dispose();
-				new GUI(c, "Cars");
+				new GUI(IH, "Cars");
 			}
 		}
-		if (evtString.equals("Register")) { // create new account button 
-			if (passwordChecker(new String(registerPasswordField.getPassword()), registerFirstNameField.getText()) == true) { // checks if password meets requirements
-				//if the user name is not contained within the accumulated user name list
-				if (usernames.isEmpty()) {
-					//create user
-					User user = new User(registerFirstNameField.getText(), registerLastNameField.getText(), registerUsernameField.getText(), new String(registerPasswordField.getPassword()));
-					//Adds user to Inventory Handler for logging
-					//c.Users.add(user); 
-					usernames.add(registerUsernameField.getText());
-					passwords.add(new String(registerPasswordField.getPassword()));
-					System.out.println(usernames.get(0));
-					System.out.println(passwords.get(0));
-
-				}
-				else if (!usernames.contains(registerUsernameField.getText())) {
-					//create user
-					User user = new User(registerFirstNameField.getText(), registerLastNameField.getText(), registerUsernameField.getText(), new String(registerPasswordField.getPassword()));
-					
-					//Adds user to Inventory Handler for logging
-					//c.add(user); 
-					usernames.add(registerUsernameField.getText());
-					passwords.add(new String(registerPasswordField.getPassword()));
-				}
-				
+		
+		// register with jasiva
+		if (evtString.equals("Register")) { 
+			// checks if password meets requirements
+			boolean validPassword = passwordChecker(new String(registerPasswordField.getPassword()), registerFirstNameField.getText());
+			// checks if user name is already taken
+			boolean validUser = usernames.isEmpty() || !usernames.contains(registerUsernameField.getText());
+			// if the password is invalid, print that and why
+			if (!validPassword) {
+				System.out.println("Invalid password");
+				registerPasswordField.setText(""); 
+			}
+			//if the user name is invalid (taken), print that
+			if (!validUser) {
+				System.out.println("Invalid Username");
+				registerUsernameField.setText(""); 
+			}
+			// if both are valid, make a new user and clear the fields
+			if (validUser && validPassword) {
+				// create user
+				User user = new User(registerFirstNameField.getText(), registerLastNameField.getText(), registerUsernameField.getText(), new String(registerPasswordField.getPassword()));
+				// adds user to Inventory Handler for logging
+				IH.Users.add(user); 
+				// adds user names to local array lists for storage
+				usernames.add(registerUsernameField.getText());
+				passwords.add(new String(registerPasswordField.getPassword()));
+				// clear the fields after registering successfully
 				registerPasswordField.setText(""); 
 				registerUsernameField.setText("");
 				registerFirstNameField.setText(""); 
 				registerLastNameField.setText("");
-			} else {
-				System.out.println("Invalid username or password");
-				for (int i = 2; i < 4; i++) {
-					//clear fields to ease re-trying
-					registerPasswordField.setText(""); 
-					registerUsernameField.setText("");
-				}
 			}
 		}
 		if (evtString.equals("Rent a Car")) {
 			this.dispose();
-			new GUI(c,"Login");
+			new GUI(IH,"Login");
 		}
 	}
 
 	public boolean passwordChecker(String password, String name1) {
-		int check1 = 0; // check variable for password length
-		int check2 = 0; // check variable for if there is a capital
-		int check3 = 0; // check variable for if there is a number
-		int check4 = 0; // check variable for if there is a special character
-		int check5 = 0; // check variable for if name is contained in password
-		boolean good = false;
+		boolean length = false; // check variable for password length
+		boolean capital = false; // check variable for if there is a capital
+		boolean number = false; // check variable for if there is a number
+		boolean charac = false; // check variable for if there is a special character
+		boolean namecon = false; // check variable for if name is contained in password
 		String name = name1.toLowerCase();
-		while (good == false) { // loop that repeats until password is valid
-			if (password.length() >= 8) { // checks length
-				check1 = 1;
-			}
-			char[] pass = password.toCharArray(); // converts to char array to be able to do checks
-			for (int i = 0; i < password.length(); i++) {
-				if (isUpper(pass[i]) == true) { // checks for upper case
-					check2 = 1;
-				}
-				if (containsNum(pass[i]) == true) { // checks for number
-					check3 = 1;
-				}
-				if (containsSpecial(pass[i]) == true) { // checks for special character
-					check4 = 1;
-				}
-			}
-			if (password.contains(name) == false) { // checks for name
-				check5 = 1;
-			}
-			if (check1 == 1 && check2 == 1 && check3 == 1 && check4 == 1 && check5 == 1) { // checks to see all
-																							// parameters are completed
-				good = true;// stops loop
-				System.out.println("Valid Password");
-				return true;
-			}
-			if (check1 == 0 || check2 == 0 || check3 == 0 || check4 == 0 || check5 == 0) { // checks if parameters are
-																							// bad and reports the
-																							// issues
-				System.out.println("Invalid Password. Please Re-Enter.The issues are:");
-				if (check1 == 0)
-					System.out.println("Password is not long enough");
-				if (check2 == 0)
-					System.out.println("Password does not have an upper case");
-				if (check3 == 0)
-					System.out.println("Password does not have a number");
-				if (check4 == 0)
-					System.out.println("Password does not have a special character");
-				if (check5 == 0)
-					System.out.println("Password contains your name");
-				return false;
-			}
+		if (password.length() >= 8) { // checks length
+			length = true;
 		}
-		return false;
+		char[] pass = password.toCharArray(); // converts to char array to be able to do checks
+		for (int i = 0; i < password.length(); i++) {
+			if (isUpper(pass[i]))  // checks for upper case
+				capital = true;
+			if (containsNum(pass[i]))  // checks for number
+				number = true;
+			if (containsSpecial(pass[i]))  // checks for special character
+				charac = true;
+		}
+		// checks for name
+		if (!password.toLowerCase().contains(name)) { 
+			namecon = true;
+		}
+		// checks to see all parameters are completed
+		if (length && capital && number && charac && namecon) { 
+			System.out.println("Valid Password");
+			return true;
+		}
+		else { 
+			System.out.println("Invalid Password. Please Re-Enter. The issues are:");
+			if (!length)
+				System.out.println("Password is not long enough");
+			if (!capital)
+				System.out.println("Password does not have an upper case");
+			if (!number)
+				System.out.println("Password does not have a number");
+			if (!charac)
+				System.out.println("Password does not have a special character");
+			if (!namecon)
+				System.out.println("Password contains your name");
+			return false;
+		}
 	}
 
 	static boolean isUpper(char c) { // methods check characters against ASC-II library to determine if upper/number/special
