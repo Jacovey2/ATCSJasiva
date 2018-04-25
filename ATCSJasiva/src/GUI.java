@@ -16,10 +16,6 @@ public class GUI extends JFrame implements ActionListener {
 	private JPasswordField signInPasswordField = new JPasswordField(10);
 	private JPasswordField registerPasswordField = new JPasswordField(10);
 	
-	//local user name and password storage
-	private static ArrayList<String> usernames = new ArrayList<String>();
-	private static ArrayList<String> passwords = new ArrayList<String>();
-	
 	//master inventory handler
 	public static InventoryHandler IH;
 	
@@ -357,6 +353,9 @@ public class GUI extends JFrame implements ActionListener {
 		// sign in to jasiva
 		if (evtString.equals("Sign in")) {
 			boolean valid = false;
+			//Getting the Usernames and Passwords for checking
+			ArrayList<String> usernames = IH.getUsernames();
+			ArrayList<String> passwords = IH.getPasswords();
 			if (!usernames.isEmpty() && usernames.indexOf(signInUsernameField.getText())==passwords.indexOf(new String(signInPasswordField.getPassword()))) { 															
 				System.out.println("success");
 				valid = true;
@@ -374,6 +373,8 @@ public class GUI extends JFrame implements ActionListener {
 		
 		// register with jasiva
 		if (evtString.equals("Register")) { 
+			//Getting the User names for checking validity
+			ArrayList<String> usernames = IH.getUsernames();
 			// checks if password meets requirements
 			boolean validPassword = true;//passwordChecker(new String(registerPasswordField.getPassword()), registerFirstNameField.getText());
 			// checks if user name is already taken
@@ -394,9 +395,6 @@ public class GUI extends JFrame implements ActionListener {
 				User user = new User(registerFirstNameField.getText(), registerLastNameField.getText(), registerUsernameField.getText(), new String(registerPasswordField.getPassword()));
 				// adds user to Inventory Handler for logging
 				IH.add(user); 
-				// adds user names to local array lists for storage
-				usernames.add(registerUsernameField.getText());
-				passwords.add(new String(registerPasswordField.getPassword()));
 				// clear the fields after registering successfully
 				registerPasswordField.setText(""); 
 				registerUsernameField.setText("");
