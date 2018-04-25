@@ -25,6 +25,22 @@ public class InventoryHandler {
 		Users.add(c);
 	}
 	
+	public ArrayList<String> getUsernames(){
+		ArrayList<String> tempArray = new ArrayList<String>();
+		for (User u:Users) {
+			tempArray.add(u.getUsername());
+		}
+		return tempArray;
+	}
+	
+	public ArrayList<String> getPasswords(){
+		ArrayList<String> tempArray = new ArrayList<String>();
+		for (User u:Users) {
+			tempArray.add(u.getPassword());
+		}
+		return tempArray;
+	}
+	
 	public void Info() { // gives all of the information of all the items in the store
 		ArrayList<String> out = new ArrayList<String>();
 		for (User c : Users) {
