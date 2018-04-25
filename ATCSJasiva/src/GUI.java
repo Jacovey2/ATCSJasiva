@@ -16,6 +16,14 @@ public class GUI extends JFrame implements ActionListener {
 	private JPasswordField signInPasswordField = new JPasswordField(10);
 	private JPasswordField registerPasswordField = new JPasswordField(10);
 	
+	//Frames(temp test as global var)
+	JFrame carFrame;
+	JFrame loginFrame;
+	JFrame welcomeFrame;
+	JFrame bookFrame;
+	JFrame aboutFrame;
+	JFrame carInfoFrame;
+	
 	//master inventory handler
 	public static InventoryHandler IH;
 	
@@ -36,7 +44,7 @@ public class GUI extends JFrame implements ActionListener {
 		// LOGIN FRAME
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		SpringLayout loginlayout = new SpringLayout();
-		JFrame loginFrame = new JFrame("Login");
+		loginFrame = new JFrame("Login");
 		loginFrame.setLayout(loginlayout); // makes the layout a spring layout
 
 		// login frame setup
@@ -110,7 +118,7 @@ public class GUI extends JFrame implements ActionListener {
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// WELCOME FRAME
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		JFrame welcomeFrame = new JFrame("Welcome");
+		welcomeFrame = new JFrame("Welcome");
 		welcomeFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		welcomeFrame.setLayout(null);
 
@@ -151,7 +159,7 @@ public class GUI extends JFrame implements ActionListener {
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// CAR VIEWER FRAME
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		JFrame carFrame = new JFrame("Cars"); 
+		carFrame = new JFrame("Cars"); 
 		carFrame.setLayout(null);
 
 		// car viewer setup
@@ -218,7 +226,7 @@ public class GUI extends JFrame implements ActionListener {
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// BOOKING FRAME
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		JFrame bookFrame = new JFrame("Booking"); // about page panel
+		bookFrame = new JFrame("Booking"); // about page panel
 		bookFrame.setLayout(null);
 		
 		// booking frame setup
@@ -269,7 +277,7 @@ public class GUI extends JFrame implements ActionListener {
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// ABOUT FRAME
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		JFrame aboutFrame = new JFrame("About");
+		aboutFrame = new JFrame("About");
 		aboutFrame.setLayout(null);
 
 		// about frame setup
@@ -287,7 +295,7 @@ public class GUI extends JFrame implements ActionListener {
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// CAR INFO FRAME
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		JFrame carInfoFrame = new JFrame("Car Info");
+		carInfoFrame = new JFrame("Car Info");
 		carInfoFrame.setLayout(null);
 		carInfoFrame.setSize(900, 500);
 
@@ -366,7 +374,7 @@ public class GUI extends JFrame implements ActionListener {
 				signInPasswordField.setText("");
 			}
 			else {
-				this.dispose();
+				welcomeFrame.dispose();
 				new GUI(IH, "Cars");
 			}
 		}
