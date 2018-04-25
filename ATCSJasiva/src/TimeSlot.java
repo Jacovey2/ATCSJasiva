@@ -42,19 +42,6 @@ public class TimeSlot {
 				return true;
 		return false;
 	}
-	private boolean inBetween(int a, int b, int c) {
-		if (a<b && b<c) 
-			return true;
-		else return false;
-	}
-	private boolean contained(int a, int b, int c, int d) {
-		if ((c>=a && b>=d)) {
-			if (!(c==d && a==b && a==c)) {
-				return true;
-			}
-		}
-		return false;
-	}
 	public String ToString () {
 		return "from:"+startMonth+"/"+startDay+"/"+startYear+" "+startTime+"  to:"+endMonth+"/"+endDay+"/"+endYear+" "+endTime;
 	}

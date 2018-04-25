@@ -8,6 +8,7 @@ public class GUI extends JFrame implements ActionListener {
 
 	// Global variables
 	private static String CurrentPanel = "Welcome";
+	// (text fields in the way we are using them must be global variables)
 	private JTextField signInUsernameField = new JTextField(10);
 	private JTextField registerFirstNameField = new JTextField(10);
 	private JTextField registerLastNameField = new JTextField(10);
@@ -15,11 +16,13 @@ public class GUI extends JFrame implements ActionListener {
 	private JPasswordField signInPasswordField = new JPasswordField(10);
 	private JPasswordField registerPasswordField = new JPasswordField(10);
 	
+	//local user name and password storage
 	private static ArrayList<String> usernames = new ArrayList<String>();
 	private static ArrayList<String> passwords = new ArrayList<String>();
 	
+	//master inventory handler
 	public static InventoryHandler IH;
-
+	
 	public static void main(String[] args) {
 		IH = new InventoryHandler();//stays constant
 		new GUI(IH, CurrentPanel);
@@ -171,6 +174,20 @@ public class GUI extends JFrame implements ActionListener {
 		// appearance changes
 		carViewerAboutButton.setForeground(Color.RED);
 		carViewerAboutButton.setFont(new Font("Arial", Font.PLAIN, 70));
+		
+		//activating buttons
+		cheapButton.addActionListener(this);
+		lowEndButton.addActionListener(this);
+		mediumButton.addActionListener(this);
+		highEndButton.addActionListener(this);
+		premiumButton.addActionListener(this);
+		
+		//Changing button Action commands
+		cheapButton.setActionCommand("cheapCar");
+		lowEndButton.setActionCommand("lowEndCar");
+		mediumButton.setActionCommand("mediumCar");
+		highEndButton.setActionCommand("highEndCar");
+		premiumButton.setActionCommand("premiumCar");
 		
 		// arranging components
 		carViewerAboutButton.setBounds(300, 20, 300, 75);
@@ -375,7 +392,7 @@ public class GUI extends JFrame implements ActionListener {
 				// create user
 				User user = new User(registerFirstNameField.getText(), registerLastNameField.getText(), registerUsernameField.getText(), new String(registerPasswordField.getPassword()));
 				// adds user to Inventory Handler for logging
-				IH.Users.add(user); 
+				IH.add(user); 
 				// adds user names to local array lists for storage
 				usernames.add(registerUsernameField.getText());
 				passwords.add(new String(registerPasswordField.getPassword()));
@@ -389,6 +406,11 @@ public class GUI extends JFrame implements ActionListener {
 		if (evtString.equals("Rent a Car")) {
 			this.dispose();
 			new GUI(IH,"Login");
+		}
+		if (evtString.endsWith("Car")) {
+			
+			this.dispose();
+			new GUI(IH,"Carinfo");
 		}
 	}
 
