@@ -255,8 +255,8 @@ public class GUI extends JFrame implements ActionListener {
 		pickCarButton.setBounds(370, 300, 150, 70);
 
 		// adding components to frame and finalizing
-		bookFrame.add(backButton);
-		bookFrame.add(carViewerAboutButton);
+		//bookFrame.add(backButton);
+		//bookFrame.add(carViewerAboutButton);
 		bookFrame.add(pickupLabel);
 		bookFrame.add(pickupField);
 		bookFrame.add(checkLabel);
