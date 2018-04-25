@@ -115,6 +115,7 @@ public class GUI extends JFrame implements ActionListener {
 		// WELCOME FRAME
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		JFrame welcomeFrame = new JFrame("Welcome");
+		welcomeFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		welcomeFrame.setLayout(null);
 
 		// welcome frame setup
@@ -204,8 +205,6 @@ public class GUI extends JFrame implements ActionListener {
 		backButton.setBounds(100, 50, 200, 30);
 
 		// adding components to frame and finalizing
-		carFrame.add(backButton);
-		carFrame.add(carViewerAboutButton);
 		carFrame.add(cheapLabel);
 		carFrame.add(cheapButton);
 		carFrame.add(lowEndLabel);
@@ -216,6 +215,8 @@ public class GUI extends JFrame implements ActionListener {
 		carFrame.add(highEndButton);
 		carFrame.add(premiumLabel);
 		carFrame.add(premiumButton);
+		carFrame.add(backButton);
+		carFrame.add(carViewerAboutButton);
 		carFrame.setSize(900, 500);
 
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -406,6 +407,7 @@ public class GUI extends JFrame implements ActionListener {
 		if (evtString.equals("Rent a Car")) {
 			this.dispose();
 			new GUI(IH,"Login");
+	
 		}
 		if (evtString.endsWith("Car")) {
 			
