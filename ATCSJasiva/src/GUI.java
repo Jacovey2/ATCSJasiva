@@ -374,7 +374,7 @@ public class GUI extends JFrame implements ActionListener {
 		// register with jasiva
 		if (evtString.equals("Register")) { 
 			// checks if password meets requirements
-			boolean validPassword = passwordChecker(new String(registerPasswordField.getPassword()), registerFirstNameField.getText());
+			boolean validPassword = true;//passwordChecker(new String(registerPasswordField.getPassword()), registerFirstNameField.getText());
 			// checks if user name is already taken
 			boolean validUser = usernames.isEmpty() || !usernames.contains(registerUsernameField.getText());
 			// if the password is invalid, print that and why
