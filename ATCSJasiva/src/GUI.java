@@ -131,6 +131,7 @@ public class GUI extends JFrame implements ActionListener {
 		JButton rentButton = new JButton("Rent a Car");
 		JButton viewCarsButton = new JButton("See our Cars");
 		JButton AboutButton = new JButton("JASIVA");
+		JButton toAbout = new JButton("About");
 		JScrollPane missionTextScroll = new JScrollPane(missionTextLabel);
 		
 		// arranging on page
@@ -139,6 +140,7 @@ public class GUI extends JFrame implements ActionListener {
 		rentButton.setBounds(500, 275, 150, 60);
 		viewCarsButton.setBounds(250, 275, 150, 60);
 		AboutButton.setBounds(300, 20, 300, 75);
+		toAbout.setBounds(380, 230, 130, 30);
 		
 		// font/appearance changes
 		AboutButton.setForeground(Color.RED);
@@ -151,6 +153,7 @@ public class GUI extends JFrame implements ActionListener {
 		welcomeFrame.add(AboutButton);
 		welcomeFrame.add(missionLabel);
 		welcomeFrame.add(missionTextScroll);
+		welcomeFrame.add(toAbout);
 		welcomeFrame.setTitle("Welcome page");
 		welcomeFrame.setSize(900, 500);
 		welcomeFrame.setVisible(true);
@@ -159,6 +162,7 @@ public class GUI extends JFrame implements ActionListener {
 		rentButton.addActionListener(this);
 		viewCarsButton.addActionListener(this);
 		AboutButton.addActionListener(this);
+		toAbout.addActionListener(this);
 		
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// CAR VIEWER FRAME
@@ -430,6 +434,14 @@ public class GUI extends JFrame implements ActionListener {
 			loginFrame.setVisible(true);
 			welcomeFrame.setVisible(false);
 			aboutFrame.setVisible(false);
+			carFrame.setVisible(false);
+			bookFrame.setVisible(false);
+			carInfoFrame.setVisible(false);
+		}
+		if (evtString.equals("About")) {
+			loginFrame.setVisible(false);
+			welcomeFrame.setVisible(false);
+			aboutFrame.setVisible(true);
 			carFrame.setVisible(false);
 			bookFrame.setVisible(false);
 			carInfoFrame.setVisible(false);
