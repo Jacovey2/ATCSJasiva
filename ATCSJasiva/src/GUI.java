@@ -29,16 +29,10 @@ public class GUI extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) {
 		IH = new InventoryHandler();//stays constant
-		new GUI(IH, CurrentPanel);
+		new GUI(IH);
 	}
 
-	public GUI(InventoryHandler c, String CurrentPanel) {
-		// if instantiated with a specific state, it will use it, but defaults to
-		// "Welcome panel"
-		String currentPanel = CurrentPanel;
-		if (CurrentPanel == "") {
-			currentPanel = "Welcome"; // state string that determines which window is open
-		}
+	public GUI(InventoryHandler c) {
 
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// LOGIN FRAME
@@ -150,6 +144,7 @@ public class GUI extends JFrame implements ActionListener {
 		welcomeFrame.add(missionTextScroll);
 		welcomeFrame.setTitle("Welcome page");
 		welcomeFrame.setSize(900, 500);
+		welcomeFrame.setVisible(true);
 		
 		// activating buttons
 		rentButton.addActionListener(this);
@@ -173,7 +168,7 @@ public class GUI extends JFrame implements ActionListener {
 		JButton mediumButton = new JButton(new ImageIcon(((new ImageIcon("medium.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
 		JButton highEndButton = new JButton(new ImageIcon(((new ImageIcon("highend.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
 		JButton premiumButton = new JButton(new ImageIcon(((new ImageIcon("chiron.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
-		JButton backButton = new JButton("Back");
+		JButton backButton = new JButton("back");
 		JButton carViewerAboutButton = new JButton("JASIVA");
 
 		// appearance changes
@@ -186,6 +181,8 @@ public class GUI extends JFrame implements ActionListener {
 		mediumButton.addActionListener(this);
 		highEndButton.addActionListener(this);
 		premiumButton.addActionListener(this);
+		carViewerAboutButton.addActionListener(this);
+		backButton.addActionListener(this);
 		
 		//Changing button Action commands
 		cheapButton.setActionCommand("cheapCar");
@@ -241,6 +238,16 @@ public class GUI extends JFrame implements ActionListener {
 		JTextField endTField = new JTextField("");
 		JCheckBox checkField = new JCheckBox();
 		JButton pickCarButton = new JButton("Pick a Car!");
+		//JButton carViewerAboutButton = new JButton("JASIVA");
+		
+	
+		//carViewerAboutButton2.setForeground(Color.RED);
+		//carViewerAboutButton2.setFont(new Font("Arial", Font.PLAIN, 70));
+		
+		
+		//adding action listener
+		pickCarButton.addActionListener(this);
+		//carViewerAboutButton.addActionListener(this);
 
 		// appearance changes
 		checkLabel.setFont(new Font("Arial", Font.PLAIN, 9));
@@ -259,8 +266,8 @@ public class GUI extends JFrame implements ActionListener {
 		pickCarButton.setBounds(370, 300, 150, 70);
 
 		// adding components to frame and finalizing
-		//bookFrame.add(backButton);
-		//bookFrame.add(carViewerAboutButton);
+		bookFrame.add(backButton);
+		bookFrame.add(carViewerAboutButton);
 		bookFrame.add(pickupLabel);
 		bookFrame.add(pickupField);
 		bookFrame.add(checkLabel);
@@ -298,58 +305,6 @@ public class GUI extends JFrame implements ActionListener {
 		carInfoFrame = new JFrame("Car Info");
 		carInfoFrame.setLayout(null);
 		carInfoFrame.setSize(900, 500);
-
-		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		// SELECTING WHICH FRAME TO USE
-		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		if (currentPanel.equals("Welcome")) {
-			welcomeFrame.setVisible(true);
-			loginFrame.setVisible(false);
-			aboutFrame.setVisible(false);
-			carFrame.setVisible(false);
-			bookFrame.setVisible(false);
-			carInfoFrame.setVisible(false);
-		}
-		if (currentPanel.equals("Login")) {
-			loginFrame.setVisible(true);
-			welcomeFrame.setVisible(false);
-			aboutFrame.setVisible(false);
-			carFrame.setVisible(false);
-			bookFrame.setVisible(false);
-			carInfoFrame.setVisible(false);
-		}
-		if (currentPanel.equals("About")) {
-			aboutFrame.setVisible(true);
-			loginFrame.setVisible(false);
-			welcomeFrame.setVisible(false);
-			carFrame.setVisible(false);
-			bookFrame.setVisible(false);
-			carInfoFrame.setVisible(false);
-		}
-		if (currentPanel.equals("Cars")) {
-			carFrame.setVisible(true);
-			aboutFrame.setVisible(false);
-			loginFrame.setVisible(false);
-			welcomeFrame.setVisible(false);
-			bookFrame.setVisible(false);
-			carInfoFrame.setVisible(false);
-		}
-		if (currentPanel.equals("Book")) {
-			bookFrame.setVisible(true);
-			carFrame.setVisible(false);
-			aboutFrame.setVisible(false);
-			loginFrame.setVisible(false);
-			welcomeFrame.setVisible(false);
-			carInfoFrame.setVisible(false);
-		}
-		if (currentPanel.equals("CarInfo")) {
-			carInfoFrame.setVisible(true);
-			carFrame.setVisible(false);
-			aboutFrame.setVisible(false);
-			loginFrame.setVisible(false);
-			welcomeFrame.setVisible(false);
-			bookFrame.setVisible(false);
-		}
 	}
 
 	public void actionPerformed(ActionEvent evt) {
@@ -374,8 +329,12 @@ public class GUI extends JFrame implements ActionListener {
 				signInPasswordField.setText("");
 			}
 			else {
-				welcomeFrame.dispose();
-				new GUI(IH, "Cars");
+				loginFrame.setVisible(false);
+				welcomeFrame.setVisible(false);
+				aboutFrame.setVisible(false);
+				carFrame.setVisible(false);
+				bookFrame.setVisible(true);
+				carInfoFrame.setVisible(false);
 			}
 		}
 		
@@ -384,7 +343,8 @@ public class GUI extends JFrame implements ActionListener {
 			//Getting the User names for checking validity
 			ArrayList<String> usernames = IH.getUsernames();
 			// checks if password meets requirements
-			boolean validPassword = true;//passwordChecker(new String(registerPasswordField.getPassword()), registerFirstNameField.getText());
+			boolean validPassword = true;
+			//passwordChecker(new String(registerPasswordField.getPassword()), registerFirstNameField.getText());
 			// checks if user name is already taken
 			boolean validUser = usernames.isEmpty() || !usernames.contains(registerUsernameField.getText());
 			// if the password is invalid, print that and why
@@ -411,14 +371,44 @@ public class GUI extends JFrame implements ActionListener {
 			}
 		}
 		if (evtString.equals("Rent a Car")) {
-			this.dispose();
-			new GUI(IH,"Login");
-	
+			loginFrame.setVisible(true);
+			welcomeFrame.setVisible(false);
+			aboutFrame.setVisible(false);
+			carFrame.setVisible(false);
+			bookFrame.setVisible(false);
+			carInfoFrame.setVisible(false);
 		}
-		if (evtString.endsWith("Car")) {
-			
-			this.dispose();
-			new GUI(IH,"Carinfo");
+		if (evtString.equals("See our Cars")) {
+			loginFrame.setVisible(false);
+			welcomeFrame.setVisible(false);
+			aboutFrame.setVisible(false);
+			carFrame.setVisible(true);
+			bookFrame.setVisible(false);
+			carInfoFrame.setVisible(false);
+		}
+		if (evtString.equals("JASIVA")) {
+			loginFrame.setVisible(false);
+			welcomeFrame.setVisible(true);
+			aboutFrame.setVisible(false);
+			carFrame.setVisible(false);
+			bookFrame.setVisible(false);
+			carInfoFrame.setVisible(false);
+		}
+		if (evtString.equals("Pick a Car!")) {
+			loginFrame.setVisible(false);
+			welcomeFrame.setVisible(false);
+			aboutFrame.setVisible(false);
+			carFrame.setVisible(true);
+			bookFrame.setVisible(false);
+			carInfoFrame.setVisible(false);
+		}
+		if (evtString.equals("back")) {
+			loginFrame.setVisible(false);
+			welcomeFrame.setVisible(false);
+			aboutFrame.setVisible(false);
+			carFrame.setVisible(false);
+			bookFrame.setVisible(true);
+			carInfoFrame.setVisible(false);
 		}
 	}
 
