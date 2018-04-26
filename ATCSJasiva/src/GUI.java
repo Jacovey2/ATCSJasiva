@@ -54,6 +54,11 @@ public class GUI extends JFrame implements ActionListener {
 		JLabel registerLabel = new JLabel("New User");
 		JButton signInButton = new JButton("Sign in");
 		JButton registerButton = new JButton("Register");
+		JButton homeButton = new JButton("JASIVA");
+		homeButton.setForeground(Color.RED);
+		homeButton.setFont(new Font("Arial", Font.PLAIN, 70));
+
+		
 		
 		// set labels
 		signInPasswordLabel.setLabelFor(signInPasswordField);
@@ -94,6 +99,8 @@ public class GUI extends JFrame implements ActionListener {
 		loginlayout.putConstraint(SpringLayout.WEST, registerButton, 105, SpringLayout.WEST, registerPanel);
 		loginlayout.putConstraint(SpringLayout.SOUTH, existingUserLabel, -5, SpringLayout.NORTH, signInPanel);
 		loginlayout.putConstraint(SpringLayout.SOUTH, registerLabel, -5, SpringLayout.NORTH, registerPanel);
+		loginlayout.putConstraint(SpringLayout.SOUTH, homeButton, -30, SpringLayout.NORTH, registerPanel);
+		loginlayout.putConstraint(SpringLayout.EAST, homeButton, 150, SpringLayout.WEST, registerPanel);
 
 		// adding components to frame and finalizing
 		loginFrame.add(signInPanel);
@@ -102,18 +109,20 @@ public class GUI extends JFrame implements ActionListener {
 		loginFrame.add(registerLabel);
 		loginFrame.add(signInButton);
 		loginFrame.add(registerButton);
+		loginFrame.add(homeButton);
 		loginFrame.setTitle("Login");
 		loginFrame.setSize(900, 500);
 		
 		// button Setups
 		signInButton.addActionListener(this);
 		registerButton.addActionListener(this);
+		homeButton.addActionListener(this);
+		
 
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// WELCOME FRAME
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		welcomeFrame = new JFrame("Welcome");
-		welcomeFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		welcomeFrame.setLayout(null);
 
 		// welcome frame setup
@@ -193,16 +202,16 @@ public class GUI extends JFrame implements ActionListener {
 		
 		// arranging components
 		carViewerAboutButton.setBounds(300, 20, 300, 75);
-		cheapLabel.setBounds(200, 180, 100, 100);
-		lowEndLabel.setBounds(400, 180, 100, 100);
-		mediumLabel.setBounds(600, 180, 100, 100);
-		highEndLabel.setBounds(200, 380, 100, 100);
-		premiumLabel.setBounds(400, 380, 100, 100);
-		cheapButton.setBounds(140, 90, 150, 130);
-		lowEndButton.setBounds(340, 90, 150, 130);
-		mediumButton.setBounds(540, 90, 150, 130);
-		highEndButton.setBounds(140, 280, 150, 130);
-		premiumButton.setBounds(340, 280, 150, 130);
+		cheapLabel.setBounds(200, 200, 100, 100);
+		lowEndLabel.setBounds(400, 200, 100, 100);
+		mediumLabel.setBounds(600, 200, 100, 100);
+		highEndLabel.setBounds(200, 400, 100, 100);
+		premiumLabel.setBounds(400, 400, 100, 100);
+		cheapButton.setBounds(140, 110, 150, 130);
+		lowEndButton.setBounds(340, 110, 150, 130);
+		mediumButton.setBounds(540, 110, 150, 130);
+		highEndButton.setBounds(140, 300, 150, 130);
+		premiumButton.setBounds(340, 300, 150, 130);
 		backButton.setBounds(100, 50, 200, 30);
 
 		// adding components to frame and finalizing
@@ -238,16 +247,18 @@ public class GUI extends JFrame implements ActionListener {
 		JTextField endTField = new JTextField("");
 		JCheckBox checkField = new JCheckBox();
 		JButton pickCarButton = new JButton("Pick a Car!");
-		//JButton carViewerAboutButton = new JButton("JASIVA");
+		JButton carViewerAboutButton2 = new JButton("JASIVA");
+		JButton backButton2 = new JButton("back");
 		
 	
-		//carViewerAboutButton2.setForeground(Color.RED);
-		//carViewerAboutButton2.setFont(new Font("Arial", Font.PLAIN, 70));
+		carViewerAboutButton2.setForeground(Color.RED);
+		carViewerAboutButton2.setFont(new Font("Arial", Font.PLAIN, 70));
 		
 		
 		//adding action listener
 		pickCarButton.addActionListener(this);
-		//carViewerAboutButton.addActionListener(this);
+		carViewerAboutButton2.addActionListener(this);
+		backButton2.addActionListener(this);
 
 		// appearance changes
 		checkLabel.setFont(new Font("Arial", Font.PLAIN, 9));
@@ -264,10 +275,15 @@ public class GUI extends JFrame implements ActionListener {
 		endTField.setBounds(395, 240, 130, 30);
 		checkField.setBounds(495, 157, 25, 25);
 		pickCarButton.setBounds(370, 300, 150, 70);
+		carViewerAboutButton2.setBounds(300, 20, 300, 75);
+		backButton2.setBounds(100, 50, 200, 30);
+		
+		//
+		backButton2.setActionCommand("back to signIN");
 
 		// adding components to frame and finalizing
-		bookFrame.add(backButton);
-		bookFrame.add(carViewerAboutButton);
+		bookFrame.add(backButton2);
+		bookFrame.add(carViewerAboutButton2);
 		bookFrame.add(pickupLabel);
 		bookFrame.add(pickupField);
 		bookFrame.add(checkLabel);
@@ -408,6 +424,14 @@ public class GUI extends JFrame implements ActionListener {
 			aboutFrame.setVisible(false);
 			carFrame.setVisible(false);
 			bookFrame.setVisible(true);
+			carInfoFrame.setVisible(false);
+		}
+		if (evtString.equals("back to signIN")) {
+			loginFrame.setVisible(true);
+			welcomeFrame.setVisible(false);
+			aboutFrame.setVisible(false);
+			carFrame.setVisible(false);
+			bookFrame.setVisible(false);
 			carInfoFrame.setVisible(false);
 		}
 	}
