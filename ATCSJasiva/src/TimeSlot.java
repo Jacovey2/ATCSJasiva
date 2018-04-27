@@ -1,7 +1,11 @@
-import java.util.Date;
-import java.util.Scanner;
 
 public class TimeSlot {
+	public static void main (String[] args) {
+		System.out.println(singleConflict(2,5,5,6));
+		TimeSlot ts = new TimeSlot(1,1,1,2,1,1,1,5);
+		TimeSlot tsc= new TimeSlot(1,1,1,5,1,1,1,6);
+		System.out.println("Final Answer:"+ts.Conflict(tsc));
+	}
 	public int startMonth;
 	public int startDay;
 	public int startYear;
@@ -19,7 +23,7 @@ public class TimeSlot {
 					int EndDay,
 					int EndYear,
 					int EndTime) {
-		startTime = StartTime;
+		startMonth = StartMonth;
 		startDay = StartDay;
 		startYear = StartYear;
 		startTime =StartTime;
@@ -37,10 +41,26 @@ public class TimeSlot {
 					}
 		return true;
 	}
-	private boolean singleConflict(int a, int b, int c, int d) {
-		if ((a>c && c>b) || (a>d && d>b) || (c>a && a>b && b>d) || (a==c && c>b && b>d) || (a>c && c>b && b==d))
-				return true;
-		return false;
+	private static boolean singleConflict(int a, int b, int c, int d) {
+		int[] ints = {a,b,c,d};
+		int max = a;
+		int min = a;
+		System.out.print("\nints: ");
+		for (int i=0; i<ints.length; i++) {
+			System.out.print(ints[i]+", ");
+			if (max<ints[i])
+				max=ints[i];
+			if (min>ints[i])
+				min=ints[i];
+		}
+		System.out.println();
+		int maxdiff = Math.abs(max-min);
+		System.out.println("maxdiff: "+maxdiff);
+		boolean eclipse = ((maxdiff== Math.abs(a-b)) || (maxdiff== Math.abs(c-d))) && a!=d;
+		System.out.println("eclipse: "+eclipse +"("+(a-b)+") ("+(c-d)+")");
+		boolean contain = (a<c && c<b) || (a<d && c<b);
+		System.out.println("contain: "+contain);
+		return  eclipse || contain;
 	}
 	public String ToString () {
 		return "from:"+startMonth+"/"+startDay+"/"+startYear+" "+startTime+"  to:"+endMonth+"/"+endDay+"/"+endYear+" "+endTime;
