@@ -1,11 +1,6 @@
 
 public class TimeSlot {
-	public static void main (String[] args) {
-		System.out.println(singleConflict(2,5,5,6));
-		TimeSlot ts = new TimeSlot(1,1,1,2,1,1,1,5);
-		TimeSlot tsc= new TimeSlot(1,1,1,5,1,1,1,6);
-		System.out.println("Final Answer:"+ts.Conflict(tsc));
-	}
+
 	public int startMonth;
 	public int startDay;
 	public int startYear;
