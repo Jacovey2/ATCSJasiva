@@ -9,7 +9,7 @@ import java.awt.*;
 public class GUI extends JFrame implements ActionListener {
 
 	// Global variables
-	private static String CurrentPanel = "Welcome";
+	//private static String CurrentPanel = "Welcome";
 	// (text fields in the way we are using them must be global variables)
 	private JTextField signInUsernameField = new JTextField(10);
 	private JTextField registerFirstNameField = new JTextField(10);
@@ -491,6 +491,46 @@ public class GUI extends JFrame implements ActionListener {
 			bookFrame.setVisible(false);
 			carInfoFrame.setVisible(false);
 			managerFrame.setVisible(false);
+		}
+		if (evtString.equals("cheapCar")) {
+			Object[] options = {"Book!","Cancel"};
+			int returnValue = JOptionPane.showOptionDialog(carFrame, "Would you like book this car?" + "\n"+
+			"25mpg, 4 people", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[1]);
+			if (returnValue == JOptionPane.YES_OPTION) {
+				//THIS IS WHERE THE BOOKING SHOULD BE CREATED
+			}
+		}
+		if (evtString.equals("lowEndCar")) {
+			Object[] options = {"Book!","Cancel"};
+			int returnValue = JOptionPane.showOptionDialog(carFrame, "Would you like book this car?" + "\n"+
+			"20mpg, 5 people", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[1]);
+			if (returnValue == JOptionPane.YES_OPTION) {
+				//THIS IS WHERE THE BOOKING SHOULD BE CREATED
+			}
+		}
+		if (evtString.equals("mediumCar")) {
+			Object[] options = {"Book!","Cancel"};
+			int returnValue = JOptionPane.showOptionDialog(carFrame, "Would you like book this car?" + "\n"+
+			"20mpg, 5 people", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[1]);
+			if (returnValue == JOptionPane.YES_OPTION) {
+				//THIS IS WHERE THE BOOKING SHOULD BE CREATED
+			}
+		}
+		if (evtString.equals("highEndCar")) {
+			Object[] options = {"Book!","Cancel"};
+			int returnValue = JOptionPane.showOptionDialog(carFrame, "Would you like book this car?" + "\n"+
+			"10mpg, 7 people", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[1]);
+			if (returnValue == JOptionPane.YES_OPTION) {
+				//THIS IS WHERE THE BOOKING SHOULD BE CREATED
+			}
+		}
+		if (evtString.equals("premiumCar")) {
+			Object[] options = {"Book!","Cancel"};
+			int returnValue = JOptionPane.showOptionDialog(carFrame, "Would you like book this car?" + "\n"+
+			"10mpg, 2 people", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[1]);
+			if (returnValue == JOptionPane.YES_OPTION) {
+				//THIS IS WHERE THE BOOKING SHOULD BE CREATED
+			}
 		}
 		if (evtString.equals("Manager Interface")) {
 			//need to make password field
