@@ -1,5 +1,7 @@
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -23,6 +25,7 @@ public class GUI extends JFrame implements ActionListener {
 	JFrame bookFrame;
 	JFrame aboutFrame;
 	JFrame carInfoFrame;
+	JFrame managerFrame;
 	
 	//master inventory handler
 	public static InventoryHandler IH;
@@ -133,6 +136,7 @@ public class GUI extends JFrame implements ActionListener {
 		JButton AboutButton = new JButton("JASIVA");
 		JButton toAbout = new JButton("About");
 		JScrollPane missionTextScroll = new JScrollPane(missionTextLabel);
+		JButton toManager = new JButton("Manager Interface");
 		
 		// arranging on page
 		missionLabel.setBounds(300, 140, 100, 50);
@@ -141,6 +145,7 @@ public class GUI extends JFrame implements ActionListener {
 		viewCarsButton.setBounds(250, 275, 150, 60);
 		AboutButton.setBounds(300, 20, 300, 75);
 		toAbout.setBounds(380, 230, 130, 30);
+		toManager.setBounds(0, 450, 200, 30);
 		
 		// font/appearance changes
 		AboutButton.setForeground(Color.RED);
@@ -154,6 +159,7 @@ public class GUI extends JFrame implements ActionListener {
 		welcomeFrame.add(missionLabel);
 		welcomeFrame.add(missionTextScroll);
 		welcomeFrame.add(toAbout);
+		welcomeFrame.add(toManager);
 		welcomeFrame.setTitle("Welcome page");
 		welcomeFrame.setSize(900, 500);
 		welcomeFrame.setVisible(true);
@@ -163,6 +169,7 @@ public class GUI extends JFrame implements ActionListener {
 		viewCarsButton.addActionListener(this);
 		AboutButton.addActionListener(this);
 		toAbout.addActionListener(this);
+		toManager.addActionListener(this);
 		
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// CAR VIEWER FRAME
@@ -308,15 +315,25 @@ public class GUI extends JFrame implements ActionListener {
 		aboutFrame.setLayout(null);
 
 		// about frame setup
-		JLabel aboutText = new JLabel("wejfoqregerkgheroughkdsfhaejgferg");
+		JTextArea aboutText = new JTextArea("At JASIVA, we think about giving you a car."+ "\n"+" But you will never actually get a car."
+				+ "\n"+ "Our mission is to give you the experience of booking a car."+ "\n"+" The program may have glitches, but that is by design."
+				+ "\n"+"To make your experience more realistic, the process cannot be easy."+ "\n"+" By the end you may throw out your computer."
+				+ "\n"+"That is how we know we have been succesful. "+ "\n"+"*we are not actually responsible for providing car*");
 		JScrollPane aboutTextScroll = new JScrollPane(aboutText);// create scroll bar
+		JButton aboutHomeButton = new JButton("JASIVA");
+		aboutHomeButton.setForeground(Color.RED);
+		aboutHomeButton.setFont(new Font("Arial", Font.PLAIN, 70));
 		
 		// arranging components
 		aboutTextScroll.setBounds(190, 100, 500, 300);
+		aboutHomeButton.setBounds(300, 20, 300, 75);
 
+		//adding action listener
+		aboutHomeButton.addActionListener(this);
+		
 		// adding components to frame and finalizing
-		aboutFrame.add(aboutText);
 		aboutFrame.add(aboutTextScroll);
+		aboutFrame.add(aboutHomeButton);
 		aboutFrame.setSize(900, 500);
 
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -325,6 +342,14 @@ public class GUI extends JFrame implements ActionListener {
 		carInfoFrame = new JFrame("Car Info");
 		carInfoFrame.setLayout(null);
 		carInfoFrame.setSize(900, 500);
+		
+		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		// Manager FRAME
+		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+		managerFrame = new JFrame("Manager Frame");
+		managerFrame.setLayout(null);
+		managerFrame.setSize(900, 500);
 	}
 
 	public void actionPerformed(ActionEvent evt) {
@@ -345,6 +370,7 @@ public class GUI extends JFrame implements ActionListener {
 			}
 			if (valid == false) {
 				System.out.println("Incorrect Username or Password");
+				JOptionPane.showMessageDialog(loginFrame, "Incorrect Username or Password");
 				signInUsernameField.setText(""); 
 				signInPasswordField.setText("");
 			}
@@ -355,6 +381,7 @@ public class GUI extends JFrame implements ActionListener {
 				carFrame.setVisible(false);
 				bookFrame.setVisible(true);
 				carInfoFrame.setVisible(false);
+				managerFrame.setVisible(false);
 			}
 		}
 		
@@ -397,6 +424,7 @@ public class GUI extends JFrame implements ActionListener {
 			carFrame.setVisible(false);
 			bookFrame.setVisible(false);
 			carInfoFrame.setVisible(false);
+			managerFrame.setVisible(false);
 		}
 		if (evtString.equals("See our Cars")) {
 			loginFrame.setVisible(false);
@@ -405,6 +433,7 @@ public class GUI extends JFrame implements ActionListener {
 			carFrame.setVisible(true);
 			bookFrame.setVisible(false);
 			carInfoFrame.setVisible(false);
+			managerFrame.setVisible(false);
 		}
 		if (evtString.equals("JASIVA")) {
 			loginFrame.setVisible(false);
@@ -413,6 +442,7 @@ public class GUI extends JFrame implements ActionListener {
 			carFrame.setVisible(false);
 			bookFrame.setVisible(false);
 			carInfoFrame.setVisible(false);
+			managerFrame.setVisible(false);
 		}
 		if (evtString.equals("Pick a Car!")) {
 			loginFrame.setVisible(false);
@@ -421,6 +451,7 @@ public class GUI extends JFrame implements ActionListener {
 			carFrame.setVisible(true);
 			bookFrame.setVisible(false);
 			carInfoFrame.setVisible(false);
+			managerFrame.setVisible(false);
 		}
 		if (evtString.equals("back")) {
 			loginFrame.setVisible(false);
@@ -429,6 +460,7 @@ public class GUI extends JFrame implements ActionListener {
 			carFrame.setVisible(false);
 			bookFrame.setVisible(true);
 			carInfoFrame.setVisible(false);
+			managerFrame.setVisible(false);
 		}
 		if (evtString.equals("back to signIN")) {
 			loginFrame.setVisible(true);
@@ -437,6 +469,7 @@ public class GUI extends JFrame implements ActionListener {
 			carFrame.setVisible(false);
 			bookFrame.setVisible(false);
 			carInfoFrame.setVisible(false);
+			managerFrame.setVisible(false);
 		}
 		if (evtString.equals("About")) {
 			loginFrame.setVisible(false);
@@ -445,6 +478,24 @@ public class GUI extends JFrame implements ActionListener {
 			carFrame.setVisible(false);
 			bookFrame.setVisible(false);
 			carInfoFrame.setVisible(false);
+			managerFrame.setVisible(false);
+		}
+		if (evtString.equals("Manager Interface")) {
+			String s = (String)JOptionPane.showInputDialog(welcomeFrame,"Enter Code for Access","Input", JOptionPane.WARNING_MESSAGE,null,null,null);
+			//If a string was returned, say so.
+			if ((s != null) && (s.length() > 0) && s.equals("1234")) {
+				managerFrame.setVisible(true);
+				loginFrame.setVisible(false);
+				welcomeFrame.setVisible(false);
+				aboutFrame.setVisible(false);
+				carFrame.setVisible(false);
+				bookFrame.setVisible(false);
+				carInfoFrame.setVisible(false);
+			    return;
+			}if((s != null) && s != "1234" && (s.length() > 0)){
+				JOptionPane.showMessageDialog(welcomeFrame,"Wrong Code","Error",JOptionPane.ERROR_MESSAGE);
+			}
+			
 		}
 	}
 
@@ -455,6 +506,7 @@ public class GUI extends JFrame implements ActionListener {
 		boolean charac = false; // check variable for if there is a special character
 		boolean namecon = false; // check variable for if name is contained in password
 		String name = name1.toLowerCase();
+		ArrayList<String> errors = new ArrayList<String>();
 		if (password.length() >= 8) { // checks length
 			length = true;
 		}
@@ -479,15 +531,17 @@ public class GUI extends JFrame implements ActionListener {
 		else { 
 			System.out.println("Invalid Password. Please Re-Enter. The issues are:");
 			if (!length)
-				System.out.println("Password is not long enough");
+				errors.add("Password is not long enough");
 			if (!capital)
-				System.out.println("Password does not have an upper case");
+				errors.add("Password does not have an upper case");
 			if (!number)
-				System.out.println("Password does not have a number");
+				errors.add("Password does not have a number");
 			if (!charac)
-				System.out.println("Password does not have a special character");
+				errors.add("Password does not have a special character");
 			if (!namecon)
-				System.out.println("Password contains your name");
+				errors.add("Password contains your name");
+			String allErrors = errors.toString(); 
+			JOptionPane.showMessageDialog(loginFrame, allErrors);
 			return false;
 		}
 	}
