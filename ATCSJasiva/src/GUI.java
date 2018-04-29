@@ -349,6 +349,18 @@ public class GUI extends JFrame implements ActionListener {
 	
 		managerFrame = new JFrame("Manager Frame");
 		managerFrame.setLayout(null);
+		JButton managerAboutHomeButton = new JButton("JASIVA");
+		managerAboutHomeButton.setForeground(Color.RED);
+		managerAboutHomeButton.setFont(new Font("Arial", Font.PLAIN, 70));
+		
+		// arranging components
+		managerAboutHomeButton.setBounds(300, 20, 300, 75);
+
+		//adding action listener
+		managerAboutHomeButton.addActionListener(this);
+		
+		// adding components to frame and finalizing
+		managerFrame.add(managerAboutHomeButton);
 		managerFrame.setSize(900, 500);
 	}
 
@@ -481,6 +493,7 @@ public class GUI extends JFrame implements ActionListener {
 			managerFrame.setVisible(false);
 		}
 		if (evtString.equals("Manager Interface")) {
+			//need to make password field
 			String s = (String)JOptionPane.showInputDialog(welcomeFrame,"Enter Code for Access","Input", JOptionPane.WARNING_MESSAGE,null,null,null);
 			//If a string was returned, say so.
 			if ((s != null) && (s.length() > 0) && s.equals("1234")) {
