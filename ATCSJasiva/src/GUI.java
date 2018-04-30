@@ -21,7 +21,15 @@ public class GUI implements ActionListener {
 	private JTextField dropField = new JTextField("");
 	private JTextField startTField = new JTextField("");
 	private JTextField endTField = new JTextField("");
+	boolean signedIn = false;
 	JCheckBox checkField = new JCheckBox();
+
+	String[] carLocations = new String[] { "", "NYC", "Orlando", "Seattle" };
+	JComboBox<String> pickupLocations = new JComboBox<>(carLocations);
+	JComboBox<String> dropLocations = new JComboBox<>(carLocations);
+	// how to get string
+	// String selectedLocation = (String) pickupLocations.getSelectedItem();
+	// creating calendar option
 
 	// Frames(temp test as global var)
 	JFrame carFrame;
@@ -252,6 +260,12 @@ public class GUI implements ActionListener {
 		bookFrame = new JFrame("Booking"); // about page panel
 		bookFrame.setLayout(null);
 
+		SpinnerDateModel date = new SpinnerDateModel();
+		JSpinner pickupDate = new JSpinner(date);
+		JSpinner dropDate = new JSpinner(date);
+		pickupDate.setEditor(new JSpinner.DateEditor(pickupDate, "MM/dd/yyyy/HHmm"));
+		dropDate.setEditor(new JSpinner.DateEditor(dropDate, "MM/dd/yyyy/HHmm"));
+
 		// booking frame setup
 		JLabel pickupLabel = new JLabel("From/Pickup:");
 		JLabel checkLabel = new JLabel("Pickup is the same as drop-off");
@@ -265,52 +279,53 @@ public class GUI implements ActionListener {
 		JButton carViewerAboutButton2 = new JButton("JASIVA");
 		JButton backButton2 = new JButton("back");
 
-		carViewerAboutButton2.setForeground(Color.RED);
-		carViewerAboutButton2.setFont(new Font("Arial", Font.PLAIN, 70));
-
 		// adding action listener
 		pickCarButton.addActionListener(this);
 		carViewerAboutButton2.addActionListener(this);
 		backButton2.addActionListener(this);
+		checkField.addActionListener(this);
 
 		// appearance changes
 		checkLabel.setFont(new Font("Arial", Font.PLAIN, 9));
 		startTLabelInstruction.setFont(new Font("Arial", Font.PLAIN, 10));
 		endTLabelInstruction.setFont(new Font("Arial", Font.PLAIN, 10));
+		carViewerAboutButton2.setForeground(Color.RED);
+		carViewerAboutButton2.setFont(new Font("Arial", Font.PLAIN, 70));
 
 		// arranging components
-		pickupLabel.setBounds(310, 130, 130, 30);
+		pickupLabel.setBounds(310, 130, 110, 30);
 		checkLabel.setBounds(370, 155, 170, 30);
-		dropLabel.setBounds(310, 180, 130, 30);
-		startTField.setBounds(395, 220, 130, 30);
+		dropLabel.setBounds(310, 180, 110, 30);
+		pickupDate.setBounds(380, 220, 150, 30);
 		startTLabel.setBounds(310, 220, 130, 30);
 		startTLabelInstruction.setBounds(410, 202, 130, 30);
-		endTField.setBounds(395, 260, 130, 30);
+		dropDate.setBounds(380, 260, 150, 30);
 		endTLabel.setBounds(310, 260, 130, 30);
 		endTLabelInstruction.setBounds(410, 242, 130, 30);
-		pickupField.setBounds(395, 130, 130, 30);
-		dropField.setBounds(395, 180, 130, 30);
+		pickupLocations.setBounds(395, 130, 130, 30);
+		dropLocations.setBounds(395, 180, 130, 30);
 		checkField.setBounds(495, 157, 25, 25);
 		pickCarButton.setBounds(370, 300, 150, 70);
 		carViewerAboutButton2.setBounds(300, 20, 300, 75);
 		backButton2.setBounds(100, 50, 200, 30);
 
-		//
+		// setting action commands
 		backButton2.setActionCommand("back to signIN");
+		checkField.setActionCommand("checked");
 
 		// adding components to frame and finalizing
 		bookFrame.add(backButton2);
 		bookFrame.add(carViewerAboutButton2);
 		bookFrame.add(pickupLabel);
-		bookFrame.add(pickupField);
+		bookFrame.add(pickupLocations);
 		bookFrame.add(checkLabel);
 		bookFrame.add(checkField);
 		bookFrame.add(dropLabel);
-		bookFrame.add(dropField);
+		bookFrame.add(dropLocations);
 		bookFrame.add(startTLabel);
-		bookFrame.add(startTField);
+		bookFrame.add(pickupDate);
 		bookFrame.add(endTLabel);
-		bookFrame.add(endTField);
+		bookFrame.add(dropDate);
 		bookFrame.add(startTLabelInstruction);
 		bookFrame.add(endTLabelInstruction);
 		bookFrame.add(pickCarButton);
@@ -324,16 +339,16 @@ public class GUI implements ActionListener {
 
 		// about frame setup
 		JTextArea aboutText = new JTextArea("At JASIVA, we satisfy your need to rent a car.\n"
-				                          + "Our mission is to provide all our wonderful customers the authentic " + "\n"
-				                          + "experience of renting a car. The program may have glitches, but that  " + "\n"
-				                          + "is by design. To make your experience more realistic, the process " + "\n"
-				                          + "cannot be easy. By the end you may throw out your computer. But " + "\n" 
-				                          + "without that struggle, the experience of renting a car just isn't right. \n\n ya know?"+ "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" 
-				                          + "*we are not actually responsible for providing cars to any of the given\n"
-				                          + "locations. Prices may vary depending on duration, our general feeling\n"
-				                          + "about the world, the global price of wheat, and how much we want to pad \n"
-				                          + "our wallets*");
-		
+				+ "Our mission is to provide all our wonderful customers the authentic " + "\n"
+				+ "experience of renting a car. The program may have glitches, but that  " + "\n"
+				+ "is by design. To make your experience more realistic, the process " + "\n"
+				+ "cannot be easy. By the end you may throw out your computer. But " + "\n"
+				+ "without that struggle, the experience of renting a car just isn't right. \n\n ya know?"
+				+ "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+				+ "*we are not actually responsible for providing cars to any of the given\n"
+				+ "locations. Prices may vary depending on duration, our general feeling\n"
+				+ "about the world, the global price of wheat, and how much we want to pad \n" + "our wallets*");
+
 		JScrollPane aboutTextScroll = new JScrollPane(aboutText);// create scroll bar
 		JButton aboutHomeButton = new JButton("JASIVA");
 		aboutHomeButton.setForeground(Color.RED);
@@ -377,7 +392,7 @@ public class GUI implements ActionListener {
 		// adding components to frame and finalizing
 		managerFrame.add(managerAboutHomeButton);
 		managerFrame.setSize(900, 500);
-		
+
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Final setup of frames
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -406,6 +421,7 @@ public class GUI implements ActionListener {
 					.indexOf(new String(signInPasswordField.getPassword()))) {
 				System.out.println("success");
 				valid = true;
+				signedIn = true;
 				IH.CurrentUser = IH.Users.get(IH.getUsernames().indexOf(signInUsernameField.getText()));
 			}
 			if (valid == false) {
@@ -429,9 +445,10 @@ public class GUI implements ActionListener {
 			// Getting the User names for checking validity
 			ArrayList<String> usernames = IH.getUsernames();
 			// checks if password meets requirements
-			
-			//!!!!!!!!!!! TEMPORARY DEBUGG COMMENTING !!!!!!!!!!
-			boolean validPassword = true; //passwordChecker(new String(registerPasswordField.getPassword()), registerFirstNameField.getText());
+
+			// !!!!!!!!!!! TEMPORARY DEBUGG COMMENTING !!!!!!!!!!
+			boolean validPassword = true; // passwordChecker(new String(registerPasswordField.getPassword()),
+											// registerFirstNameField.getText());
 			// checks if user name is already taken
 			boolean validUser = usernames.isEmpty() || !usernames.contains(registerUsernameField.getText());
 			// if the password is invalid, print that and why
@@ -521,53 +538,49 @@ public class GUI implements ActionListener {
 			carInfoFrame.setVisible(false);
 			managerFrame.setVisible(false);
 		}
-		//all the car booking options
+		if (evtString.equals("checked")) {
+			String selectedLocation = (String) pickupLocations.getSelectedItem();
+			dropLocations.setSelectedItem(selectedLocation);
+		}
+
+		// all the car booking options
 		if (evtString.endsWith("Car")) {
-			Car bookedCar;
-			
-			if (evtString.equals("cheapCar")) {
-				bookedCar= new Car(24, 4, "cheapCar", new Location(pickupField.getText()), 12.5);
-			}
-			else if (evtString.equals("lowEndCar")) {
-				bookedCar= new Car(20, 4, "Lowend", new Location(pickupField.getText()), 15);
-			}
-			else if (evtString.equals("mediumCar")) {
-				bookedCar= new Car(15, 4, "mediumCar", new Location(pickupField.getText()), 20);
-			}
-			else if (evtString.equals("highEndCar")) {
-				bookedCar= new Car(15, 4, "highEndCar", new Location(pickupField.getText()), 28);
-			}
-			else if (evtString.equals("premiumCar")) {
-				bookedCar= new Car(10, 2, "premiumCar", new Location(pickupField.getText()), 35);
-			}
-			else {
-				bookedCar= new Car(0, 0, "ERROR", new Location("ERROR"), 0);
-			}
-			
-			Object[] options = { "Book!", "Cancel" };
-			// Confirm Booking Message
-			int returnValue = JOptionPane.showOptionDialog(carFrame,
-					"Would you like book this car?" + "\n" + "25mpg, 4 people", null, JOptionPane.YES_NO_CANCEL_OPTION,
-					JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-			
-			if (returnValue == JOptionPane.YES_OPTION) {
-				//Create car and TS for booking
-				//month/day/year/time in 0000
-				TimeSlot bookedTimeSlot = TSfromDateString(startTField.getText(),endTField.getText());
-				//Add booking to IH list
-				double price = IH.addReservation(bookedCar, new Location(pickupField.getText()), bookedTimeSlot, IH.CurrentUser);
-				if (price == -1) {
-					System.out.println("ThatS not a very good boy of a reservatIon :(");
-				}else {
-					System.out.println("Price of Reservation is: " +  price);
+			Car bookedCar = new Car(0, 0, "ERROR", new Location("ERROR"), 0);
+			if (signedIn == true) {
+				if (evtString.equals("cheapCar")) {
+					bookedCar = new Car(24, 4, "cheapCar", new Location(pickupField.getText()), 12.5);
+				} else if (evtString.equals("lowEndCar")) {
+					bookedCar = new Car(20, 4, "Lowend", new Location(pickupField.getText()), 15);
+				} else if (evtString.equals("mediumCar")) {
+					bookedCar = new Car(15, 4, "mediumCar", new Location(pickupField.getText()), 20);
+				} else if (evtString.equals("highEndCar")) {
+					bookedCar = new Car(15, 4, "highEndCar", new Location(pickupField.getText()), 28);
+				} else if (evtString.equals("premiumCar")) {
+					bookedCar = new Car(10, 2, "premiumCar", new Location(pickupField.getText()), 35);
+				} else {
+					bookedCar = new Car(0, 0, "ERROR", new Location("ERROR"), 0);
 				}
-				loginFrame.setVisible(false);
-				welcomeFrame.setVisible(false);
-				aboutFrame.setVisible(false);
-				carFrame.setVisible(false);
-				bookFrame.setVisible(true);
-				carInfoFrame.setVisible(false);
-				managerFrame.setVisible(false);
+				Object[] options = { "Book!", "Cancel" };
+				// Confirm Booking Message
+				int returnValue = JOptionPane.showOptionDialog(carFrame,
+						"Would you like book this car?" + "\n" + "25mpg, 4 people", null,
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+
+				if (returnValue == JOptionPane.YES_OPTION) {
+					// Create car and TS for booking
+					// month/day/year/time in 0000
+					TimeSlot bookedTimeSlot = TSfromDateString(startTField.getText(), endTField.getText());
+					// Add booking to IH list
+					double price = IH.addReservation(bookedCar, new Location(pickupField.getText()), bookedTimeSlot,
+							IH.CurrentUser);
+					if (price == -1) {
+						System.out.println("ThatS not a very good boy of a reservatIon :(");
+					} else {
+						System.out.println("Price of Reservation is: " + price);
+					}
+				}
+			} else {
+				JOptionPane.showMessageDialog(carFrame, "Not Signed In", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
