@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.ArrayList;
 
 public class InventoryHandler {
@@ -11,6 +12,38 @@ public class InventoryHandler {
 		Cars = new ArrayList<Car>();
 		Reservations = new ArrayList<Reservation>();
 	}
+	public void saveInformation() throws IOException{
+		//Write Reservations to file
+		File reservationFile = new File("reservations.txt");
+		FileWriter rFileWrite = new FileWriter(reservationFile);
+		for (Reservation r : Reservations) {
+			String tempString = r.toString().replaceAll("\n"," ");
+			System.out.println(tempString);
+			rFileWrite.write(tempString);
+		}
+		rFileWrite.close();
+		
+		//Write Cars
+		File carFile = new File("cars.txt");
+		FileWriter cFileWrite = new FileWriter(carFile);
+		for (Car c : Cars) {
+			cFileWrite.write(c.toString());
+		}
+		cFileWrite.close();
+		
+		//Write users to file
+		File usersFile = new File("users.txt");
+		FileWriter uFileWrite = new FileWriter(usersFile);
+		for (User u : Users) {
+			uFileWrite.write(u.toString());
+		}
+		uFileWrite.close();
+	}
+	public void loadInformation(){
+		File reservationFile = new File("reservations.txt");
+		File carFile = new File("cars.txt");
+		File usersFile = new File("users.txt");
+	}
 
 	public double addReservation(Car car, Location location, TimeSlot timeSlot, User user) {
 		boolean valid = true;
@@ -19,7 +52,7 @@ public class InventoryHandler {
 				valid = false;
 		}
 		/*if (!location.Cars.contains(car))
-			valid = false;*///Will not be commented in final version, but without manager login there will never be cars at any location
+			valid = false;*///Will not be commented in final version, but without manager window there will never be cars at any location
 		if (((timeSlot.getDuration()/60)/24)>80)
 			valid=false;
 		Reservations.add(new Reservation(timeSlot, car, user));
