@@ -1,4 +1,3 @@
-
 public class Car {
 	public int mpg;
 	public int capacity;

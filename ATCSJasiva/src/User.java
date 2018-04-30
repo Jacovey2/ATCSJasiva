@@ -40,7 +40,7 @@ public class User {
 			redactedPassword+=password.substring(password.length()-2,password.length()-1);
 		}
 		else {
-			for (int i=1; i<password.length(); i++) {
+			for (int i=0; i<password.length(); i++) {
 				redactedPassword+="*";
 			}
 		}

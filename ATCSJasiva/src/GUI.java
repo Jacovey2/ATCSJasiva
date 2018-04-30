@@ -529,8 +529,8 @@ public class GUI extends JFrame implements ActionListener {
 				//Create car and TS for booking
 				TimeSlot bookedTimeSlot = TSfromDateString(startTField.getText(),endTField.getText());
 				//Add booking to IH list
-				boolean success = IH.addReservation(bookedCar, new Location(pickupField.getText()), bookedTimeSlot, IH.CurrentUser);
-				if (!success) {
+				double price = IH.addReservation(bookedCar, new Location(pickupField.getText()), bookedTimeSlot, IH.CurrentUser);
+				if (price == -1) {
 					System.out.println("ThatS not a very good boy of a reservatIon :(");
 				}
 				loginFrame.setVisible(false);

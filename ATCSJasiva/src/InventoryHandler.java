@@ -12,7 +12,7 @@ public class InventoryHandler {
 		Reservations = new ArrayList<Reservation>();
 	}
 
-	public boolean addReservation(Car car, Location location, TimeSlot timeSlot, User user) {
+	public double addReservation(Car car, Location location, TimeSlot timeSlot, User user) {
 		boolean valid = true;
 		for (Reservation r : Reservations) {
 			if (r.getTimeSlot().Conflict(timeSlot))
@@ -20,13 +20,20 @@ public class InventoryHandler {
 		}
 		/*if (!location.Cars.contains(car))
 			valid = false;*///Will not be commented in final version, but without manager login there will never be cars at any location
+		if (((timeSlot.getDuration()/60)/24)>80)
+			valid=false;
 		Reservations.add(new Reservation(timeSlot, car, user));
 		// temporary printing out of reservations
-		if (valid)
+		if (valid) {
 			for (Reservation r : Reservations)
 				System.out.println(r.toString());
-
-		return valid;
+			double durationDiscoutRate=0.15/30;
+			double price = car.pricePerHour*timeSlot.getDuration()*(1 - timeSlot.getDuration()*durationDiscoutRate);//TODO: add multiple location pricing
+			return price;
+		}
+		else{
+			return -1;
+		}
 	}
 
 	public void add(User c) { // adds to array list
