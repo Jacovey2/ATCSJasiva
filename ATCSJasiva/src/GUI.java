@@ -278,18 +278,26 @@ public class GUI  implements ActionListener {
 		startTLabelInstruction.setFont(new Font("Arial", Font.PLAIN, 10));
 		endTLabelInstruction.setFont(new Font("Arial", Font.PLAIN, 10));
 
+		String[] carLocations = new String[] {"","NYC", "Orlando",
+				"Seattle"};
+
+		JComboBox<String> pickupLocations = new JComboBox<>(carLocations);
+		JComboBox<String> dropLocations = new JComboBox<>(carLocations);
+		//how to get string
+		//String selectedLocation = (String) pickupLocations.getSelectedItem();
+		
 		// arranging components
-		pickupLabel.setBounds(310, 130, 130, 30);
+		pickupLabel.setBounds(310, 130, 110, 30);
 		checkLabel.setBounds(370, 155, 170, 30);
-		dropLabel.setBounds(310, 180, 130, 30);
+		dropLabel.setBounds(310, 180, 110, 30);
 		startTField.setBounds(395, 220, 130, 30);
 		startTLabel.setBounds(310, 220, 130, 30);
 		startTLabelInstruction.setBounds(410, 202, 130, 30);
 		endTField.setBounds(395, 260, 130, 30);
 		endTLabel.setBounds(310, 260, 130, 30);
 		endTLabelInstruction.setBounds(410, 242, 130, 30);
-		pickupField.setBounds(395, 130, 130, 30);
-		dropField.setBounds(395, 180, 130, 30);
+		pickupLocations.setBounds(395, 130, 130, 30);
+		dropLocations.setBounds(395, 180, 130, 30);
 		checkField.setBounds(495, 157, 25, 25);
 		pickCarButton.setBounds(370, 300, 150, 70);
 		carViewerAboutButton2.setBounds(300, 20, 300, 75);
@@ -302,11 +310,11 @@ public class GUI  implements ActionListener {
 		bookFrame.add(backButton2);
 		bookFrame.add(carViewerAboutButton2);
 		bookFrame.add(pickupLabel);
-		bookFrame.add(pickupField);
+		bookFrame.add(pickupLocations);
 		bookFrame.add(checkLabel);
 		bookFrame.add(checkField);
 		bookFrame.add(dropLabel);
-		bookFrame.add(dropField);
+		bookFrame.add(dropLocations);
 		bookFrame.add(startTLabel);
 		bookFrame.add(startTField);
 		bookFrame.add(endTLabel);
