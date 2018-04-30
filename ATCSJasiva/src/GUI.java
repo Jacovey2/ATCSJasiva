@@ -6,7 +6,7 @@ import java.util.Scanner;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUI extends JFrame implements ActionListener {
+public class GUI  implements ActionListener {
 
 	// Global variables
 	// private static String CurrentPanel = "Welcome";
@@ -41,7 +41,6 @@ public class GUI extends JFrame implements ActionListener {
 	}
 
 	public GUI(InventoryHandler c) {
-
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// LOGIN FRAME
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -370,6 +369,17 @@ public class GUI extends JFrame implements ActionListener {
 		// adding components to frame and finalizing
 		managerFrame.add(managerAboutHomeButton);
 		managerFrame.setSize(900, 500);
+		
+		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		// Final setup of frames
+		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		carFrame.setResizable(false);
+		loginFrame.setResizable(false);
+		welcomeFrame.setResizable(false);
+		bookFrame.setResizable(false);
+		aboutFrame.setResizable(false);
+		carInfoFrame.setResizable(false);
+		managerFrame.setResizable(false);
 	}
 
 	public void actionPerformed(ActionEvent evt) {
@@ -506,6 +516,7 @@ public class GUI extends JFrame implements ActionListener {
 		//all the car booking options
 		if (evtString.endsWith("Car")) {
 			Car bookedCar;
+			
 			if (evtString.equals("cheapCar")) {
 				bookedCar= new Car(24, 4, "cheapCar", new Location(pickupField.getText()), 12.5);
 			}
@@ -524,13 +535,16 @@ public class GUI extends JFrame implements ActionListener {
 			else {
 				bookedCar= new Car(0, 0, "ERROR", new Location("ERROR"), 0);
 			}
+			
 			Object[] options = { "Book!", "Cancel" };
 			// Confirm Booking Message
 			int returnValue = JOptionPane.showOptionDialog(carFrame,
 					"Would you like book this car?" + "\n" + "25mpg, 4 people", null, JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+			
 			if (returnValue == JOptionPane.YES_OPTION) {
 				//Create car and TS for booking
+				//month/day/year/time in 0000
 				TimeSlot bookedTimeSlot = TSfromDateString(startTField.getText(),endTField.getText());
 				//Add booking to IH list
 				double price = IH.addReservation(bookedCar, new Location(pickupField.getText()), bookedTimeSlot, IH.CurrentUser);
