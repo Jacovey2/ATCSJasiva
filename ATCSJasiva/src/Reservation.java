@@ -26,6 +26,6 @@ public class Reservation {
 		return user;
 	}
 	public String toString() {
-		return "Reservation:\n  TS: " + timeSlot + "\n  Car: " + car + "\n  User: " + user+"\n";
+		return  timeSlot + "/" + car + "/" + user;
 	}
 }

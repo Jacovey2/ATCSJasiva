@@ -74,6 +74,6 @@ public class TimeSlot {
 		return  eclipse || contain;
 	}
 	public String toString () {
-		return "from:"+startMonth+"/"+startDay+"/"+startYear+" "+startTime+"  to:"+endMonth+"/"+endDay+"/"+endYear+" "+endTime;
+		return startMonth+"/"+startDay+"/"+startYear+"/"+startTime+"/"+endMonth+"/"+endDay+"/"+endYear+"/"+endTime;
 	}
 }

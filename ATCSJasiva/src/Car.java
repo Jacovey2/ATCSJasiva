@@ -14,7 +14,6 @@ public class Car {
 	}
 
 	public String toString() {
-		return model + " at " + location + " with " + mpg + "mpg for " + capacity + " people at " + pricePerHour
-				+ " dollars per hour";
+		return model + "/" + location + "/" + mpg + "/" + capacity + "/" + pricePerHour;
 	}
 }

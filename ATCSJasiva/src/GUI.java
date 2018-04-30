@@ -6,7 +6,7 @@ import java.util.Scanner;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUI  implements ActionListener {
+public class GUI implements ActionListener {
 
 	// Global variables
 	// private static String CurrentPanel = "Welcome";

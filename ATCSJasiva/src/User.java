@@ -30,20 +30,6 @@ public class User {
 		return password;
 	}
 	public String toString() {
-		String redactedPassword="";
-		if (password.length()>3) {
-			redactedPassword="";
-			redactedPassword+=password.substring(0,1);
-			for (int i=1; i<password.length()-1; i++) {
-				redactedPassword+="*";
-			}
-			redactedPassword+=password.substring(password.length()-2,password.length()-1);
-		}
-		else {
-			for (int i=0; i<password.length(); i++) {
-				redactedPassword+="*";
-			}
-		}
-		return firstName+" "+lastName +": "+username +", "+redactedPassword;
+		return firstName+"/"+lastName +"/"+username +"/"+password;
 	}
 }
