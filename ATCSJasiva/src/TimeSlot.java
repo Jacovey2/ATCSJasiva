@@ -1,4 +1,4 @@
-
+import java.util.Calendar;
 public class TimeSlot {
 
 	public int startMonth;
@@ -9,6 +9,12 @@ public class TimeSlot {
 	public int endDay;
 	public int endYear;
 	public int endTime;
+	
+	/*
+	public static void main (String[] args) {
+		TimeSlot tS= new TimeSlot(2,5,2012,1100,2,5,2012,1430);
+		tS.getDuration();
+	}*/
 	
 	public TimeSlot (int StartMonth,
 					int StartDay,
@@ -36,28 +42,38 @@ public class TimeSlot {
 					}
 		return true;
 	}
+	public int getDuration() {
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		startDate.set(startYear, startMonth, startDay, hourFromTime(startTime),minFromTime(startTime));
+		endDate.set(endYear, endMonth,endDay,hourFromTime(endTime),minFromTime(endTime));
+		double timeInMillis = (double) (endDate.getTime().getTime()-startDate.getTime().getTime());
+		double timeInHours  = timeInMillis*0.00000027777778;
+		int    timeInMins   = (int) Math.round(timeInHours*60);
+		return (timeInMins);
+	}
+	private int hourFromTime(int time) {
+		return Math.round(time/100);
+	}
+	private int minFromTime(int time) {
+		return time-Math.round(time/100)*100;
+	}
 	private static boolean singleConflict(int a, int b, int c, int d) {
 		int[] ints = {a,b,c,d};
 		int max = a;
 		int min = a;
-		System.out.print("\nints: ");
 		for (int i=0; i<ints.length; i++) {
-			System.out.print(ints[i]+", ");
 			if (max<ints[i])
 				max=ints[i];
 			if (min>ints[i])
 				min=ints[i];
 		}
-		System.out.println();
 		int maxdiff = Math.abs(max-min);
-		System.out.println("maxdiff: "+maxdiff);
 		boolean eclipse = ((maxdiff== Math.abs(a-b)) || (maxdiff== Math.abs(c-d))) && a!=d;
-		System.out.println("eclipse: "+eclipse +"("+(a-b)+") ("+(c-d)+")");
 		boolean contain = (a<c && c<b) || (a<d && c<b);
-		System.out.println("contain: "+contain);
 		return  eclipse || contain;
 	}
-	public String ToString () {
+	public String toString () {
 		return "from:"+startMonth+"/"+startDay+"/"+startYear+" "+startTime+"  to:"+endMonth+"/"+endDay+"/"+endYear+" "+endTime;
 	}
 }
