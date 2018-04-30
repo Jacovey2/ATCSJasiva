@@ -256,7 +256,9 @@ public class GUI  implements ActionListener {
 		JLabel pickupLabel = new JLabel("From/Pickup:");
 		JLabel checkLabel = new JLabel("Pickup is the same as drop-off");
 		JLabel dropLabel = new JLabel("To/Drop-Off:");
+		JLabel startTLabelInstruction = new JLabel("MM/DD/YYYY/TTTT");
 		JLabel startTLabel = new JLabel("Start time:");
+		JLabel endTLabelInstruction = new JLabel("MM/DD/YYYY/TTTT");
 		JLabel endTLabel = new JLabel("End time:");
 		JCheckBox checkField = new JCheckBox();
 		JButton pickCarButton = new JButton("Pick a Car!");
@@ -273,17 +275,21 @@ public class GUI  implements ActionListener {
 
 		// appearance changes
 		checkLabel.setFont(new Font("Arial", Font.PLAIN, 9));
+		startTLabelInstruction.setFont(new Font("Arial", Font.PLAIN, 10));
+		endTLabelInstruction.setFont(new Font("Arial", Font.PLAIN, 10));
 
 		// arranging components
 		pickupLabel.setBounds(310, 130, 130, 30);
 		checkLabel.setBounds(370, 155, 170, 30);
 		dropLabel.setBounds(310, 180, 130, 30);
-		startTLabel.setBounds(310, 210, 130, 30);
-		endTLabel.setBounds(310, 240, 130, 30);
+		startTField.setBounds(395, 220, 130, 30);
+		startTLabel.setBounds(310, 220, 130, 30);
+		startTLabelInstruction.setBounds(410, 202, 130, 30);
+		endTField.setBounds(395, 260, 130, 30);
+		endTLabel.setBounds(310, 260, 130, 30);
+		endTLabelInstruction.setBounds(410, 242, 130, 30);
 		pickupField.setBounds(395, 130, 130, 30);
 		dropField.setBounds(395, 180, 130, 30);
-		startTField.setBounds(395, 210, 130, 30);
-		endTField.setBounds(395, 240, 130, 30);
 		checkField.setBounds(495, 157, 25, 25);
 		pickCarButton.setBounds(370, 300, 150, 70);
 		carViewerAboutButton2.setBounds(300, 20, 300, 75);
@@ -305,6 +311,8 @@ public class GUI  implements ActionListener {
 		bookFrame.add(startTField);
 		bookFrame.add(endTLabel);
 		bookFrame.add(endTField);
+		bookFrame.add(startTLabelInstruction);
+		bookFrame.add(endTLabelInstruction);
 		bookFrame.add(pickCarButton);
 		bookFrame.setSize(900, 500);
 
