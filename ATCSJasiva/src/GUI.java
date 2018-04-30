@@ -316,13 +316,17 @@ public class GUI extends JFrame implements ActionListener {
 		aboutFrame.setLayout(null);
 
 		// about frame setup
-		JTextArea aboutText = new JTextArea("At JASIVA, we think about giving you a car." + "\n"
-				+ " But you will never actually get a car." + "\n"
-				+ "Our mission is to give you the experience of booking a car." + "\n"
-				+ " The program may have glitches, but that is by design." + "\n"
-				+ "To make your experience more realistic, the process cannot be easy." + "\n"
-				+ " By the end you may throw out your computer." + "\n" + "That is how we know we have been succesful. "
-				+ "\n" + "*we are not actually responsible for providing car*");
+		JTextArea aboutText = new JTextArea("At JASIVA, we satisfy your need to rent a car.\n"
+				                          + "Our mission is to provide all our wonderful customers the authentic " + "\n"
+				                          + "experience of renting a car. The program may have glitches, but that  " + "\n"
+				                          + "is by design. To make your experience more realistic, the process " + "\n"
+				                          + "cannot be easy. By the end you may throw out your computer. But " + "\n" 
+				                          + "without that struggle, the experience of renting a car just isn't right. \n\n ya know?"+ "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" 
+				                          + "*we are not actually responsible for providing cars to any of the given\n"
+				                          + "locations. Prices may vary depending on duration, our general feeling\n"
+				                          + "about the world, the global price of wheat, and how much we want to pad \n"
+				                          + "our wallets*");
+		
 		JScrollPane aboutTextScroll = new JScrollPane(aboutText);// create scroll bar
 		JButton aboutHomeButton = new JButton("JASIVA");
 		aboutHomeButton.setForeground(Color.RED);
@@ -532,6 +536,8 @@ public class GUI extends JFrame implements ActionListener {
 				double price = IH.addReservation(bookedCar, new Location(pickupField.getText()), bookedTimeSlot, IH.CurrentUser);
 				if (price == -1) {
 					System.out.println("ThatS not a very good boy of a reservatIon :(");
+				}else {
+					System.out.println("Price of Reservation is: " +  price);
 				}
 				loginFrame.setVisible(false);
 				welcomeFrame.setVisible(false);

@@ -28,7 +28,8 @@ public class InventoryHandler {
 			for (Reservation r : Reservations)
 				System.out.println(r.toString());
 			double durationDiscoutRate=0.15/30;
-			double price = car.pricePerHour*timeSlot.getDuration()*(1 - timeSlot.getDuration()*durationDiscoutRate);//TODO: add multiple location pricing
+			double durationinHours = timeSlot.getDuration()/60;
+			double price = (car.pricePerHour*durationinHours)*(1 - (durationinHours*durationDiscoutRate));//TODO: add multiple location pricing
 			return price;
 		}
 		else{
