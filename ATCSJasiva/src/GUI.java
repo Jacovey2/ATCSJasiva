@@ -34,7 +34,7 @@ public class GUI implements ActionListener {
 	JComboBox<String> dropLocations = new JComboBox<>(carLocations);
 	// how to get string
 	// String selectedLocation = (String) pickupLocations.getSelectedItem();
-	int carMpg;
+	int carMpg; //should to be taken from car class
 	int carCapacity;
 
 	// Frames(temp test as global var)
