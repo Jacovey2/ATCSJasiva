@@ -27,8 +27,8 @@ public class GUI implements ActionListener {
 	SpinnerDateModel dropdate = new SpinnerDateModel();
 	JSpinner pickupDate = new JSpinner(pickupdate);
 	JSpinner dropDate = new JSpinner(dropdate);	
-	String[] carLocations = new String[] { "", "NYC", "Orlando", "Seattle" };
-	String[] carTypes = new String[]{ "", "Cheap", "lowEnd", "medium", "premium", "highend" };
+	String[] carLocations = new String[] { "Location", "NYC", "Orlando", "Seattle" };
+	String[] carTypes = new String[]{ "Car", "Cheap", "lowEnd", "medium", "premium", "highend" };
 	JComboBox<String> pickupLocations = new JComboBox<>(carLocations);
 	JComboBox<String> dropLocations = new JComboBox<>(carLocations);
 	// how to get string
@@ -417,10 +417,13 @@ public class GUI implements ActionListener {
 		JComboBox<String> checkReservedLocations = new JComboBox<>(carLocations);
 		JTextArea availableCars = new JTextArea();
 		JScrollPane allAvailableCars = new JScrollPane(availableCars);
-		JComboBox<String> reservedCars = new JComboBox<>(carTypes);
+		JComboBox<String> reservedCars = new JComboBox<>(carTypes); //array needs to be changed
 		JButton removeReservation = new JButton("Remove Reservation");
 		JButton enterAvailableButton = new JButton("Enter");
 		JButton enterReservedButton = new JButton("Check");
+		JLabel availableSearchLabel = new JLabel("Available Search");
+		JLabel reservedSearchLabel = new JLabel("Reserved Search");
+		JLabel availableResultLabel = new JLabel("Result");
 		
 		//appearance changes
 		managerAboutHomeButton.setForeground(Color.RED);
@@ -442,25 +445,27 @@ public class GUI implements ActionListener {
 		
 		
 		//Informational text Areas
-		 allLocations.setBounds(80, 290, 240, 180);
-		 allUser.setBounds(330, 290, 240, 180);
-		 allReservation.setBounds(580, 290, 240, 180);
-		 removeAllReservations.setBounds(395, 130, 130, 30);
-		 locationsLabel.setBounds(395, 130, 130, 30);
-		 reservationsLabel.setBounds(395, 130, 130, 30); 
-		 UsersLabel.setBounds(395, 130, 130, 30);
+		 allLocations.setBounds(80, 300, 240, 170);
+		 allUser.setBounds(330, 300, 240, 170);
+		 allReservation.setBounds(580, 300, 240, 170);
+		 removeAllReservations.setBounds(410, 280, 160, 20);
+		 locationsLabel.setBounds(80, 280, 130, 20);
+		 reservationsLabel.setBounds(330, 280, 130, 20); 
+		 UsersLabel.setBounds(580, 280, 130, 20);
 		
 		//Checking available reservations areas
-		 checkAvailableCars.setBounds(395, 130, 130, 30);
-		 checkAvailableLocations.setBounds(395, 130, 130, 30);
-		 checkReservedCars.setBounds(395, 130, 130, 30);
-		 checkReservedLocations.setBounds(395, 130, 130, 30);
-		 availableCars.setBounds(395, 130, 130, 30);
-		 allAvailableCars.setBounds(395, 130, 130, 30);
-		 reservedCars.setBounds(395, 130, 130, 30);
-		 removeReservation.setBounds(395, 130, 130, 30);
-		 enterAvailableButton.setBounds(395, 130, 130, 30);
-		 enterReservedButton.setBounds(395, 130, 130, 30);
+		 checkAvailableCars.setBounds(20, 200, 130, 30);
+		 checkAvailableLocations.setBounds(150, 200, 130, 30);
+		 checkReservedCars.setBounds(440, 200, 130, 30);
+		 checkReservedLocations.setBounds(570, 200, 130, 30);
+		 allAvailableCars.setBounds(290, 200, 130, 80);
+		 reservedCars.setBounds(710, 200, 130, 30);
+		 removeReservation.setBounds(710, 230, 130, 30);
+		 enterAvailableButton.setBounds(85, 230, 130, 30);
+		 enterReservedButton.setBounds(515, 230, 130, 30);
+		 availableSearchLabel.setBounds(85, 175, 130, 30);
+		 reservedSearchLabel.setBounds(515, 175, 130, 30);
+		 availableResultLabel.setBounds(300, 175, 130, 30);
 
 		// adding action listener
 		managerAboutHomeButton.addActionListener(this);
@@ -505,6 +510,9 @@ public class GUI implements ActionListener {
 		managerFrame.add(removeReservation);
 		managerFrame.add(enterAvailableButton);
 		managerFrame.add(enterReservedButton);
+		managerFrame.add(availableSearchLabel);
+		managerFrame.add(reservedSearchLabel);
+		managerFrame.add(availableResultLabel);
 		managerFrame.setSize(900, 500);
 
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
