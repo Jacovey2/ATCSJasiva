@@ -47,7 +47,7 @@ public class TimeSlot {
 		Calendar endDate = Calendar.getInstance();
 		startDate.set(startYear, startMonth, startDay, hourFromTime(startTime),minFromTime(startTime));
 		endDate.set(endYear, endMonth,endDay,hourFromTime(endTime),minFromTime(endTime));
-		double timeInMillis = (double) (endDate.getTime().getTime()-startDate.getTime().getTime());
+		double timeInMillis = (double) Math.abs((endDate.getTime().getTime()-startDate.getTime().getTime()));
 		double timeInHours  = timeInMillis*0.00000027777778;
 		int    timeInMins   = (int) Math.round(timeInHours*60);
 		System.out.println(timeInMins);
