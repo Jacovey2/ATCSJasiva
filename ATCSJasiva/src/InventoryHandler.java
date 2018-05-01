@@ -15,8 +15,14 @@ public class InventoryHandler {
 	}
 
 	public void saveInformation() throws IOException {
+		File reservationFile;
+		File carFile;
+		File usersFile;
+		reservationFile = new File("reservations.txt");
+		carFile = new File("cars.txt");
+		usersFile = new File("users.txt");
+		
 		// Write Reservations to file
-		File reservationFile = new File("reservations.txt");
 		FileWriter rFileWrite = new FileWriter(reservationFile);
 		for (Reservation r : Reservations) {
 			String tempString = r.getTimeSlot().toString();
@@ -27,7 +33,6 @@ public class InventoryHandler {
 		rFileWrite.close();
 
 		// Write Cars
-		File carFile = new File("cars.txt");
 		FileWriter cFileWrite = new FileWriter(carFile);
 		for (Car c : Cars) {
 			cFileWrite.write(c.toString());
@@ -35,7 +40,6 @@ public class InventoryHandler {
 		cFileWrite.close();
 
 		// Write users to file
-		File usersFile = new File("users.txt");
 		FileWriter uFileWrite = new FileWriter(usersFile);
 		for (User u : Users) {
 			uFileWrite.write(u.toString());

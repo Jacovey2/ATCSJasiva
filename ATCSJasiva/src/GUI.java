@@ -1,4 +1,6 @@
 import java.awt.event.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,8 +46,13 @@ public class GUI implements ActionListener {
 	// master inventory handler
 	public static InventoryHandler IH;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		IH = new InventoryHandler();// stays constant
+		try {
+			IH.loadInformation();
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
 		new GUI(IH);
 	}
 
@@ -394,13 +401,21 @@ public class GUI implements ActionListener {
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Final setup of frames
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		carFrame.setResizable(false);
-		loginFrame.setResizable(false);
-		welcomeFrame.setResizable(false);
-		bookFrame.setResizable(false);
-		aboutFrame.setResizable(false);
-		carInfoFrame.setResizable(false);
-		managerFrame.setResizable(false);
+		JFrame[] frames = {welcomeFrame,loginFrame,bookFrame,aboutFrame,carInfoFrame,managerFrame,carFrame};
+		for (int i=0; i<frames.length;i++) {
+			frames[i].setResizable(false);
+			frames[i].addWindowListener(new java.awt.event.WindowAdapter() {
+		        public void windowClosing(WindowEvent winEvt) {
+		            try {
+						IH.saveInformation();
+					} catch (IOException e) {}
+		            System.exit(0);
+		        }
+		    });
+		}
+		
+		
+
 	}
 
 	public void actionPerformed(ActionEvent evt) {
