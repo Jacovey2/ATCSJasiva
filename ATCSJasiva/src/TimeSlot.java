@@ -50,6 +50,7 @@ public class TimeSlot {
 		double timeInMillis = (double) (endDate.getTime().getTime()-startDate.getTime().getTime());
 		double timeInHours  = timeInMillis*0.00000027777778;
 		int    timeInMins   = (int) Math.round(timeInHours*60);
+		System.out.println(timeInMins);
 		return (timeInMins);
 	}
 	private int hourFromTime(int time) {

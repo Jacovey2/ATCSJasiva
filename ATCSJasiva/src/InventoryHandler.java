@@ -131,11 +131,7 @@ public class InventoryHandler {
 				System.out.println(r.toString());
 			double durationDiscoutRate = 0.15 / 30;
 			double durationinHours = timeSlot.getDuration() / 60;
-			double price = (car.pricePerHour * durationinHours) * (1 - (durationinHours * durationDiscoutRate));// TODO:
-																												// add
-																												// multiple
-																												// location
-																												// pricing
+			double price = (car.pricePerHour * durationinHours) * (1 - (durationinHours * durationDiscoutRate));// TODO: add multiple location pricing
 			return price;
 		} else {
 			return -1;
