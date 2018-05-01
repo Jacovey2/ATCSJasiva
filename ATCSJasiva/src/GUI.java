@@ -1,4 +1,5 @@
 import java.awt.event.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -17,19 +18,22 @@ public class GUI implements ActionListener {
 	private JTextField registerUsernameField = new JTextField(10);
 	private JPasswordField signInPasswordField = new JPasswordField(10);
 	private JPasswordField registerPasswordField = new JPasswordField(10);
-	private JTextField pickupField = new JTextField("");
+	/*private JTextField pickupField = new JTextField("");
 	private JTextField dropField = new JTextField("");
 	private JTextField startTField = new JTextField("");
-	private JTextField endTField = new JTextField("");
+	private JTextField endTField = new JTextField("");*/
 	boolean signedIn = false;
 	JCheckBox checkField = new JCheckBox();
-
+	//creating calendar selection tool
+	SpinnerDateModel pickupdate = new SpinnerDateModel();
+	SpinnerDateModel dropdate = new SpinnerDateModel();
+	JSpinner pickupDate = new JSpinner(pickupdate);
+	JSpinner dropDate = new JSpinner(dropdate);
 	String[] carLocations = new String[] { "", "NYC", "Orlando", "Seattle" };
 	JComboBox<String> pickupLocations = new JComboBox<>(carLocations);
 	JComboBox<String> dropLocations = new JComboBox<>(carLocations);
 	// how to get string
 	// String selectedLocation = (String) pickupLocations.getSelectedItem();
-	// creating calendar option
 
 	// Frames(temp test as global var)
 	JFrame carFrame;
@@ -260,9 +264,6 @@ public class GUI implements ActionListener {
 		bookFrame = new JFrame("Booking"); // about page panel
 		bookFrame.setLayout(null);
 
-		SpinnerDateModel date = new SpinnerDateModel();
-		JSpinner pickupDate = new JSpinner(date);
-		JSpinner dropDate = new JSpinner(date);
 		pickupDate.setEditor(new JSpinner.DateEditor(pickupDate, "MM/dd/yyyy/HHmm"));
 		dropDate.setEditor(new JSpinner.DateEditor(dropDate, "MM/dd/yyyy/HHmm"));
 
@@ -548,15 +549,15 @@ public class GUI implements ActionListener {
 			Car bookedCar = new Car(0, 0, "ERROR", new Location("ERROR"), 0);
 			if (signedIn == true) {
 				if (evtString.equals("cheapCar")) {
-					bookedCar = new Car(24, 4, "cheapCar", new Location(pickupField.getText()), 12.5);
+					bookedCar = new Car(24, 4, "cheapCar", new Location((String) pickupLocations.getSelectedItem()), 12.5);
 				} else if (evtString.equals("lowEndCar")) {
-					bookedCar = new Car(20, 4, "Lowend", new Location(pickupField.getText()), 15);
+					bookedCar = new Car(20, 4, "Lowend", new Location((String) pickupLocations.getSelectedItem()), 15);
 				} else if (evtString.equals("mediumCar")) {
-					bookedCar = new Car(15, 4, "mediumCar", new Location(pickupField.getText()), 20);
+					bookedCar = new Car(15, 4, "mediumCar", new Location((String) pickupLocations.getSelectedItem()), 20);
 				} else if (evtString.equals("highEndCar")) {
-					bookedCar = new Car(15, 4, "highEndCar", new Location(pickupField.getText()), 28);
+					bookedCar = new Car(15, 4, "highEndCar", new Location((String) pickupLocations.getSelectedItem()), 28);
 				} else if (evtString.equals("premiumCar")) {
-					bookedCar = new Car(10, 2, "premiumCar", new Location(pickupField.getText()), 35);
+					bookedCar = new Car(10, 2, "premiumCar", new Location((String) pickupLocations.getSelectedItem()), 35);
 				} else {
 					bookedCar = new Car(0, 0, "ERROR", new Location("ERROR"), 0);
 				}
@@ -569,9 +570,9 @@ public class GUI implements ActionListener {
 				if (returnValue == JOptionPane.YES_OPTION) {
 					// Create car and TS for booking
 					// month/day/year/time in 0000
-					TimeSlot bookedTimeSlot = TSfromDateString(startTField.getText(), endTField.getText());
+					TimeSlot bookedTimeSlot = TSfromDateString(new SimpleDateFormat("MM/dd/yyyy/HHmm").format(pickupDate.getValue()), new SimpleDateFormat("MM/dd/yyyy/HHmm").format(dropDate.getValue()));
 					// Add booking to IH list
-					double price = IH.addReservation(bookedCar, new Location(pickupField.getText()), bookedTimeSlot,
+					double price = IH.addReservation(bookedCar, new Location((String) pickupLocations.getSelectedItem()), bookedTimeSlot,
 							IH.CurrentUser);
 					if (price == -1) {
 						System.out.println("ThatS not a very good boy of a reservatIon :(");
@@ -580,7 +581,23 @@ public class GUI implements ActionListener {
 					}
 				}
 			} else {
-				JOptionPane.showMessageDialog(carFrame, "Not Signed In", "Error", JOptionPane.ERROR_MESSAGE);
+				Object[] options = { "Sign In", "See Car Info","Cancel"};
+				// Confirm Booking Message
+				int returnValue = JOptionPane.showOptionDialog(carFrame,
+						"You are not signed in", null, JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.ERROR_MESSAGE, null, options, options[2]);
+				if (returnValue == JOptionPane.YES_OPTION) {
+					loginFrame.setVisible(true);
+					welcomeFrame.setVisible(false);
+					aboutFrame.setVisible(false);
+					carFrame.setVisible(false);
+					bookFrame.setVisible(false);
+					carInfoFrame.setVisible(false);
+					managerFrame.setVisible(false);
+				}
+				if (returnValue == JOptionPane.NO_OPTION) {
+					JOptionPane.showMessageDialog(carFrame,"25mpg, 4 people");
+				}
 			}
 		}
 
