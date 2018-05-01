@@ -34,6 +34,8 @@ public class GUI implements ActionListener {
 	JComboBox<String> dropLocations = new JComboBox<>(carLocations);
 	// how to get string
 	// String selectedLocation = (String) pickupLocations.getSelectedItem();
+	int carMpg; //should to be taken from car class
+	int carCapacity;
 
 	// Frames(temp test as global var)
 	JFrame carFrame;
@@ -546,25 +548,35 @@ public class GUI implements ActionListener {
 
 		// all the car booking options
 		if (evtString.endsWith("Car")) {
-			Car bookedCar = new Car(0, 0, "ERROR", new Location("ERROR"), 0);
-			if (signedIn == true) {
+			Car bookedCar;
 				if (evtString.equals("cheapCar")) {
-					bookedCar = new Car(24, 4, "cheapCar", new Location((String) pickupLocations.getSelectedItem()), 12.5);
+					carMpg=25;
+					carCapacity=4;
+					bookedCar = new Car(25, 4, "cheapCar", new Location((String) pickupLocations.getSelectedItem()), 12.5);
 				} else if (evtString.equals("lowEndCar")) {
+					carMpg=20;
+					carCapacity=4;
 					bookedCar = new Car(20, 4, "Lowend", new Location((String) pickupLocations.getSelectedItem()), 15);
 				} else if (evtString.equals("mediumCar")) {
+					carMpg=15;
+					carCapacity=4;
 					bookedCar = new Car(15, 4, "mediumCar", new Location((String) pickupLocations.getSelectedItem()), 20);
 				} else if (evtString.equals("highEndCar")) {
-					bookedCar = new Car(15, 4, "highEndCar", new Location((String) pickupLocations.getSelectedItem()), 28);
+					carMpg=15;
+					carCapacity=7;
+					bookedCar = new Car(15, 7, "highEndCar", new Location((String) pickupLocations.getSelectedItem()), 28);
 				} else if (evtString.equals("premiumCar")) {
+					carMpg=10;
+					carCapacity=2;
 					bookedCar = new Car(10, 2, "premiumCar", new Location((String) pickupLocations.getSelectedItem()), 35);
 				} else {
 					bookedCar = new Car(0, 0, "ERROR", new Location("ERROR"), 0);
 				}
+				if (signedIn == true) {
 				Object[] options = { "Book!", "Cancel" };
 				// Confirm Booking Message
 				int returnValue = JOptionPane.showOptionDialog(carFrame,
-						"Would you like book this car?" + "\n" + "25mpg, 4 people", null,
+						"Would you like book this car?" + "\n" + "MPG: "+carMpg +" "+ "Capacity: "+carCapacity, null,
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
 				if (returnValue == JOptionPane.YES_OPTION) {
@@ -596,7 +608,7 @@ public class GUI implements ActionListener {
 					managerFrame.setVisible(false);
 				}
 				if (returnValue == JOptionPane.NO_OPTION) {
-					JOptionPane.showMessageDialog(carFrame,"25mpg, 4 people");
+					JOptionPane.showMessageDialog(carFrame,  "MPG: "+carMpg +" "+  "Capacity: "+carCapacity);
 				}
 			}
 		}
