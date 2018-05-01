@@ -17,10 +17,7 @@ public class Location {
 		return cars;
 	}
 	public String toString() {
-		String retString = locationName +"\n";
-		for (Car c:cars) {
-			retString+= "-"+c.toString()+"\n";
-		}
+		String retString = locationName;
 		return retString;
 	}
 }

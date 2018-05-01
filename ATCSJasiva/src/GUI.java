@@ -637,7 +637,6 @@ public class GUI implements ActionListener {
 		int endYear = endDateScanner.nextInt();
 		int endTime = endDateScanner.nextInt();
 		TimeSlot ts = new TimeSlot(startMonth, startDay, startYear, startTime, endMonth, endDay, endYear, endTime);
-		System.out.println(ts);
 		startDateScanner.close();
 		endDateScanner.close();
 		return ts;
