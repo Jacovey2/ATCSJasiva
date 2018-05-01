@@ -126,16 +126,16 @@ public class InventoryHandler {
 		 * if (!location.Cars.contains(car)) valid = false;
 		 */// Will not be commented in final version, but without manager window there will
 			// never be cars at any location
-		if (((timeSlot.getDuration() / 60) / 24) > 80)
-			valid = false;
 		Reservations.add(new Reservation(timeSlot, car, user));
 		// temporary printing out of reservations
 		if (valid) {
 			for (Reservation r : Reservations)
 				System.out.println(r.toString());
 			double durationDiscoutRate = 0.15 / 30;
+			double maxdiscount = 0.4;
 			double durationinHours = timeSlot.getDuration() / 60;
-			double price = (car.pricePerHour * durationinHours) * (1 - (durationinHours * durationDiscoutRate));// TODO: add multiple location pricing
+			System.out.println(durationinHours);
+			double price = durationinHours*car.pricePerHour *(1-((2*maxdiscount)/(1+Math.pow(Math.E, -4*durationinHours*durationDiscoutRate))-maxdiscount));// TODO: add multiple location pricing
 			return price;
 		} else {
 			return -1;
