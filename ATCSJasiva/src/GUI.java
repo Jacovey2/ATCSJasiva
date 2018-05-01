@@ -392,7 +392,7 @@ public class GUI implements ActionListener {
 		JComboBox<String> addRemoveCar = new JComboBox<>(carTypes);
 		JComboBox<String> addRemoveCarLocations = new JComboBox<>(carLocations);
 		JLabel removeAddCarLabel = new JLabel("Add/Remove Car at Location");
-		JLabel removeAddLocationLabel = new JLabel("Add/Remove Car at Location");
+		JLabel removeAddLocationLabel = new JLabel("Add/Remove Location");
 		JButton addCar = new JButton("Add Vehicle");
 		JButton removeCar = new JButton("Remove Vehicle");
 		JButton addLocation = new JButton("Add Location");
@@ -429,22 +429,22 @@ public class GUI implements ActionListener {
 		// arranging components
 		managerAboutHomeButton.setBounds(300, 20, 300, 75);
 		
-		removeAddLocationLabel.setBounds(130, 80, 130, 60);
+		removeAddLocationLabel.setBounds(130, 80, 150, 60);
 		addRemoveLocations.setBounds(120, 120, 130, 30);
 		addLocation.setBounds(130, 150, 50, 20);
 		removeLocation.setBounds(195, 150, 50, 20);
 		
-		removeAddCarLabel.setBounds(330, 80, 130, 60);
+		removeAddCarLabel.setBounds(330, 80, 180, 60);
 		addRemoveCar.setBounds(320, 120, 130, 30);
 		addRemoveCarLocations.setBounds(450, 120, 130, 30);
-		addCar.setBounds(405, 150, 50, 20);
-		removeCar.setBounds(470, 150, 50, 20);
+		addCar.setBounds(385, 150, 50, 20);
+		removeCar.setBounds(450, 150, 50, 20);
 		
 		
 		//Informational text Areas
-		 allLocations.setBounds(395, 130, 130, 30);
-		 allUser.setBounds(395, 130, 130, 30);
-		 allReservation.setBounds(395, 130, 130, 30);
+		 allLocations.setBounds(80, 290, 240, 180);
+		 allUser.setBounds(330, 290, 240, 180);
+		 allReservation.setBounds(580, 290, 240, 180);
 		 removeAllReservations.setBounds(395, 130, 130, 30);
 		 locationsLabel.setBounds(395, 130, 130, 30);
 		 reservationsLabel.setBounds(395, 130, 130, 30); 
