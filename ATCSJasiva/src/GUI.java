@@ -389,6 +389,7 @@ public class GUI implements ActionListener {
 		//adding and removing buttons
 		JButton managerAboutHomeButton = new JButton("JASIVA");
 		JComboBox<String> addRemoveLocations = new JComboBox<>(carLocations);
+		addRemoveLocations.setEditable(true);
 		JComboBox<String> addRemoveCar = new JComboBox<>(carTypes);
 		JComboBox<String> addRemoveCarLocations = new JComboBox<>(carLocations);
 		JLabel removeAddCarLabel = new JLabel("Add/Remove Car at Location");
@@ -397,6 +398,13 @@ public class GUI implements ActionListener {
 		JButton removeCar = new JButton("Remove Vehicle");
 		JButton addLocation = new JButton("Add Location");
 		JButton removeLocation = new JButton("Remove Location");
+		JButton searchUserButton = new JButton("Search");
+		JTextField searchUserField = new JTextField("");
+		JLabel searchUserLabel = new JLabel("Search User");
+		JTextField searchResultField = new JTextField("");
+		JButton removeUserButton = new JButton("Remove User");
+		JLabel resultLabel = new JLabel("Result");
+		
 		
 		//Informational text Areas
 		JTextArea locations = new JTextArea();
@@ -432,16 +440,23 @@ public class GUI implements ActionListener {
 		// arranging components
 		managerAboutHomeButton.setBounds(300, 20, 300, 75);
 		
-		removeAddLocationLabel.setBounds(130, 80, 150, 60);
-		addRemoveLocations.setBounds(120, 120, 130, 30);
-		addLocation.setBounds(130, 150, 50, 20);
-		removeLocation.setBounds(195, 150, 50, 20);
+		removeAddLocationLabel.setBounds(20, 80, 150, 60);
+		addRemoveLocations.setBounds(20, 120, 130, 30);
+		addLocation.setBounds(30, 150, 50, 20);
+		removeLocation.setBounds(90, 150, 50, 20);
 		
-		removeAddCarLabel.setBounds(330, 80, 180, 60);
-		addRemoveCar.setBounds(320, 120, 130, 30);
-		addRemoveCarLocations.setBounds(450, 120, 130, 30);
-		addCar.setBounds(385, 150, 50, 20);
-		removeCar.setBounds(450, 150, 50, 20);
+		removeAddCarLabel.setBounds(230, 80, 180, 60);
+		addRemoveCar.setBounds(200, 120, 130, 30);
+		addRemoveCarLocations.setBounds(330, 120, 130, 30);
+		addCar.setBounds(270, 150, 50, 20);
+		removeCar.setBounds(330, 150, 50, 20);
+		
+		searchUserButton.setBounds(505, 150, 50, 20);
+		searchUserField.setBounds(500, 120, 130, 30);
+		searchUserLabel.setBounds(500, 80, 180, 60);
+		searchResultField.setBounds(650, 120, 130, 30);
+		removeUserButton.setBounds(650, 150, 95, 20);
+		resultLabel.setBounds(650,100,50,20);
 		
 		
 		//Informational text Areas
@@ -477,6 +492,8 @@ public class GUI implements ActionListener {
 		removeReservation.addActionListener(this);
 		enterAvailableButton.addActionListener(this);
 		enterReservedButton.addActionListener(this);
+		searchUserButton.addActionListener(this);
+		removeUserButton.addActionListener(this);
 
 		// adding components to frame and finalizing
 		managerFrame.add(managerAboutHomeButton);
@@ -489,6 +506,12 @@ public class GUI implements ActionListener {
 		managerFrame.add(removeCar);
 		managerFrame.add(addLocation);
 		managerFrame.add(removeLocation);
+		managerFrame.add(searchUserButton);
+		managerFrame.add(searchUserField);
+		managerFrame.add(searchUserLabel);
+		managerFrame.add(searchResultField);
+		managerFrame.add(removeUserButton);
+		managerFrame.add(resultLabel);
 		
 		//AddingInformational text Areas
 		managerFrame.add(allLocations);
