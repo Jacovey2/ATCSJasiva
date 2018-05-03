@@ -10,9 +10,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GUI implements ActionListener {
-
 	// Global variables
-	// private static String CurrentPanel = "Welcome";
+
+	//Locations of cars
+	String[] carLocations = new String[0];
+	String[] carTypes = new String[]{ "Car", "Cheap", "lowEnd", "medium", "premium", "highend" };
+	JComboBox<String> pickupLocations = new JComboBox<>(carLocations);
+	JComboBox<String> dropLocations = new JComboBox<>(carLocations);
+
 	// (text fields in the way we are using them must be global variables)
 	private JTextField signInUsernameField = new JTextField(10);
 	private JTextField registerFirstNameField = new JTextField(10);
@@ -37,6 +42,8 @@ public class GUI implements ActionListener {
 	JScrollPane allUser          = new JScrollPane(user);
 	JScrollPane allReservation   = new JScrollPane(reservation);
 	JScrollPane allAvailableCars = new JScrollPane(availableCars);
+	JComboBox<String> addRemoveLocations =      new JComboBox<>(carLocations);
+	JComboBox<String> addRemoveCarLocations =   new JComboBox<>(carLocations);
 	
 	
 	//creating calendar selection tool
@@ -45,13 +52,9 @@ public class GUI implements ActionListener {
 	JSpinner pickupDate = new JSpinner(pickupdate);
 	JSpinner dropDate = new JSpinner(dropdate);	
 	
-	//Locations of cars
-	String[] carLocations = new String[0];
-	String[] carTypes = new String[]{ "Car", "Cheap", "lowEnd", "medium", "premium", "highend" };
-	JComboBox<String> pickupLocations = new JComboBox<>(carLocations);
-	JComboBox<String> dropLocations = new JComboBox<>(carLocations);
+	
 
-	// Frames(temp test as global var)
+	// Frames
 	JFrame carFrame;
 	JFrame loginFrame;
 	JFrame welcomeFrame;
@@ -404,9 +407,12 @@ public class GUI implements ActionListener {
 		
 		
 		//Informational text Areas
-		JLabel locationsLabel = new JLabel("Locations");
-		JLabel reservationsLabel = new JLabel("Reservations");
-		JLabel UsersLabel = new JLabel("Users");
+		JLabel locationsLabel       = new JLabel("Locations");
+		JLabel reservationsLabel    = new JLabel("Reservations");
+		JLabel UsersLabel           = new JLabel("Users");
+		JLabel availableSearchLabel = new JLabel("Availablity Search");
+		JLabel reservedSearchLabel  = new JLabel("Reserved Search");
+		JLabel availableResultLabel = new JLabel("Result");
 		JComboBox<String> checkAvailableCars = new JComboBox<>(carTypes);
 		JComboBox<String> checkReservedCars = new JComboBox<>(carTypes);
 		JComboBox<String> reservedCars = new JComboBox<>(carTypes); 
@@ -416,19 +422,17 @@ public class GUI implements ActionListener {
 		JComboBox<String> addRemoveLocations =      new JComboBox<>(carLocations);
 		JComboBox<String> addRemoveCarLocations =   new JComboBox<>(carLocations);
 		JButton managerAboutHomeButton = new JButton("JASIVA");
-		JButton removeReservation = new JButton("Remove Reservation");
-		JButton removeAllReservations = new JButton("Remove All Reservations");
-		JButton enterAvailableButton = new JButton("Enter");
-		JButton enterReservedButton = new JButton("Check");
-		JButton addCar = new JButton("Add Vehicle");
-		JButton removeCar = new JButton("Remove Vehicle");
-		JButton addLocation = new JButton("Add Location");
-		JButton removeLocation = new JButton("Remove Location");
-		JButton searchUserButton = new JButton("Search");
-		JButton removeUserButton = new JButton("Remove User");
-		JLabel availableSearchLabel = new JLabel("Availablity Search");
-		JLabel reservedSearchLabel = new JLabel("Reserved Search");
-		JLabel availableResultLabel = new JLabel("Result");
+		JButton removeReservation      = new JButton("Remove Reservation");
+		JButton removeAllReservations  = new JButton("Remove All Reservations");
+		JButton enterAvailableButton   = new JButton("Enter");
+		JButton enterReservedButton    = new JButton("Check");
+		JButton addCar                 = new JButton("Add Vehicle");
+		JButton removeCar              = new JButton("Remove Vehicle");
+		JButton addLocation            = new JButton("Add Location");
+		JButton removeLocation         = new JButton("Remove Location");
+		JButton searchUserButton       = new JButton("Search");
+		JButton removeUserButton       = new JButton("Remove User");
+		
 		
 		//Changing functionalities
 		addRemoveLocations.setEditable(true);
@@ -438,41 +442,41 @@ public class GUI implements ActionListener {
 		managerAboutHomeButton.setFont(new Font("Arial", Font.PLAIN, 70));
 
 		// arranging components
-		managerAboutHomeButton.setBounds(300, 20, 300, 75);
-		removeAddLocationLabel.setBounds(20, 80, 150, 60);
-		addRemoveLocations.setBounds(20, 120, 130, 30);
-		addLocation.setBounds(30, 150, 50, 20);
-		removeLocation.setBounds(90, 150, 50, 20);
-		removeAddCarLabel.setBounds(230, 80, 180, 60);
-		addRemoveCar.setBounds(200, 120, 130, 30);
-		addRemoveCarLocations.setBounds(330, 120, 130, 30);
-		addCar.setBounds(270, 150, 50, 20);
-		removeCar.setBounds(330, 150, 50, 20);
-		searchUserButton.setBounds(505, 150, 50, 20);
-		searchUserField.setBounds(500, 120, 130, 30);
-		searchUserLabel.setBounds(500, 80, 180, 60);
-		searchResultField.setBounds(650, 120, 130, 30);
-		removeUserButton.setBounds(650, 150, 95, 20);
-		resultLabel.setBounds(650,100,50,20);
-		allLocations.setBounds(80, 300, 240, 170);
-		allUser.setBounds(330, 300, 240, 170);
-		allReservation.setBounds(580, 300, 240, 170);
-		removeAllReservations.setBounds(410, 280, 160, 20);
-		locationsLabel.setBounds(80, 280, 130, 20);
-		reservationsLabel.setBounds(330, 280, 130, 20); 
-		UsersLabel.setBounds(580, 280, 130, 20);
-		checkAvailableCars.setBounds(20, 200, 130, 30);
-		checkAvailableLocations.setBounds(150, 200, 130, 30);
-		checkReservedCars.setBounds(440, 200, 130, 30);
-		checkReservedLocations.setBounds(570, 200, 130, 30);
-		allAvailableCars.setBounds(290, 200, 130, 80);
-		reservedCars.setBounds(710, 200, 130, 30);
-		removeReservation.setBounds(710, 230, 130, 30);
-		enterAvailableButton.setBounds(85, 230, 130, 30);
-		enterReservedButton.setBounds(515, 230, 130, 30);
-		availableSearchLabel.setBounds(85, 175, 130, 30);
-		reservedSearchLabel.setBounds(515, 175, 130, 30);
-		availableResultLabel.setBounds(300, 175, 130, 30);
+		managerAboutHomeButton.setBounds( 300, 20,  300, 75 );
+		removeAddLocationLabel.setBounds( 20,  80,  150, 60 );
+		addRemoveLocations.setBounds(     20,  120, 130, 30 );
+		addLocation.setBounds(            30,  150, 50,  20 );
+		removeLocation.setBounds(         90,  150, 50,  20 );
+		removeAddCarLabel.setBounds(      230, 80,  180, 60 );
+		addRemoveCar.setBounds(           200, 120, 130, 30 );
+		addRemoveCarLocations.setBounds(  330, 120, 130, 30 );
+		addCar.setBounds(                 270, 150, 50,  20 );
+		removeCar.setBounds(              330, 150, 50,  20 );
+		searchUserButton.setBounds(       505, 150, 50,  20 );
+		searchUserField.setBounds(        500, 120, 130, 30 );
+		searchUserLabel.setBounds(        500, 80,  180, 60 );
+		searchResultField.setBounds(      650, 120, 130, 30 );
+		removeUserButton.setBounds(       650, 150, 95,  20 );
+		resultLabel.setBounds(            650, 100, 50,  20 );
+		removeAllReservations.setBounds(  410, 280, 160, 20 );
+		locationsLabel.setBounds(         80,  280, 130, 20 );
+		reservationsLabel.setBounds(      330, 280, 130, 20 ); 
+		UsersLabel.setBounds(             580, 280, 130, 20 );
+		checkAvailableCars.setBounds(     20,  200, 130, 30 );
+		checkAvailableLocations.setBounds(150, 200, 130, 30 );
+		checkReservedCars.setBounds(      440, 200, 130, 30 );
+		checkReservedLocations.setBounds( 570, 200, 130, 30 );
+		allAvailableCars.setBounds(       290, 200, 130, 80 );
+		reservedCars.setBounds(           710, 200, 130, 30 );
+		removeReservation.setBounds(      710, 230, 130, 30 );
+		enterAvailableButton.setBounds(   85,  230, 130, 30 );
+		enterReservedButton.setBounds(    515, 230, 130, 30 );
+		availableSearchLabel.setBounds(   85,  175, 130, 30 );
+		reservedSearchLabel.setBounds(    515, 175, 130, 30 );
+		availableResultLabel.setBounds(   300, 175, 130, 30 );
+		allLocations.setBounds(           80,  300, 240, 170);
+		allUser.setBounds(                330, 300, 240, 170);
+		allReservation.setBounds(         580, 300, 240, 170);
 
 		// adding action listener
 		managerAboutHomeButton.addActionListener(this);
@@ -645,7 +649,7 @@ public class GUI implements ActionListener {
 			//TODO
 		}
 		if (evtString.equals("Add Location")) {
-			
+			//TODO
 		}
 		if (evtString.equals("Remove Vehicle")) {
 			//TODO
