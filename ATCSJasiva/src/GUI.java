@@ -27,15 +27,15 @@ public class GUI implements ActionListener {
 	JCheckBox checkField = new JCheckBox();
 	
 	//Manager Frame global Variables
-	JTextField searchUserField = new JTextField("");
+	JTextField searchUserField   = new JTextField("");
 	JTextField searchResultField = new JTextField("");
-	JTextArea locations = new JTextArea();
-	JScrollPane allLocations = new JScrollPane(locations);
-	JTextArea user = new JTextArea();
-	JScrollPane allUser = new JScrollPane(user);
-	JTextArea reservation = new JTextArea();
-	JScrollPane allReservation = new JScrollPane(reservation);
-	JTextArea availableCars = new JTextArea();
+	JTextArea locations          = new JTextArea();
+	JTextArea user               = new JTextArea();
+	JTextArea reservation        = new JTextArea();
+	JTextArea availableCars      = new JTextArea();
+	JScrollPane allLocations     = new JScrollPane(locations);
+	JScrollPane allUser          = new JScrollPane(user);
+	JScrollPane allReservation   = new JScrollPane(reservation);
 	JScrollPane allAvailableCars = new JScrollPane(availableCars);
 	
 	
@@ -46,10 +46,10 @@ public class GUI implements ActionListener {
 	JSpinner dropDate = new JSpinner(dropdate);	
 	
 	//Locations of cars
-	ArrayList<String> carLocations = new ArrayList<String>();
+	String[] carLocations = new String[0];
 	String[] carTypes = new String[]{ "Car", "Cheap", "lowEnd", "medium", "premium", "highend" };
-	JComboBox<String> pickupLocations = new JComboBox<>( (String[]) carLocations.toArray());
-	JComboBox<String> dropLocations = new JComboBox<>( (String[]) carLocations.toArray());
+	JComboBox<String> pickupLocations = new JComboBox<>(carLocations);
+	JComboBox<String> dropLocations = new JComboBox<>(carLocations);
 
 	// Frames(temp test as global var)
 	JFrame carFrame;
@@ -58,7 +58,7 @@ public class GUI implements ActionListener {
 	JFrame bookFrame;
 	JFrame aboutFrame;
 	JFrame managerFrame;
-	JFrame[] frames = {welcomeFrame,loginFrame,bookFrame,aboutFrame,managerFrame,carFrame};
+	JFrame[] frames;
 
 	// master inventory handler
 	public static InventoryHandler IH;
@@ -70,7 +70,6 @@ public class GUI implements ActionListener {
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
-		
 		new GUI(IH);
 	}
 
@@ -409,13 +408,13 @@ public class GUI implements ActionListener {
 		JLabel reservationsLabel = new JLabel("Reservations");
 		JLabel UsersLabel = new JLabel("Users");
 		JComboBox<String> checkAvailableCars = new JComboBox<>(carTypes);
-		JComboBox<String> checkAvailableLocations = new JComboBox<>( (String[]) carLocations.toArray());
 		JComboBox<String> checkReservedCars = new JComboBox<>(carTypes);
-		JComboBox<String> checkReservedLocations = new JComboBox<>( (String[]) carLocations.toArray());
 		JComboBox<String> reservedCars = new JComboBox<>(carTypes); 
 		JComboBox<String> addRemoveCar = new JComboBox<>(carTypes);
-		JComboBox<String> addRemoveLocations = new JComboBox<>((String[]) carLocations.toArray());
-		JComboBox<String> addRemoveCarLocations = new JComboBox<>( (String[]) carLocations.toArray());
+		JComboBox<String> checkAvailableLocations = new JComboBox<>(carLocations);
+		JComboBox<String> checkReservedLocations =  new JComboBox<>(carLocations);
+		JComboBox<String> addRemoveLocations =      new JComboBox<>(carLocations);
+		JComboBox<String> addRemoveCarLocations =   new JComboBox<>(carLocations);
 		JButton managerAboutHomeButton = new JButton("JASIVA");
 		JButton removeReservation = new JButton("Remove Reservation");
 		JButton removeAllReservations = new JButton("Remove All Reservations");
@@ -427,7 +426,7 @@ public class GUI implements ActionListener {
 		JButton removeLocation = new JButton("Remove Location");
 		JButton searchUserButton = new JButton("Search");
 		JButton removeUserButton = new JButton("Remove User");
-		JLabel availableSearchLabel = new JLabel("Available Search");
+		JLabel availableSearchLabel = new JLabel("Availablity Search");
 		JLabel reservedSearchLabel = new JLabel("Reserved Search");
 		JLabel availableResultLabel = new JLabel("Result");
 		
@@ -530,6 +529,8 @@ public class GUI implements ActionListener {
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Final setup of frames
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		JFrame[] tempJFar = {welcomeFrame,loginFrame,bookFrame,aboutFrame,managerFrame,carFrame};
+		frames = tempJFar;
 		for (int i=0; i<frames.length;i++) {
 			frames[i].setResizable(false);
 			frames[i].addWindowListener(new java.awt.event.WindowAdapter() {
@@ -627,6 +628,36 @@ public class GUI implements ActionListener {
 		}
 		if (evtString.equals("About")) {
 			switchToFrame(aboutFrame);
+		}
+		if (evtString.equals("Remove Reservation")) {
+			//TODO
+		}
+		if (evtString.equals("Remove All Reservations")) {
+			//TODO
+		}
+		if (evtString.equals("Enter")) {
+			//TODO
+		}
+		if (evtString.equals("Check")) {
+			//TODO
+		}
+		if (evtString.equals("Add Vehicle")) {
+			//TODO
+		}
+		if (evtString.equals("Add Location")) {
+			
+		}
+		if (evtString.equals("Remove Vehicle")) {
+			//TODO
+		}
+		if (evtString.equals("Remove Location")) {
+			//TODO
+		}
+		if (evtString.equals("Search")) {
+			//TODO
+		}
+		if (evtString.equals("Remove User")) {
+			//TODO
 		}
 		if (evtString.equals("Manager Interface")) {
 			// need to make password field
