@@ -161,6 +161,13 @@ public class InventoryHandler {
 		}
 		return tempArray;
 	}
+	public ArrayList<String> getLocations() {
+		ArrayList<String> tempArray = new ArrayList<String>();
+		for (Car c : Cars) {
+			tempArray.add(c.location.toString());
+		}
+		return tempArray;
+	}
 
 	public void Info() { // gives all of the information of all the items in the store
 		ArrayList<String> out = new ArrayList<String>();
