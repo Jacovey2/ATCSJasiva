@@ -1,9 +1,12 @@
 import java.awt.event.*;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 import javax.swing.*;
@@ -43,7 +46,7 @@ public class GUI implements ActionListener {
 	JScrollPane allReservation   = new JScrollPane(reservation);
 	JScrollPane allAvailableCars = new JScrollPane(availableCars);
 	JComboBox<String> addRemoveLocations =      new JComboBox<>(carLocations);
-	JComboBox<String> addRemoveCarLocations =   new JComboBox<>(carLocations);
+	JTextField addRemoveCarLocations =   new JTextField("");
 	
 	
 	//creating calendar selection tool
@@ -401,7 +404,6 @@ public class GUI implements ActionListener {
 		//creating button/labels
 		//adding and removing buttons
 		JLabel removeAddCarLabel = new JLabel("Add/Remove Car at Location");
-		JLabel removeAddLocationLabel = new JLabel("Add/Remove Location");
 		JLabel searchUserLabel = new JLabel("Search User");
 		JLabel resultLabel = new JLabel("Result");
 		
@@ -419,8 +421,6 @@ public class GUI implements ActionListener {
 		JComboBox<String> addRemoveCar = new JComboBox<>(carTypes);
 		JComboBox<String> checkAvailableLocations = new JComboBox<>(carLocations);
 		JComboBox<String> checkReservedLocations =  new JComboBox<>(carLocations);
-		JComboBox<String> addRemoveLocations =      new JComboBox<>(carLocations);
-		JComboBox<String> addRemoveCarLocations =   new JComboBox<>(carLocations);
 		JButton managerAboutHomeButton = new JButton("JASIVA");
 		JButton removeReservation      = new JButton("Remove Reservation");
 		JButton removeAllReservations  = new JButton("Remove All Reservations");
@@ -428,14 +428,11 @@ public class GUI implements ActionListener {
 		JButton enterReservedButton    = new JButton("Check");
 		JButton addCar                 = new JButton("Add Vehicle");
 		JButton removeCar              = new JButton("Remove Vehicle");
-		JButton addLocation            = new JButton("Add Location");
-		JButton removeLocation         = new JButton("Remove Location");
 		JButton searchUserButton       = new JButton("Search");
 		JButton removeUserButton       = new JButton("Remove User");
 		
 		
 		//Changing functionalities
-		addRemoveLocations.setEditable(true);
 		
 		//appearance changes
 		managerAboutHomeButton.setForeground(Color.RED);
@@ -443,10 +440,6 @@ public class GUI implements ActionListener {
 
 		// arranging components
 		managerAboutHomeButton.setBounds( 300, 20,  300, 75 );
-		removeAddLocationLabel.setBounds( 20,  80,  150, 60 );
-		addRemoveLocations.setBounds(     20,  120, 130, 30 );
-		addLocation.setBounds(            30,  150, 50,  20 );
-		removeLocation.setBounds(         90,  150, 50,  20 );
 		removeAddCarLabel.setBounds(      230, 80,  180, 60 );
 		addRemoveCar.setBounds(           200, 120, 130, 30 );
 		addRemoveCarLocations.setBounds(  330, 120, 130, 30 );
@@ -454,8 +447,8 @@ public class GUI implements ActionListener {
 		removeCar.setBounds(              330, 150, 50,  20 );
 		searchUserButton.setBounds(       505, 150, 50,  20 );
 		searchUserField.setBounds(        500, 120, 130, 30 );
-		searchUserLabel.setBounds(        500, 80,  180, 60 );
-		searchResultField.setBounds(      650, 120, 130, 30 );
+		searchUserLabel.setBounds(        500, 20,  180, 60 );
+		searchResultField.setBounds(      645, 110, 200, 40 );
 		removeUserButton.setBounds(       650, 150, 95,  20 );
 		resultLabel.setBounds(            650, 100, 50,  20 );
 		removeAllReservations.setBounds(  410, 280, 160, 20 );
@@ -482,8 +475,6 @@ public class GUI implements ActionListener {
 		managerAboutHomeButton.addActionListener(this);
 		addCar.addActionListener(this);
 		removeCar.addActionListener(this);
-		addLocation.addActionListener(this);
-		removeLocation.addActionListener(this);
 		removeAllReservations.addActionListener(this);
 		removeReservation.addActionListener(this);
 		enterAvailableButton.addActionListener(this);
@@ -493,15 +484,11 @@ public class GUI implements ActionListener {
 
 		// adding components to frame and finalizing
 		managerFrame.add(managerAboutHomeButton);
-		managerFrame.add(addRemoveLocations);
 		managerFrame.add(addRemoveCar);
 		managerFrame.add(removeAddCarLabel);
 		managerFrame.add(addRemoveCarLocations);
-		managerFrame.add(removeAddLocationLabel); 
 		managerFrame.add(addCar);
 		managerFrame.add(removeCar);
-		managerFrame.add(addLocation);
-		managerFrame.add(removeLocation);
 		managerFrame.add(searchUserButton);
 		managerFrame.add(searchUserField);
 		managerFrame.add(searchUserLabel);
@@ -658,7 +645,12 @@ public class GUI implements ActionListener {
 			//TODO
 		}
 		if (evtString.equals("Search")) {
-			//TODO
+			int index = binarySearch( IH.getUsernames(),searchUserField.getText());
+			if(index>=0) {
+				searchResultField.setText(IH.getUsernames().get(index)+" "+IH.Reservations.get(index));
+			}else {
+				JOptionPane.showMessageDialog(managerFrame, "User does not exist");
+			}
 		}
 		if (evtString.equals("Remove User")) {
 			//TODO
@@ -829,5 +821,26 @@ public class GUI implements ActionListener {
 			return true;
 		}
 		return false;
+	}
+	public int binarySearch(ArrayList<String> users, String userName){
+		Collections.sort(users); //sorts array list because it is not sorted
+		int first = 0;//first position in array
+		int last = users.size() - 1; //last position in array
+		int middle;
+		boolean found = false;
+		while (found==false && first<=last) {
+			middle = ((first + last) / 2); //picks middle point in array
+			if (users.get(middle).compareToIgnoreCase(userName) < 0) { //checks middle of list and picks left or right of it
+				first = (middle + 1); //makes smaller interval if middle word is not chosen word
+			}
+			else if (users.get(middle).compareToIgnoreCase(userName) > 0) {
+				last = (middle - 1);
+			} else {
+				System.out.println("the index is: " + middle);
+				found = true; //stops loop if word is found
+				return middle;
+			}
+		}
+		return -1;
 	}
 }
