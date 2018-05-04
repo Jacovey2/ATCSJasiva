@@ -450,7 +450,7 @@ public class GUI implements ActionListener {
 		searchUserLabel.setBounds(        500, 80,  180, 60 );
 		searchResultField.setBounds(      645, 110, 200, 40 );
 		removeUserButton.setBounds(       650, 150, 95,  20 );
-		resultLabel.setBounds(            650, 100, 50,  20 );
+		resultLabel.setBounds(            650, 90, 50,  20 );
 		removeAllReservations.setBounds(  410, 280, 160, 20 );
 		locationsLabel.setBounds(         80,  280, 130, 20 );
 		reservationsLabel.setBounds(      330, 280, 130, 20 ); 
@@ -635,13 +635,7 @@ public class GUI implements ActionListener {
 		if (evtString.equals("Add Vehicle")) {
 			//TODO
 		}
-		if (evtString.equals("Add Location")) {
-			//TODO
-		}
 		if (evtString.equals("Remove Vehicle")) {
-			//TODO
-		}
-		if (evtString.equals("Remove Location")) {
 			//TODO
 		}
 		if (evtString.equals("Search")) {
