@@ -447,7 +447,7 @@ public class GUI implements ActionListener {
 		removeCar.setBounds(              330, 150, 50,  20 );
 		searchUserButton.setBounds(       505, 150, 50,  20 );
 		searchUserField.setBounds(        500, 120, 130, 30 );
-		searchUserLabel.setBounds(        500, 20,  180, 60 );
+		searchUserLabel.setBounds(        500, 80,  180, 60 );
 		searchResultField.setBounds(      645, 110, 200, 40 );
 		removeUserButton.setBounds(       650, 150, 95,  20 );
 		resultLabel.setBounds(            650, 100, 50,  20 );
