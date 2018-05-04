@@ -132,13 +132,13 @@ public class InventoryHandler {
 			for (Reservation r : Reservations)
 				System.out.println(r.toString());
 			double durationDiscountRate = 0.15 / 30;
-			double maxDiscount = 0.4;
+			double maxDiscount = 0.5;
 			double durationInHours = timeSlot.getDuration() / 60;
 			System.out.println(durationInHours);
 			double x = durationInHours;
 			double r = durationDiscountRate;
 			double mD = maxDiscount;
-			double gx = x*4*r; //
+			double gx = x*r;
 			double fx = ((2*mD)/(1+Math.pow(Math.E, -4*gx))) - mD;//sigmoid curve (sigmoid curve has default derivative of 1/4 at 0, thus multiplying by 4 to counteract)
 			double dx = 1-fx;
 			double price = car.pricePerHour*x*dx;// TODO: add multiple location pricing
