@@ -173,7 +173,10 @@ public class GUI implements ActionListener {
 
 		// welcome frame setup
 		JLabel missionLabel = new JLabel("Our Mission:");
-		JLabel missionTextLabel = new JLabel("wejfoqregerkgheroughkdsfhaejgferg");
+		JTextArea missionTextLabel = new JTextArea("This is our mission statement: \n"+
+											"We rent cars with purpose and heart, \n"+
+											"We think deeply about taking your money, \n"+
+											"And we do all of this confidently!");
 		JButton rentButton = new JButton("Book Now!");
 		JButton viewCarsButton = new JButton("See our Cars");
 		JButton AboutButton = new JButton("JASIVA");
@@ -182,7 +185,7 @@ public class GUI implements ActionListener {
 		JButton toManager = new JButton("Manager Interface");
 
 		// arranging on page
-		missionLabel.setBounds(300, 140, 100, 50);
+		missionLabel.setBounds(300, 120, 100, 50);
 		missionTextScroll.setBounds(300, 150, 300, 70);
 		rentButton.setBounds(500, 275, 150, 60);
 		viewCarsButton.setBounds(250, 275, 150, 60);
@@ -194,6 +197,7 @@ public class GUI implements ActionListener {
 		AboutButton.setForeground(Color.RED);
 		AboutButton.setFont(new Font("Arial", Font.PLAIN, 70));
 		welcomeFrame.setContentPane(new JLabel(new ImageIcon("backround.jpeg")));
+		missionTextLabel.setEditable(false);
 
 		// adding components to frame and finalizing
 		welcomeFrame.add(rentButton);
@@ -423,6 +427,7 @@ public class GUI implements ActionListener {
 		JButton removeCar              = new JButton("Remove Vehicle");
 		JButton searchUserButton       = new JButton("Search");
 		JButton removeUserButton       = new JButton("Remove User");
+		JButton removeAllUsersButton       = new JButton("Remove All Users");
 		
 		
 		//Changing functionalities
@@ -441,10 +446,11 @@ public class GUI implements ActionListener {
 		searchUserButton.setBounds(       505, 150, 50,  20 );
 		searchUserField.setBounds(        500, 120, 130, 30 );
 		searchUserLabel.setBounds(        500, 80,  180, 60 );
-		scrollSearchResultField.setBounds(      645, 110, 200, 40 );
+		scrollSearchResultField.setBounds(645, 110, 200, 40 );
 		removeUserButton.setBounds(       650, 150, 95,  20 );
 		resultLabel.setBounds(            650, 90, 50,  20 );
 		removeAllReservations.setBounds(  410, 280, 160, 20 );
+		removeAllUsersButton.setBounds(	 635, 280, 160 ,20 );
 		locationsLabel.setBounds(         80,  280, 130, 20 );
 		reservationsLabel.setBounds(      330, 280, 130, 20 ); 
 		UsersLabel.setBounds(             580, 280, 130, 20 );
@@ -467,7 +473,7 @@ public class GUI implements ActionListener {
 		
 		//setting textfields
 		availableCars.setText("");//add in available cars
-		locations.setText("");//add all locations
+		locations.setText(IH.getLocations().toString());//add all locations
 		user.setText(IH.getUsernames().toString());
 
 		// adding action listener
@@ -478,6 +484,7 @@ public class GUI implements ActionListener {
 		enterAvailableButton.addActionListener(this);
 		searchUserButton.addActionListener(this);
 		removeUserButton.addActionListener(this);
+		removeAllUsersButton.addActionListener(this);
 
 		// adding components to frame and finalizing
 		managerFrame.add(managerAboutHomeButton);
@@ -501,11 +508,11 @@ public class GUI implements ActionListener {
 		managerFrame.add(UsersLabel);
 		managerFrame.add(checkAvailableCars);
 		managerFrame.add(checkAvailableLocations);
-		managerFrame.add(availableCars);
 		managerFrame.add(allAvailableCars);
 		managerFrame.add(enterAvailableButton);
 		managerFrame.add(availableSearchLabel);
 		managerFrame.add(availableResultLabel);
+		managerFrame.add(removeAllUsersButton);
 		managerFrame.setSize(900, 500);
 
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -615,6 +622,9 @@ public class GUI implements ActionListener {
 			reservation.setText("");
 			//also get ride of all reservations
 		}
+		if (evtString.equals("Remove All Users")) {
+			//also get ride of all reservations
+		}
 		if (evtString.equals("Enter")) {
 			//set availableCars text area to all selected types ofcars at location
 			String carComboBoxValue=(String) checkAvailableCars.getSelectedItem();
@@ -630,13 +640,17 @@ public class GUI implements ActionListener {
 		if (evtString.equals("Search")) {
 			int index = binarySearch( IH.getUsernames(),searchUserField.getText());
 			if(index>=0) {
-				searchResultField.setText(IH.getUsernames().get(index)+" "+IH.Reservations.get(index));
+				searchResultField.setText(IH.getUsernames().get(index)+" "/*+IH.Reservations.get(index)*/);
 			}else {
 				JOptionPane.showMessageDialog(managerFrame, "User does not exist");
 			}
 		}
 		if (evtString.equals("Remove User")) {
 			int index = binarySearch( IH.getUsernames(),searchUserField.getText());
+			IH.Users.remove(index);
+			IH.Reservations.remove(index);
+			searchResultField.setText("");
+			user.setText(IH.getUsernames().toString());
 			//remove reservation and person at index
 		}
 		if (evtString.equals("Manager Interface")) {
