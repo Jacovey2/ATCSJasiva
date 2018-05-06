@@ -48,7 +48,7 @@ public class GUI implements ActionListener {
 	JTextField addRemoveCarLocations =   new JTextField("");
 	JComboBox<String> checkAvailableCars = new JComboBox<>(carTypes);
 	JComboBox<String> addRemoveCar = new JComboBox<>(carTypes);
-	JComboBox<String> checkAvailableLocations = new JComboBox<>(IH.getLocationsArray());
+	JComboBox<String> checkAvailableLocations = new JComboBox<>(IH.getLocationsArray());//doesnt update
 	
 	
 	//creating calendar selection tool
@@ -628,7 +628,7 @@ public class GUI implements ActionListener {
 			IH.Users.clear();
 			user.setText(IH.getUsernames().toString());
 		}
-		if (evtString.equals("Enter")) {
+		if (evtString.equals("Enter")) { //NEEDS WORK
 			//set availableCars text area to all selected types ofcars at location
 			String carComboBoxValue=(String) checkAvailableCars.getSelectedItem();
 			String LocationComboBoxValue=(String) checkAvailableLocations.getSelectedItem();
@@ -657,7 +657,7 @@ public class GUI implements ActionListener {
 			availableCars.setText(IH.Cars.toString());
 			locations.setText(IH.getLocations().toString());
 		}
-		if (evtString.equals("Remove Vehicle")) {//doesnt actually work
+		if (evtString.equals("Remove Vehicle")) {//doesnt actually work NEEDS WORK
 			Car removeCar;
 			if (addRemoveCar.getSelectedItem().equals("Cheap")) {
 				removeCar = new Car(25, 4, "cheapCar", new Location(addRemoveCarLocations.getText()), 12.5);
@@ -679,7 +679,12 @@ public class GUI implements ActionListener {
 		if (evtString.equals("Search")) {
 			int index = binarySearch( IH.getUsernames(),searchUserField.getText());
 			if(index>=0) {
-				searchResultField.setText(IH.getUsernames().get(index)+" "/*+IH.Reservations.get(index)*/);
+				try {
+					searchResultField.setText(IH.getUsernames().get(index)+IH.Reservations.get(index));
+				} catch ( IndexOutOfBoundsException e ) { //in case user does not have a reservation
+					searchResultField.setText(IH.getUsernames().get(index));
+				}
+				
 			}else {
 				JOptionPane.showMessageDialog(managerFrame, "User Does Not Exist", "Error", JOptionPane.ERROR_MESSAGE);
 			}
