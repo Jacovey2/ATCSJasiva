@@ -48,7 +48,7 @@ public class GUI implements ActionListener {
 	JTextField addRemoveCarLocations =   new JTextField("");
 	JComboBox<String> checkAvailableCars = new JComboBox<>(carTypes);
 	JComboBox<String> addRemoveCar = new JComboBox<>(carTypes);
-	JComboBox<String> checkAvailableLocations = new JComboBox<>(carLocations);
+	JComboBox<String> checkAvailableLocations = new JComboBox<>(IH.getLocationsArray());
 	
 	
 	//creating calendar selection tool
@@ -475,6 +475,7 @@ public class GUI implements ActionListener {
 		availableCars.setText("");//add in available cars
 		locations.setText(IH.getLocations().toString());//add all locations
 		user.setText(IH.getUsernames().toString());
+		reservation.setText(IH.Reservations.toString());
 
 		// adding action listener
 		managerAboutHomeButton.addActionListener(this);
@@ -586,10 +587,11 @@ public class GUI implements ActionListener {
 			// if both are valid, make a new user and clear the fields
 			if (validUser && validPassword) {
 				// create user
-				User user = new User(registerFirstNameField.getText(), registerLastNameField.getText(),
+				User userCreated = new User(registerFirstNameField.getText(), registerLastNameField.getText(),
 						registerUsernameField.getText(), new String(registerPasswordField.getPassword()));
 				// adds user to Inventory Handler for logging
-				IH.add(user);
+				IH.add(userCreated);
+				user.setText(IH.getUsernames().toString());
 				// clear the fields after registering successfully
 				registerPasswordField.setText("");
 				registerUsernameField.setText("");
@@ -619,39 +621,80 @@ public class GUI implements ActionListener {
 			switchToFrame(aboutFrame);
 		}
 		if (evtString.equals("Remove All Reservations")) {
-			reservation.setText("");
-			//also get ride of all reservations
+			IH.Reservations.clear();
+			reservation.setText(IH.Reservations.toString());
 		}
 		if (evtString.equals("Remove All Users")) {
-			//also get ride of all reservations
+			IH.Users.clear();
+			user.setText(IH.getUsernames().toString());
 		}
 		if (evtString.equals("Enter")) {
 			//set availableCars text area to all selected types ofcars at location
 			String carComboBoxValue=(String) checkAvailableCars.getSelectedItem();
 			String LocationComboBoxValue=(String) checkAvailableLocations.getSelectedItem();
-			availableCars.setText("ok"); //dosnt work for some reason
+
 		}
 		if (evtString.equals("Add Vehicle")) {
-			//TODO
+			Car newCar;
+			boolean add=true;
+			if (addRemoveCar.getSelectedItem().equals("Cheap")) {
+				newCar = new Car(25, 4, "cheapCar", new Location(addRemoveCarLocations.getText()), 12.5);
+			} else if (addRemoveCar.getSelectedItem().equals("lowEnd")) {
+				newCar = new Car(20, 4, "Lowend", new Location( addRemoveCarLocations.getText()), 15);
+			} else if (addRemoveCar.getSelectedItem().equals("medium")) {
+				newCar = new Car(15, 4, "mediumCar", new Location(addRemoveCarLocations.getText()), 20);
+			} else if (addRemoveCar.getSelectedItem().equals("highend")) {
+				newCar = new Car(15, 7, "highEndCar", new Location(addRemoveCarLocations.getText()), 28);
+			} else if (addRemoveCar.getSelectedItem().equals("premium")) {
+				newCar = new Car(10, 2, "premiumCar", new Location(addRemoveCarLocations.getText()), 35);
+			} else {
+				newCar = new Car(0, 0, "ERROR", new Location("ERROR"), 0);
+				JOptionPane.showMessageDialog(managerFrame, "Error", "Error", JOptionPane.ERROR_MESSAGE);
+				 add = false;
+			}//TODO
+			if(add==true)
+			IH.Cars.add(newCar);
+			availableCars.setText(IH.Cars.toString());
+			locations.setText(IH.getLocations().toString());
 		}
-		if (evtString.equals("Remove Vehicle")) {
-			//TODO
+		if (evtString.equals("Remove Vehicle")) {//doesnt actually work
+			Car removeCar;
+			if (addRemoveCar.getSelectedItem().equals("Cheap")) {
+				removeCar = new Car(25, 4, "cheapCar", new Location(addRemoveCarLocations.getText()), 12.5);
+			} else if (addRemoveCar.getSelectedItem().equals("lowEnd")) {
+				removeCar = new Car(20, 4, "Lowend", new Location( addRemoveCarLocations.getText()), 15);
+			} else if (addRemoveCar.getSelectedItem().equals("medium")) {
+				removeCar = new Car(15, 4, "mediumCar", new Location(addRemoveCarLocations.getText()), 20);
+			} else if (addRemoveCar.getSelectedItem().equals("highend")) {
+				removeCar = new Car(15, 7, "highEndCar", new Location(addRemoveCarLocations.getText()), 28);
+			} else if (addRemoveCar.getSelectedItem().equals("premium")) {
+				removeCar = new Car(10, 2, "premiumCar", new Location(addRemoveCarLocations.getText()), 35);
+			} else {
+				removeCar = new Car(0, 0, "ERROR", new Location("ERROR"), 0);
+			}//TODO
+			IH.Cars.remove(removeCar);
+			availableCars.setText(IH.Cars.toString());
+			locations.setText(IH.getLocations().toString());
 		}
 		if (evtString.equals("Search")) {
 			int index = binarySearch( IH.getUsernames(),searchUserField.getText());
 			if(index>=0) {
 				searchResultField.setText(IH.getUsernames().get(index)+" "/*+IH.Reservations.get(index)*/);
 			}else {
-				JOptionPane.showMessageDialog(managerFrame, "User does not exist");
+				JOptionPane.showMessageDialog(managerFrame, "User Does Not Exist", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		if (evtString.equals("Remove User")) {
 			int index = binarySearch( IH.getUsernames(),searchUserField.getText());
+			try {
+			    IH.Reservations.remove(index);
+			    reservation.setText(IH.getReservations());
+			} catch ( IndexOutOfBoundsException e ) {
+				reservation.setText(IH.Reservations.toString());
+			}
 			IH.Users.remove(index);
-			IH.Reservations.remove(index);
 			searchResultField.setText("");
 			user.setText(IH.getUsernames().toString());
-			//remove reservation and person at index
 		}
 		if (evtString.equals("Manager Interface")) {
 			// need to make password field
@@ -700,9 +743,12 @@ public class GUI implements ActionListener {
 							IH.CurrentUser);
 					if (price == -1) {
 						System.out.println("ThatS not a very good boy of a reservatIon :(");
+						JOptionPane.showMessageDialog(carFrame, "Invalid Reservation", "Error", JOptionPane.ERROR_MESSAGE);
 					} else {
 						System.out.println("Price of Reservation is: " + price);
+						JOptionPane.showMessageDialog(carFrame, "You have booked this car: " +bookedCar.toString() + "\n"+ bookedTimeSlot +"\n"+price, "Success", JOptionPane.INFORMATION_MESSAGE);
 					}
+					reservation.setText(IH.getReservations());
 				}
 			} else {
 				Object[] options = { "Sign In", "See Car Info","Cancel"};

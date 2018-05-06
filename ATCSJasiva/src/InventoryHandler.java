@@ -2,6 +2,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public class InventoryHandler {
 	public ArrayList<Reservation> Reservations = new ArrayList<Reservation>();
 	public ArrayList<Car> Cars = new ArrayList<Car>();
@@ -12,6 +14,7 @@ public class InventoryHandler {
 		Users = new ArrayList<User>();
 		Cars = new ArrayList<Car>();
 		Reservations = new ArrayList<Reservation>();
+		Cars = new ArrayList<Car>();
 	}
 
 	public void saveInformation() throws IOException {
@@ -118,10 +121,11 @@ public class InventoryHandler {
 
 	public double addReservation(Car car, Location location, TimeSlot timeSlot, User user) {
 		boolean valid = true;
-		for (Reservation r : Reservations) {
+		/*for (Reservation r : Reservations) { //this gives the booking issues
 			if (r.getTimeSlot().Conflict(timeSlot))
 				valid = false;
 		}
+		*/
 		/*
 		 * if (!location.Cars.contains(car)) valid = false;
 		 */// Will not be commented in final version, but without manager window there will
@@ -173,6 +177,24 @@ public class InventoryHandler {
 			tempArray.add(c.location.toString());
 		}
 		return tempArray;
+	}
+	public String[] getLocationsArray() { //prolly inneficient
+		ArrayList<String> tempArray = new ArrayList<String>();
+		for (Car c : Cars) {
+			tempArray.add(c.location.toString());
+		}
+		String[] list = new String[tempArray.size()];
+		for(int i = 0; i<Cars.size();i++) {
+			list[i]=tempArray.get(i);
+		}
+		return list;
+	}
+	public String getReservations() {
+		String list="";
+		for (Reservation c : Reservations) {
+			 list = list + "\n" +c.toString();
+		}
+		return list;
 	}
 
 	public void Info() { // gives all of the information of all the items in the store
