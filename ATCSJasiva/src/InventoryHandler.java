@@ -118,7 +118,7 @@ public class InventoryHandler {
 	public double addReservation(Car car, Location loc1, Location loc2, TimeSlot timeSlot, User user) {
 		boolean valid = true;
 		for (Reservation r : Reservations) { //this gives the booking issues
-			if (r.getTimeSlot().Conflict(timeSlot) || !r.getCar().Equals(car))
+			if (r.getTimeSlot().Conflict(timeSlot) && r.getCar().location.locationName.equals(loc1.locationName) && r.getCar().model.equals(car.model))
 				valid = false;
 		}
 		boolean ValidCarAtLocation =false;
