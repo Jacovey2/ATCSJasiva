@@ -735,7 +735,7 @@ public class GUI implements ActionListener {
 			} else
 				JOptionPane.showMessageDialog(managerFrame, "User Does Not Exist", "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		if (evtString.equals("Remove User")) {
+		if (evtString.equals("Remove User")) { //only allows for q reservations per user or does not work
 			int index = binarySearch(IH.getUsernames(), searchUserField.getText());
 			try {
 				IH.Reservations.remove(index);
