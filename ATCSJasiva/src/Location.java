@@ -12,7 +12,7 @@ public class Location {
 		String loc2Name = loc2.locationName;
 		double distance = -1;
 		if (loc1.equals("New York City") && loc2.equals("Orlando")) {
-			
+			//distance = 
 		}
 		
 		return distance;
