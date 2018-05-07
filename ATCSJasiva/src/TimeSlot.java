@@ -77,4 +77,7 @@ public class TimeSlot {
 	public String toString () {
 		return startMonth+"/"+startDay+"/"+startYear+"/"+startTime+"/"+endMonth+"/"+endDay+"/"+endYear+"/"+endTime;
 	}
+	public String toNiceString () {
+		return "from: "+startMonth+"/"+startDay+"/"+startYear+"/"+startTime+" to:"+endMonth+"/"+endDay+"/"+endYear+"/"+endTime;
+	}
 }

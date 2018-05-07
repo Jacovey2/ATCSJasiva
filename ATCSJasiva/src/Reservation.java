@@ -28,4 +28,7 @@ public class Reservation {
 	public String toString() {
 		return  timeSlot + "/" + car + "/" + user;
 	}
+	public String toNiceString() {
+		return "Reservation:\n TimeSlot: "+timeSlot.toNiceString() + "\n Car: " + car.toNiceString() + "\n User: " + user.toNiceString();
+	}
 }

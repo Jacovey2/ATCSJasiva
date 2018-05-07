@@ -14,15 +14,15 @@ import java.awt.*;
 
 public class GUI implements ActionListener {
 	// Global variables
-	
-	//list of default cars
+
+	// list of default cars
 	private Car[] carArray = { new Car(25, 4, "cheapCar", new Location("DEF"), 12.5),
-		new Car(20, 4, "lowEndCar", new Location("DEF"), 15), new Car(15, 4, "mediumCar", new Location("DEF"), 20),
-		new Car(15, 7, "highEndCar", new Location("DEF"), 28),
-		new Car(10, 2, "premiumCar", new Location("DEF"), 35), new Car(0, 0, "ERROR", new Location("ERROR"), 0), };
-	
+			new Car(20, 4, "lowEndCar", new Location("DEF"), 15), new Car(15, 4, "mediumCar", new Location("DEF"), 20),
+			new Car(15, 7, "highEndCar", new Location("DEF"), 28),
+			new Car(10, 2, "premiumCar", new Location("DEF"), 35), new Car(0, 0, "ERROR", new Location("ERROR"), 0), };
+
 	// Locations of cars
-	String[] carTypes = new String[] { "","cheapCar", "lowEndCar", "mediumCar", "highEndCar", "premiumCar" };
+	String[] carTypes = new String[] { "", "cheapCar", "lowEndCar", "mediumCar", "highEndCar", "premiumCar" };
 	JComboBox<String> pickupLocationsDropDown = new JComboBox<>(IH.getLocationsArray());
 	JComboBox<String> dropLocationsDropDown = new JComboBox<>(IH.getLocationsArray());
 
@@ -54,16 +54,19 @@ public class GUI implements ActionListener {
 	JComboBox<String> checkAvailableCarsDropDown = new JComboBox<>(carTypes);
 	JComboBox<String> addRemoveCarDropDown = new JComboBox<>(carTypes);
 	JComboBox<String> availableLocationsDropDown = new JComboBox<>(IH.getLocationsArray());
-	//Combo box settings change
-	//DefaultComboBoxModel model = new DefaultComboBoxModel(IH.getLocationsArray());
-	//availableLocationsDropDown.setModel(model);
 
-	
 	// creating calendar selection tool
 	SpinnerDateModel bookingPickupdate = new SpinnerDateModel();
 	SpinnerDateModel bookingDropdate = new SpinnerDateModel();
 	JSpinner bookingPickupDateSpinner = new JSpinner(bookingPickupdate);
 	JSpinner bookingDropDateSpinner = new JSpinner(bookingDropdate);
+
+	// CarViewer Images (must be global so they can be greyed out)
+	JButton cheapButton;
+	JButton lowEndButton;
+	JButton mediumButton;
+	JButton highEndButton;
+	JButton premiumButton;
 
 	// Frames
 	JFrame carFrame;
@@ -235,16 +238,16 @@ public class GUI implements ActionListener {
 		JLabel mediumLabel = new JLabel("$300");
 		JLabel highEndLabel = new JLabel("$400");
 		JLabel premiumLabel = new JLabel("$1000");
-		JButton cheapButton = new JButton(new ImageIcon(
-				((new ImageIcon("cheap.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
-		JButton lowEndButton = new JButton(new ImageIcon(
-				((new ImageIcon("lowend.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
-		JButton mediumButton = new JButton(new ImageIcon(
-				((new ImageIcon("medium.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
-		JButton highEndButton = new JButton(new ImageIcon(
-				((new ImageIcon("highend.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
-		JButton premiumButton = new JButton(new ImageIcon(
-				((new ImageIcon("chiron.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+		cheapButton = new JButton(new ImageIcon(
+				((new ImageIcon("cheapCar.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+		lowEndButton = new JButton(new ImageIcon(
+				((new ImageIcon("lowendCar.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+		mediumButton = new JButton(new ImageIcon(
+				((new ImageIcon("mediumCar.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+		highEndButton = new JButton(new ImageIcon(
+				((new ImageIcon("highendCar.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+		premiumButton = new JButton(new ImageIcon(
+				((new ImageIcon("premiumCar.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
 		JButton backButton = new JButton("back");
 		JButton carViewerAboutButton = new JButton("JASIVA");
 
@@ -476,10 +479,10 @@ public class GUI implements ActionListener {
 		managerAvailableCarsList.setEditable(false);
 
 		// setting text fields
-		managerLocationsList.setText(IH.getLocations().toString().replaceAll(",", "\n"));
-		managerUsersList.setText(IH.getUsernames().toString().replaceAll(",", "\n"));
-		managerReservationsList.setText(IH.Reservations.toString().replaceAll(",", "\n"));// !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!~~~~~~~~~~~~~~~~~~~!~~~~~~~~~~~~~~!~!~~!
-		managerAvailableCarsList.setText(IH.Cars.toString().replaceAll(",", "\n"));
+		managerLocationsList.setText(IH.getLocationsString());
+		managerUsersList.setText(IH.getUsersString());
+		managerReservationsList.setText(IH.getReservationsString());// !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!~~~~~~~~~~~~~~~~~~~!~~~~~~~~~~~~~~!~!~~!
+		managerAvailableCarsList.setText(IH.getCarsString());
 
 		// adding action listener
 		managerAboutHomeButton.addActionListener(this);
@@ -563,9 +566,8 @@ public class GUI implements ActionListener {
 				JOptionPane.showMessageDialog(loginFrame, "Incorrect Username or Password");
 				signInUsernameField.setText("");
 				signInPasswordField.setText("");
-			} else {
+			} else
 				switchToFrame(bookFrame);
-			}
 		}
 
 		// register with jasiva
@@ -604,30 +606,52 @@ public class GUI implements ActionListener {
 				registerLastNameField.setText("");
 			}
 		}
-		if (evtString.equals("Book Now!")) {
+		if (evtString.equals("Book Now!"))
 			switchToFrame(loginFrame);
-		}
-		if (evtString.equals("See our Cars")) {
+		if (evtString.equals("See our Cars"))
 			switchToFrame(carFrame);
-		}
-		if (evtString.equals("JASIVA")) {
+		if (evtString.equals("JASIVA"))
 			switchToFrame(welcomeFrame);
-		}
 		if (evtString.equals("Pick a Car!")) {
+			String pickupLocation = pickupLocationsDropDown.getSelectedItem().toString();
+			ArrayList<Car> Cars = IH.Cars;
+			boolean[] available = { false, false, false, false, false };
+			JButton[] carImageButtons = { cheapButton, lowEndButton, mediumButton, highEndButton, premiumButton };
+			for (int i = 0; i < Cars.size(); i++) {
+				if (Cars.get(i).location.toString().equals(pickupLocation)) {
+					if (Cars.get(i).model.equals(carArray[0].model))
+						available[0] = true;
+					if (Cars.get(i).model.equals(carArray[1].model))
+						available[1] = true;
+					if (Cars.get(i).model.equals(carArray[2].model))
+						available[2] = true;
+					if (Cars.get(i).model.equals(carArray[3].model))
+						available[3] = true;
+					if (Cars.get(i).model.equals(carArray[4].model))
+						available[4] = true;
+				}
+			}
+			for (int i = 0; i < carImageButtons.length; i++) {
+				if (available[i]) {
+					carImageButtons[i].setIcon(new ImageIcon(((new ImageIcon(carArray[i].model + ".jpg")).getImage())
+							.getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+				} else {
+					//carImageButtons[i].setEnabled(false);
+					carImageButtons[i].setIcon(new ImageIcon(((new ImageIcon(carArray[i].model + "Greyed.jpg")).getImage())
+									.getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+				}
+			}
 			switchToFrame(carFrame);
 		}
-		if (evtString.equals("back")) {
+		if (evtString.equals("back"))
 			switchToFrame(bookFrame);
-		}
-		if (evtString.equals("back to signIN")) {
+		if (evtString.equals("back to signIN"))
 			switchToFrame(loginFrame);
-		}
-		if (evtString.equals("About")) {
+		if (evtString.equals("About"))
 			switchToFrame(aboutFrame);
-		}
 		if (evtString.equals("Remove All Reservations")) {
 			IH.Reservations.clear();
-			managerReservationsList.setText(IH.Reservations.toString());
+			managerReservationsList.setText(IH.getReservationsString());
 		}
 		if (evtString.equals("Remove All Users")) {
 			IH.Users.clear();
@@ -638,63 +662,66 @@ public class GUI implements ActionListener {
 			String carComboBoxValue = (String) checkAvailableCarsDropDown.getSelectedItem();
 			String LocationComboBoxValue = (String) availableLocationsDropDown.getSelectedItem();
 			boolean found = false;
-			for (int i = 0; i< IH.Cars.size(); i++) 
-				if (IH.Cars.get(i).model.equals(carComboBoxValue) && IH.Cars.get(i).location.toString().equals(LocationComboBoxValue))
+			for (int i = 0; i < IH.Cars.size(); i++)
+				if (IH.Cars.get(i).model.equals(carComboBoxValue)
+						&& IH.Cars.get(i).location.toString().equals(LocationComboBoxValue))
 					found = true;
 			if (found)
 				JOptionPane.showMessageDialog(managerFrame, "Car Found", "", JOptionPane.INFORMATION_MESSAGE);
-			else 
+			else
 				JOptionPane.showMessageDialog(managerFrame, "Not found", "", JOptionPane.WARNING_MESSAGE);
 			checkAvailableCarsDropDown.setSelectedIndex(0);
 			availableLocationsDropDown.setSelectedIndex(0);
 		}
 		if (evtString.equals("Add Vehicle")) {
-			//HERE IS WHERE I MEAN
+			// HERE IS WHERE I MEAN
 			String locationName = addRemoveCarLocations.getText();
-			if(!IH.getLocations().contains(locationName)) {//the if statement doesnt work
+			if (!IH.getLocations().contains(locationName)) {// the if statement doesnt work
 				availableLocationsDropDown.addItem(locationName);
 				pickupLocationsDropDown.addItem(locationName);
 				dropLocationsDropDown.addItem(locationName);
 			}
-			Car newCar= new Car(carArray,(String)addRemoveCarDropDown.getSelectedItem(),locationName);
+			Car newCar = new Car(carArray, (String) addRemoveCarDropDown.getSelectedItem(), locationName);
 			if (newCar.model != "ERROR")
 				IH.Cars.add(newCar);
-			else 
+			else
 				JOptionPane.showMessageDialog(managerFrame, "Error", "Error", JOptionPane.ERROR_MESSAGE);
-			
+
 			addRemoveCarDropDown.setSelectedIndex(0);
-			
+
 			addRemoveCarLocations.setText("");
-			managerAvailableCarsList.setText(IH.Cars.toString().replaceAll(",", "\n"));
-			managerLocationsList.setText(IH.getLocations().toString().replaceAll(",", "\n"));
+			managerAvailableCarsList.setText(IH.getCarsString());
+			managerLocationsList.setText(IH.getLocationsString());
 
 		}
 		if (evtString.equals("Remove Vehicle")) {
-			Car removeCar = new Car(carArray,(String)addRemoveCarDropDown.getSelectedItem(),addRemoveCarLocations.getText());
-			
+			Car removeCar = new Car(carArray, (String) addRemoveCarDropDown.getSelectedItem(),
+					addRemoveCarLocations.getText());
+			String removeLocation = addRemoveCarLocations.getText();
 			boolean first = true;
+			int numCarsAtRemoveLocation = 0;
 			ArrayList<Car> tempCars = IH.Cars;
 			for (int i = 0; i < tempCars.size(); i++) {
-				if (tempCars.get(i).Equals(removeCar) && first == true) {
-					IH.Cars.remove(tempCars.get(i));
-					first = false;
-				}
+				Car car = tempCars.get(i);
+				if (car.location.toString().equals(removeLocation))
+					numCarsAtRemoveLocation++;
+				if (car.Equals(removeCar))
+					if (first) {
+						IH.Cars.remove(car);
+						first = false;
+					}
 			}
-			int numberOfLocations = 0;
-			for(int i = 0; i<IH.getLocations().size(); i++) {
-				if(IH.getLocations().get(i).equals(addRemoveCarLocations.getText())){
-					numberOfLocations++;
-				}
-			}
-			if(numberOfLocations<2) {
-				availableLocationsDropDown.removeItem(addRemoveCarLocations.getText());
-				pickupLocationsDropDown.removeItem(addRemoveCarLocations.getText());
-				dropLocationsDropDown.removeItem(addRemoveCarLocations.getText());
-			}
+			if (!IH.getLocations().contains(removeLocation) && numCarsAtRemoveLocation == 1) {
+				availableLocationsDropDown.removeItem(removeLocation);
+				pickupLocationsDropDown.removeItem(removeLocation);
+				dropLocationsDropDown.removeItem(removeLocation);
+			} else if (!IH.getLocations().contains(removeLocation))
+				JOptionPane.showMessageDialog(managerFrame, "ERROR: Car Does Not Exist", "Error",
+						JOptionPane.ERROR_MESSAGE);
 			addRemoveCarLocations.setText("");
 			addRemoveCarDropDown.setSelectedIndex(0);
-			managerAvailableCarsList.setText(IH.Cars.toString().replaceAll(",", "\n"));
-			managerLocationsList.setText(IH.getLocations().toString().replaceAll(",", "\n"));
+			managerAvailableCarsList.setText(IH.getCarsString());
+			managerLocationsList.setText(IH.getLocationsString());
 		}
 		if (evtString.equals("Search")) {
 			int index = binarySearch(IH.getUsernames(), searchUserField.getText());
@@ -704,18 +731,16 @@ public class GUI implements ActionListener {
 				} catch (IndexOutOfBoundsException e) { // in case user does not have a reservation
 					searchResultField.setText(IH.getUsernames().get(index));
 				}
-
-			} else {
+			} else
 				JOptionPane.showMessageDialog(managerFrame, "User Does Not Exist", "Error", JOptionPane.ERROR_MESSAGE);
-			}
 		}
 		if (evtString.equals("Remove User")) {
 			int index = binarySearch(IH.getUsernames(), searchUserField.getText());
 			try {
 				IH.Reservations.remove(index);
-				managerReservationsList.setText(IH.getReservations());
+				managerReservationsList.setText(IH.getReservationsString());
 			} catch (IndexOutOfBoundsException e) {
-				managerReservationsList.setText(IH.Reservations.toString());
+				managerReservationsList.setText(IH.getReservationsString());
 			}
 			IH.Users.remove(index);
 			searchResultField.setText("");
@@ -730,16 +755,14 @@ public class GUI implements ActionListener {
 				switchToFrame(managerFrame);
 				return;
 			}
-			if ((s != null) && s != "1234" && (s.length() > 0)) {
+			if ((s != null) && s != "1234" && (s.length() > 0))
 				JOptionPane.showMessageDialog(welcomeFrame, "Wrong Code", "Error", JOptionPane.ERROR_MESSAGE);
-			}
-
 		}
 
 		// all the car booking options
 		if (evtString.endsWith("Car")) {
-			//USES DEFAULT CONSTRUCTOR FOR A DEFAULT CAR
-			Car bookedCar= new Car(carArray,evtString,(String) pickupLocationsDropDown.getSelectedItem());
+			// USES DEFAULT CONSTRUCTOR FOR A DEFAULT CAR
+			Car bookedCar = new Car(carArray, evtString, (String) pickupLocationsDropDown.getSelectedItem());
 			if (signedIn == true) {
 				Object[] options = { "Book!", "Cancel" };
 				// Confirm Booking Message
@@ -756,31 +779,34 @@ public class GUI implements ActionListener {
 							new SimpleDateFormat("MM/dd/yyyy/HHmm").format(bookingPickupDateSpinner.getValue()),
 							new SimpleDateFormat("MM/dd/yyyy/HHmm").format(bookingDropDateSpinner.getValue()));
 					// Add booking to IH list
-					double price = IH.addReservation(bookedCar,new Location((String) pickupLocationsDropDown.getSelectedItem()), new Location((String) dropLocationsDropDown.getSelectedItem()) , bookedTimeSlot, IH.CurrentUser);
+					double price = IH.addReservation(bookedCar,
+							new Location((String) pickupLocationsDropDown.getSelectedItem()),
+							new Location((String) dropLocationsDropDown.getSelectedItem()), bookedTimeSlot,
+							IH.CurrentUser);
 					if (price == -1) {
 						System.out.println("ThatS not a very good boy of a reservatIon :(");
 						JOptionPane.showMessageDialog(carFrame, "Invalid Reservation", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						System.out.println("Price of Reservation is: " + price);
-						JOptionPane.showMessageDialog(carFrame, "Confirm Booking: \nCar: " + bookedCar.toString()
-								+ "\n TimeSlot: " + bookedTimeSlot + "\n Price: " + Math.round(price)+"$", "Success", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(carFrame,
+								"Confirm Booking: \n Car: " + bookedCar.toNiceString() + "\n TimeSlot: "
+										+ bookedTimeSlot.toNiceString() + "\n Price: " + Math.round(price) + "$",
+								"Confirm Booking", JOptionPane.INFORMATION_MESSAGE);
 					}
-					managerReservationsList.setText(IH.getReservations());
+					managerReservationsList.setText(IH.getReservationsString());
+					switchToFrame(bookFrame);
 				}
 			} else {
 				Object[] options = { "Sign In", "See Car Info", "Cancel" };
 				// Confirm Booking Message
 				int returnValue = JOptionPane.showOptionDialog(carFrame, "You are not signed in", null,
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[2]);
-				if (returnValue == JOptionPane.YES_OPTION) {
+				if (returnValue == JOptionPane.YES_OPTION)
 					switchToFrame(loginFrame);
-
-				}
-				if (returnValue == JOptionPane.NO_OPTION) {
+				if (returnValue == JOptionPane.NO_OPTION)
 					JOptionPane.showMessageDialog(carFrame,
 							"MPG: " + bookedCar.mpg + " " + "Capacity: " + bookedCar.capacity);
-				}
 			}
 		}
 		if (evtString.equals("checked")) {
@@ -789,8 +815,7 @@ public class GUI implements ActionListener {
 				String selectedLocation = (String) pickupLocationsDropDown.getSelectedItem();
 				dropLocationsDropDown.setSelectedItem(selectedLocation);
 				dropLocationsDropDown.setEnabled(false);
-			}
-			else {
+			} else {
 				dropLocationsDropDown.setSelectedItem(0);
 				dropLocationsDropDown.setEnabled(true);
 			}
@@ -818,11 +843,10 @@ public class GUI implements ActionListener {
 
 	public void switchToFrame(JFrame frame) {
 		for (int i = 0; i < frames.length; i++) {
-			if (frame == frames[i]) {
+			if (frame == frames[i])
 				frames[i].setVisible(true);
-			} else {
+			else
 				frames[i].setVisible(false);
-			}
 		}
 	}
 
@@ -834,9 +858,8 @@ public class GUI implements ActionListener {
 		boolean namecon = false; // check variable for if name is contained in password
 		String name = name1.toLowerCase();
 		ArrayList<String> errors = new ArrayList<String>();
-		if (password.length() >= 8) { // checks length
+		if (password.length() >= 8) // checks length
 			length = true;
-		}
 		char[] pass = password.toCharArray(); // converts to char array to be able to do checks
 		for (int i = 0; i < password.length(); i++) {
 			if (isUpper(pass[i])) // checks for upper case
@@ -847,9 +870,8 @@ public class GUI implements ActionListener {
 				charac = true;
 		}
 		// checks for name
-		if (!password.toLowerCase().contains(name)) {
+		if (!password.toLowerCase().contains(name))
 			namecon = true;
-		}
 		// checks to see all parameters are completed
 		if (length && capital && number && charac && namecon) {
 			System.out.println("Valid Password");
@@ -872,26 +894,16 @@ public class GUI implements ActionListener {
 		}
 	}
 
-	static boolean isUpper(char c) { // methods check characters against ASC-II library to determine if
-										// upper/number/special
-		if (c >= 65 && c <= 90) {
-			return true;
-		}
-		return false;
+	static boolean isUpper(char c) {
+		return (c >= 65 && c <= 90);
 	}
 
 	static boolean containsNum(char c) {
-		if (c >= 48 && c <= 57) {
-			return true;
-		}
-		return false;
+		return (c >= 48 && c <= 57);
 	}
 
 	static boolean containsSpecial(char c) {
-		if ((c >= 33 && c <= 47) || (c >= 58 && c <= 64) || (c >= 91 && c <= 96) || (c >= 123 && c <= 126)) {
-			return true;
-		}
-		return false;
+		return ((c >= 33 && c <= 47) || (c >= 58 && c <= 64) || (c >= 91 && c <= 96) || (c >= 123 && c <= 126));
 	}
 
 	public int binarySearch(ArrayList<String> users, String userName) {

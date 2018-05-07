@@ -133,7 +133,6 @@ public class InventoryHandler {
 			double durationDiscountRate = 0.15 / 30;
 			double maxDiscount = 0.5;
 			double durationInHours = timeSlot.getDuration() / 60;
-			System.out.println(durationInHours);
 			double x = durationInHours;
 			double r = durationDiscountRate;
 			double mD = maxDiscount;
@@ -141,9 +140,7 @@ public class InventoryHandler {
 			double fx = ((2*mD)/(1+Math.pow(Math.E, -4*gx))) - mD;//sigmoid curve (sigmoid curve has default derivative of 1/4 at 0, thus multiplying by 4 to counteract)
 			double dx = 1-fx;
 			double price = car.pricePerHour*x*dx;// TODO: add multiple location pricing
-			if (loc1.toString().equals(loc2.toString())) {
-				//price += loc1;
-			}
+			price += loc1.distanceFrom(loc2) * 0.5;
 			return price;
 		} else {
 			return -1;
@@ -193,10 +190,40 @@ public class InventoryHandler {
 		return list;
 	}
 	
-	public String getReservations() {
+	public String getReservationsString() {
 		String list="";
+		int counter =1;
 		for (Reservation c : Reservations) {
-			 list = list + "\n" +c.toString();
+			list += "("+counter+") "+c.toNiceString()+"\n";
+			counter++;
+		}
+		return list;
+	}
+	public String getCarsString() {
+		String list="";
+		int counter =1;
+		for (Car c : Cars) {
+			list+="("+counter+") "+c.toNiceString()+"\n";
+			counter++;
+
+		}
+		return list;
+	}
+	public String getUsersString() {
+		String list="";
+		int counter =1;
+		for (User u : Users) {
+			list+="("+counter+") "+u.toNiceString()+"\n";
+			counter++;
+		}
+		return list;
+	}
+	public String getLocationsString() {
+		String list="";
+		int counter =1;
+		for (String l : this.getLocations()) {
+			list+="("+counter+") "+l+"\n";
+			counter++;
 		}
 		return list;
 	}

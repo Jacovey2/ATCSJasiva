@@ -32,4 +32,7 @@ public class User {
 	public String toString() {
 		return firstName+"/"+lastName +"/"+username +"/"+password;
 	}
+	public String toNiceString() {
+		return firstName+","+lastName +" ("+username +","+password+")";
+	}
 }
