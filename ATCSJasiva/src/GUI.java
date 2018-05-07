@@ -22,10 +22,9 @@ public class GUI implements ActionListener {
 		new Car(10, 2, "premiumCar", new Location("DEF"), 35), new Car(0, 0, "ERROR", new Location("ERROR"), 0), };
 	
 	// Locations of cars
-	String[] carLocations = new String[0];
 	String[] carTypes = new String[] { "","cheapCar", "lowEndCar", "mediumCar", "highEndCar", "premiumCar" };
-	JComboBox<String> pickupLocations = new JComboBox<>(carLocations);
-	JComboBox<String> dropLocations = new JComboBox<>(carLocations);
+	JComboBox<String> pickupLocationsDropDown = new JComboBox<>(IH.getLocationsArray());
+	JComboBox<String> dropLocationsDropDown = new JComboBox<>(IH.getLocationsArray());
 
 	// (text fields in the way we are using them must be global variables)
 	private JTextField signInUsernameField = new JTextField(10);
@@ -55,7 +54,10 @@ public class GUI implements ActionListener {
 	JComboBox<String> checkAvailableCarsDropDown = new JComboBox<>(carTypes);
 	JComboBox<String> addRemoveCarDropDown = new JComboBox<>(carTypes);
 	JComboBox<String> availableLocationsDropDown = new JComboBox<>(IH.getLocationsArray());
-
+	//Combo box settings change
+	//DefaultComboBoxModel model = new DefaultComboBoxModel(IH.getLocationsArray());
+	//availableLocationsDropDown.setModel(model);
+	
 	// creating calendar selection tool
 	SpinnerDateModel bookingPickupdate = new SpinnerDateModel();
 	SpinnerDateModel bookingDropdate = new SpinnerDateModel();
@@ -338,8 +340,8 @@ public class GUI implements ActionListener {
 		bookingDropDateSpinner.setBounds(380, 260, 150, 30);
 		endTLabel.setBounds(310, 260, 130, 30);
 		endTLabelInstruction.setBounds(410, 242, 130, 30);
-		pickupLocations.setBounds(395, 130, 130, 30);
-		dropLocations.setBounds(395, 180, 130, 30);
+		pickupLocationsDropDown.setBounds(395, 130, 130, 30);
+		dropLocationsDropDown.setBounds(395, 180, 130, 30);
 		checkField.setBounds(495, 157, 25, 25);
 		pickCarButton.setBounds(370, 300, 150, 70);
 		carViewerAboutButton2.setBounds(300, 20, 300, 75);
@@ -353,11 +355,11 @@ public class GUI implements ActionListener {
 		bookFrame.add(backButton2);
 		bookFrame.add(carViewerAboutButton2);
 		bookFrame.add(pickupLabel);
-		bookFrame.add(pickupLocations);
+		bookFrame.add(pickupLocationsDropDown);
 		bookFrame.add(checkLabel);
 		bookFrame.add(checkField);
 		bookFrame.add(dropLabel);
-		bookFrame.add(dropLocations);
+		bookFrame.add(dropLocationsDropDown);
 		bookFrame.add(startTLabel);
 		bookFrame.add(bookingPickupDateSpinner);
 		bookFrame.add(bookingDropDateSpinner);
@@ -720,7 +722,7 @@ public class GUI implements ActionListener {
 		// all the car booking options
 		if (evtString.endsWith("Car")) {
 			//USES DEFAULT CONSTRUCTOR FOR A DEFAULT CAR
-			Car bookedCar= new Car(carArray,evtString,(String) pickupLocations.getSelectedItem());
+			Car bookedCar= new Car(carArray,evtString,(String) pickupLocationsDropDown.getSelectedItem());
 			if (signedIn == true) {
 				Object[] options = { "Book!", "Cancel" };
 				// Confirm Booking Message
@@ -738,7 +740,7 @@ public class GUI implements ActionListener {
 							new SimpleDateFormat("MM/dd/yyyy/HHmm").format(bookingDropDateSpinner.getValue()));
 					// Add booking to IH list
 					double price = IH.addReservation(bookedCar,
-							new Location((String) pickupLocations.getSelectedItem()), bookedTimeSlot, IH.CurrentUser);
+							new Location((String) pickupLocationsDropDown.getSelectedItem()), bookedTimeSlot, IH.CurrentUser);
 					if (price == -1) {
 						System.out.println("ThatS not a very good boy of a reservatIon :(");
 						JOptionPane.showMessageDialog(carFrame, "Invalid Reservation", "Error",
@@ -766,8 +768,16 @@ public class GUI implements ActionListener {
 			}
 		}
 		if (evtString.equals("checked")) {
-			String selectedLocation = (String) pickupLocations.getSelectedItem();
-			dropLocations.setSelectedItem(selectedLocation);
+			System.out.println(checkField.isSelected());
+			if (checkField.isSelected()) {
+				String selectedLocation = (String) pickupLocationsDropDown.getSelectedItem();
+				dropLocationsDropDown.setSelectedItem(selectedLocation);
+				dropLocationsDropDown.setEnabled(false);
+			}
+			else {
+				dropLocationsDropDown.setSelectedItem(0);
+				dropLocationsDropDown.setEnabled(true);
+			}
 		}
 	}
 
