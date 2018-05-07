@@ -739,8 +739,7 @@ public class GUI implements ActionListener {
 							new SimpleDateFormat("MM/dd/yyyy/HHmm").format(bookingPickupDateSpinner.getValue()),
 							new SimpleDateFormat("MM/dd/yyyy/HHmm").format(bookingDropDateSpinner.getValue()));
 					// Add booking to IH list
-					double price = IH.addReservation(bookedCar,
-							new Location((String) pickupLocationsDropDown.getSelectedItem()), bookedTimeSlot, IH.CurrentUser);
+					double price = IH.addReservation(bookedCar,new Location((String) pickupLocationsDropDown.getSelectedItem()), new Location((String) dropLocationsDropDown.getSelectedItem()) , bookedTimeSlot, IH.CurrentUser);
 					if (price == -1) {
 						System.out.println("ThatS not a very good boy of a reservatIon :(");
 						JOptionPane.showMessageDialog(carFrame, "Invalid Reservation", "Error",
