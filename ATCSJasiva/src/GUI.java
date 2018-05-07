@@ -649,20 +649,21 @@ public class GUI implements ActionListener {
 			availableLocationsDropDown.setSelectedIndex(0);
 		}
 		if (evtString.equals("Add Vehicle")) {
-			Car newCar= new Car(carArray,(String)addRemoveCarDropDown.getSelectedItem(),addRemoveCarLocations.getText());
+			//HERE IS WHERE I MEAN
+			String locationName = addRemoveCarLocations.getText();
+			if(!IH.getLocations().contains(locationName)) {//the if statement doesnt work
+				availableLocationsDropDown.addItem(locationName);
+				pickupLocationsDropDown.addItem(locationName);
+				dropLocationsDropDown.addItem(locationName);
+			}
+			Car newCar= new Car(carArray,(String)addRemoveCarDropDown.getSelectedItem(),locationName);
 			if (newCar.model != "ERROR")
 				IH.Cars.add(newCar);
 			else 
 				JOptionPane.showMessageDialog(managerFrame, "Error", "Error", JOptionPane.ERROR_MESSAGE);
 			
-			
 			addRemoveCarDropDown.setSelectedIndex(0);
-			if(!IH.getLocations().contains(addRemoveCarLocations.getText())) {//the if statement doesnt work
-				System.out.println("hello");
-				availableLocationsDropDown.addItem(addRemoveCarLocations.getText());
-				pickupLocationsDropDown.addItem(addRemoveCarLocations.getText());
-				dropLocationsDropDown.addItem(addRemoveCarLocations.getText());
-			}
+			
 			addRemoveCarLocations.setText("");
 			managerAvailableCarsList.setText(IH.Cars.toString().replaceAll(",", "\n"));
 			managerLocationsList.setText(IH.getLocations().toString().replaceAll(",", "\n"));
@@ -694,7 +695,6 @@ public class GUI implements ActionListener {
 			addRemoveCarDropDown.setSelectedIndex(0);
 			managerAvailableCarsList.setText(IH.Cars.toString().replaceAll(",", "\n"));
 			managerLocationsList.setText(IH.getLocations().toString().replaceAll(",", "\n"));
-			System.out.println(IH.getLocationsArray().toString());
 		}
 		if (evtString.equals("Search")) {
 			int index = binarySearch(IH.getUsernames(), searchUserField.getText());
