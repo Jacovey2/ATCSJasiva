@@ -115,13 +115,12 @@ public class InventoryHandler {
 		uScanner.close();
 	}
 
-	public double addReservation(Car car, Location location, TimeSlot timeSlot, User user) {
+	public double addReservation(Car car, Location loc1, Location loc2, TimeSlot timeSlot, User user) {
 		boolean valid = true;
 		for (Reservation r : Reservations) { //this gives the booking issues
 			if (r.getTimeSlot().Conflict(timeSlot) || !r.getCar().Equals(car))
 				valid = false;
 		}
-		
 		/*
 		 * if (!location.Cars.contains(car)) valid = false;
 		 */// Will not be commented in final version, but without manager window there will
@@ -142,6 +141,9 @@ public class InventoryHandler {
 			double fx = ((2*mD)/(1+Math.pow(Math.E, -4*gx))) - mD;//sigmoid curve (sigmoid curve has default derivative of 1/4 at 0, thus multiplying by 4 to counteract)
 			double dx = 1-fx;
 			double price = car.pricePerHour*x*dx;// TODO: add multiple location pricing
+			if (loc1.toString().equals(loc2.toString())) {
+				//price += loc1;
+			}
 			return price;
 		} else {
 			return -1;
