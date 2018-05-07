@@ -27,10 +27,7 @@ public class InventoryHandler {
 		// Write Reservations to file
 		FileWriter rFileWrite = new FileWriter(reservationFile);
 		for (Reservation r : Reservations) {
-			String tempString = r.getTimeSlot().toString();
-
-			System.out.println(tempString);
-			rFileWrite.write(tempString);
+			rFileWrite.write(r.toString());
 		}
 		rFileWrite.close();
 
@@ -67,11 +64,11 @@ public class InventoryHandler {
 			TimeSlot ts = new TimeSlot(startMonth, startDay, startYear, startTime, endMonth, endDay, endYear, endTime);
 			
 			//Creating car from line
-			int mpg = rScanner.nextInt();
-			int capacity = rScanner.nextInt();
-			String model = rScanner.next();
-			Location location = new Location(rScanner.next());
-			double pricePerHour = rScanner.nextInt();
+			String model =        rScanner.next();
+			Location location =   new Location(rScanner.next());
+			int mpg =             rScanner.nextInt();
+			int capacity =        rScanner.nextInt();
+			double pricePerHour = rScanner.nextDouble();
 			Car car = new Car(mpg, capacity, model, location, pricePerHour);
 			
 			//creating user from line

@@ -14,7 +14,13 @@ import java.awt.*;
 
 public class GUI implements ActionListener {
 	// Global variables
-
+	
+	//list of default cars
+	private Car[] carArray = { new Car(25, 4, "cheapCar", new Location("DEF"), 12.5),
+		new Car(20, 4, "lowEndCar", new Location("DEF"), 15), new Car(15, 4, "mediumCar", new Location("DEF"), 20),
+		new Car(15, 7, "highEndCar", new Location("DEF"), 28),
+		new Car(10, 2, "premiumCar", new Location("DEF"), 35), new Car(0, 0, "ERROR", new Location("ERROR"), 0), };
+	
 	// Locations of cars
 	String[] carLocations = new String[0];
 	String[] carTypes = new String[] { "Car", "Cheap", "lowEnd", "medium", "premium", "highend" };
@@ -329,7 +335,7 @@ public class GUI implements ActionListener {
 		bookingPickupDateSpinner.setBounds(380, 220, 150, 30);
 		startTLabel.setBounds(310, 220, 130, 30);
 		startTLabelInstruction.setBounds(410, 202, 130, 30);
-		bookingPickupDateSpinner.setBounds(380, 260, 150, 30);
+		bookingDropDateSpinner.setBounds(380, 260, 150, 30);
 		endTLabel.setBounds(310, 260, 130, 30);
 		endTLabelInstruction.setBounds(410, 242, 130, 30);
 		pickupLocations.setBounds(395, 130, 130, 30);
@@ -353,9 +359,9 @@ public class GUI implements ActionListener {
 		bookFrame.add(dropLabel);
 		bookFrame.add(dropLocations);
 		bookFrame.add(startTLabel);
+		bookFrame.add(bookingPickupDateSpinner);
 		bookFrame.add(bookingDropDateSpinner);
 		bookFrame.add(endTLabel);
-		bookFrame.add(bookingDropDateSpinner);
 		bookFrame.add(startTLabelInstruction);
 		bookFrame.add(endTLabelInstruction);
 		bookFrame.add(pickCarButton);
@@ -667,7 +673,7 @@ public class GUI implements ActionListener {
 				removeCar = new Car(10, 2, "premiumCar", new Location(addRemoveCarLocations.getText()), 35);
 			} else {
 				removeCar = new Car(0, 0, "ERROR", new Location("ERROR"), 0);
-			} // TODO
+			} 
 			boolean first = true;
 			ArrayList<Car> tempCars = IH.Cars;
 			for (int i = 0; i < tempCars.size(); i++) {
@@ -721,20 +727,8 @@ public class GUI implements ActionListener {
 
 		// all the car booking options
 		if (evtString.endsWith("Car")) {
-			Car bookedCar;
-			if (evtString.equals("cheapCar")) {
-				bookedCar = new Car(25, 4, "cheapCar", new Location((String) pickupLocations.getSelectedItem()), 12.5);
-			} else if (evtString.equals("lowEndCar")) {
-				bookedCar = new Car(20, 4, "Lowend", new Location((String) pickupLocations.getSelectedItem()), 15);
-			} else if (evtString.equals("mediumCar")) {
-				bookedCar = new Car(15, 4, "mediumCar", new Location((String) pickupLocations.getSelectedItem()), 20);
-			} else if (evtString.equals("highEndCar")) {
-				bookedCar = new Car(15, 7, "highEndCar", new Location((String) pickupLocations.getSelectedItem()), 28);
-			} else if (evtString.equals("premiumCar")) {
-				bookedCar = new Car(10, 2, "premiumCar", new Location((String) pickupLocations.getSelectedItem()), 35);
-			} else {
-				bookedCar = new Car(0, 0, "ERROR", new Location("ERROR"), 0);
-			}
+			//USES DEFAULT CONSTRUCTOR FOR A DEFAULT CAR
+			Car bookedCar= new Car(carArray,evtString,(String) pickupLocations.getSelectedItem());
 			if (signedIn == true) {
 				Object[] options = { "Book!", "Cancel" };
 				// Confirm Booking Message
@@ -759,8 +753,8 @@ public class GUI implements ActionListener {
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						System.out.println("Price of Reservation is: " + price);
-						JOptionPane.showMessageDialog(carFrame, "You have booked this car: " + bookedCar.toString()
-								+ "\n" + bookedTimeSlot + "\n" + price, "Success", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(carFrame, "Confirm Booking: \nCar: " + bookedCar.toString()
+								+ "\n TimeSlot: " + bookedTimeSlot + "\n Price: " + Math.round(price)+"$", "Success", JOptionPane.INFORMATION_MESSAGE);
 					}
 					managerReservationsList.setText(IH.getReservations());
 				}
