@@ -57,6 +57,7 @@ public class GUI implements ActionListener {
 	//Combo box settings change
 	//DefaultComboBoxModel model = new DefaultComboBoxModel(IH.getLocationsArray());
 	//availableLocationsDropDown.setModel(model);
+
 	
 	// creating calendar selection tool
 	SpinnerDateModel bookingPickupdate = new SpinnerDateModel();
@@ -654,12 +655,18 @@ public class GUI implements ActionListener {
 			else 
 				JOptionPane.showMessageDialog(managerFrame, "Error", "Error", JOptionPane.ERROR_MESSAGE);
 			
-			addRemoveCarLocations.setText("");
+			
 			addRemoveCarDropDown.setSelectedIndex(0);
+			if(!IH.getLocations().contains(addRemoveCarLocations.getText())) {//the if statement doesnt work
+				System.out.println("hello");
+				availableLocationsDropDown.addItem(addRemoveCarLocations.getText());
+				pickupLocationsDropDown.addItem(addRemoveCarLocations.getText());
+				dropLocationsDropDown.addItem(addRemoveCarLocations.getText());
+			}
+			addRemoveCarLocations.setText("");
 			managerAvailableCarsList.setText(IH.Cars.toString().replaceAll(",", "\n"));
 			managerLocationsList.setText(IH.getLocations().toString().replaceAll(",", "\n"));
-			availableLocationsDropDown = new JComboBox<>(IH.getLocationsArray());
-			System.out.println(IH.getLocationsArray().toString());
+
 		}
 		if (evtString.equals("Remove Vehicle")) {
 			Car removeCar = new Car(carArray,(String)addRemoveCarDropDown.getSelectedItem(),addRemoveCarLocations.getText());
@@ -672,11 +679,21 @@ public class GUI implements ActionListener {
 					first = false;
 				}
 			}
+			int numberOfLocations = 0;
+			for(int i = 0; i<IH.getLocations().size(); i++) {
+				if(IH.getLocations().get(i).equals(addRemoveCarLocations.getText())){
+					numberOfLocations++;
+				}
+			}
+			if(numberOfLocations<2) {
+				availableLocationsDropDown.removeItem(addRemoveCarLocations.getText());
+				pickupLocationsDropDown.removeItem(addRemoveCarLocations.getText());
+				dropLocationsDropDown.removeItem(addRemoveCarLocations.getText());
+			}
 			addRemoveCarLocations.setText("");
 			addRemoveCarDropDown.setSelectedIndex(0);
 			managerAvailableCarsList.setText(IH.Cars.toString().replaceAll(",", "\n"));
 			managerLocationsList.setText(IH.getLocations().toString().replaceAll(",", "\n"));
-			availableLocationsDropDown = new JComboBox<>(IH.getLocationsArray());
 			System.out.println(IH.getLocationsArray().toString());
 		}
 		if (evtString.equals("Search")) {
