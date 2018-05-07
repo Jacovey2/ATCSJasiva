@@ -187,7 +187,9 @@ public class InventoryHandler {
 		String[] list = new String[Cars.size()];
 		for(int i = 0; i<Cars.size();i++) {
 			list[i]=Cars.get(i).location.toString();
+			System.out.print(list[i] + " ");
 		}
+		System.out.println();
 		return list;
 	}
 	

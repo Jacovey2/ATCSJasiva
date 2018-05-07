@@ -658,8 +658,12 @@ public class GUI implements ActionListener {
 			addRemoveCarDropDown.setSelectedIndex(0);
 			managerAvailableCarsList.setText(IH.Cars.toString().replaceAll(",", "\n"));
 			managerLocationsList.setText(IH.getLocations().toString().replaceAll(",", "\n"));
+			
 			availableLocationsDropDown = new JComboBox<>(IH.getLocationsArray());
-			System.out.println(IH.getLocationsArray().toString());
+			System.out.println(IH.getLocationsArray().length);
+			//for(int i =0;i<IH.getLocationsArray().length; i++) { 
+			//	System.out.println(IH.getLocationsArray()[i]);
+			//}
 		}
 		if (evtString.equals("Remove Vehicle")) {
 			Car removeCar = new Car(carArray,(String)addRemoveCarDropDown.getSelectedItem(),addRemoveCarLocations.getText());
