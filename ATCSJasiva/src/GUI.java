@@ -763,7 +763,7 @@ public class GUI implements ActionListener {
 		if (evtString.endsWith("Car")) {
 			// USES DEFAULT CONSTRUCTOR FOR A DEFAULT CAR
 			Car bookedCar = new Car(carArray, evtString, (String) pickupLocationsDropDown.getSelectedItem());
-			if (signedIn == true) {
+			if (signedIn) {
 				Object[] options = { "Book!", "Cancel" };
 				// Confirm Booking Message
 				int returnValue = JOptionPane.showOptionDialog(carFrame,
@@ -797,7 +797,7 @@ public class GUI implements ActionListener {
 					managerReservationsList.setText(IH.getReservationsString());
 					switchToFrame(bookFrame);
 				}
-			} else {
+			} else if (!signedIn){
 				Object[] options = { "Sign In", "See Car Info", "Cancel" };
 				// Confirm Booking Message
 				int returnValue = JOptionPane.showOptionDialog(carFrame, "You are not signed in", null,

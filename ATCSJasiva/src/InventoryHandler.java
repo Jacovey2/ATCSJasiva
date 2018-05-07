@@ -121,15 +121,15 @@ public class InventoryHandler {
 			if (r.getTimeSlot().Conflict(timeSlot) || !r.getCar().Equals(car))
 				valid = false;
 		}
-		/*
-		 * if (!location.Cars.contains(car)) valid = false;
-		 */// Will not be commented in final version, but without manager window there will
-			// never be cars at any location
-		Reservations.add(new Reservation(timeSlot, car, user));
-
-		if (valid) {
-			for (Reservation r : Reservations)
-				System.out.println(r.toString());
+		boolean ValidCarAtLocation =false;
+		for (Car c:Cars) {
+			System.out.println(c.location.toString().equals(loc1.toString()) + "  "+c.model.equals(car.model));
+			if (c.location.toString().equals(loc1.toString()) && c.model.equals(car.model)) {
+				ValidCarAtLocation=true;
+			}
+		}
+		if (valid && ValidCarAtLocation) {
+			Reservations.add(new Reservation(timeSlot, car, user));
 			double durationDiscountRate = 0.15 / 30;
 			double maxDiscount = 0.5;
 			double durationInHours = timeSlot.getDuration() / 60;
