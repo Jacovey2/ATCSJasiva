@@ -636,9 +636,9 @@ public class GUI implements ActionListener {
 					carImageButtons[i].setIcon(new ImageIcon(((new ImageIcon(carArray[i].model + ".jpg")).getImage())
 							.getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
 				} else {
-					//carImageButtons[i].setEnabled(false);
-					carImageButtons[i].setIcon(new ImageIcon(((new ImageIcon(carArray[i].model + "Greyed.jpg")).getImage())
-									.getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+					carImageButtons[i].setEnabled(false); //setting enabled to false greys out the buttons automatically
+					//carImageButtons[i].setIcon(new ImageIcon(((new ImageIcon(carArray[i].model + "Greyed.jpg")).getImage())
+									//.getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
 				}
 			}
 			switchToFrame(carFrame);
@@ -655,7 +655,9 @@ public class GUI implements ActionListener {
 		}
 		if (evtString.equals("Remove All Users")) {
 			IH.Users.clear();
+			IH.Reservations.clear();
 			managerUsersList.setText(IH.getUsernames().toString());
+			managerReservationsList.setText(IH.getUsernames().toString());
 		}
 		if (evtString.equals("Enter")) { // NEEDS WORK
 			// set availableCars text area to all selected types of cars at location
@@ -688,7 +690,6 @@ public class GUI implements ActionListener {
 				JOptionPane.showMessageDialog(managerFrame, "Error", "Error", JOptionPane.ERROR_MESSAGE);
 
 			addRemoveCarDropDown.setSelectedIndex(0);
-
 			addRemoveCarLocations.setText("");
 			managerAvailableCarsList.setText(IH.getCarsString());
 			managerLocationsList.setText(IH.getLocationsString());
@@ -767,8 +768,7 @@ public class GUI implements ActionListener {
 				Object[] options = { "Book!", "Cancel" };
 				// Confirm Booking Message
 				int returnValue = JOptionPane.showOptionDialog(carFrame,
-						"Would you like book this car?" + "\n" + "MPG: " + bookedCar.mpg + " " + "Capacity: "
-								+ bookedCar.capacity,
+						"Would you like book this car?\n" + bookedCar.toNiceString(),
 						null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
 						options[1]);
 
@@ -806,7 +806,7 @@ public class GUI implements ActionListener {
 					switchToFrame(loginFrame);
 				if (returnValue == JOptionPane.NO_OPTION)
 					JOptionPane.showMessageDialog(carFrame,
-							"MPG: " + bookedCar.mpg + " " + "Capacity: " + bookedCar.capacity);
+							"Car Info\n " + bookedCar.toNiceString() );
 			}
 		}
 		if (evtString.equals("checked")) {
