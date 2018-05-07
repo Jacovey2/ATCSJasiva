@@ -172,7 +172,14 @@ public class InventoryHandler {
 		for (Car c : Cars) {
 			tempArray.add(c.location.toString());
 		}
-		return tempArray;
+		return Collapse(tempArray);
+	}
+	public ArrayList<String> Collapse(ArrayList<String> arrayList) {
+		ArrayList<String> tempString = new ArrayList<String>();
+		for (String S : arrayList)
+			if (!tempString.contains(S))
+				tempString.add(S);
+		return tempString;
 	}
 	public String[] getLocationsArray() {
 		String[] list = new String[Cars.size()];
@@ -189,14 +196,4 @@ public class InventoryHandler {
 		}
 		return list;
 	}
-
-	/*public void Info() { // gives all of the information of all the items in the store
-		ArrayList<String> out = new ArrayList<String>();
-		for (User c : Users) {
-			out.add(c.getFirstName());
-			out.add(c.getLastName());
-			out.add(c.getPassword());
-			out.add(c.getUsername());
-		}
-	}*/
 }
