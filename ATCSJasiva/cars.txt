@@ -1,1 +1,2 @@
 cheapCar/NYC/25/4/12.5
+mediumCar/Orlando/15/4/20.0

@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
 
 public class InventoryHandler {
 	public ArrayList<Reservation> Reservations = new ArrayList<Reservation>();
@@ -38,7 +37,7 @@ public class InventoryHandler {
 		// Write Cars
 		FileWriter cFileWrite = new FileWriter(carFile);
 		for (Car c : Cars) {
-			cFileWrite.write(c.toString());
+			cFileWrite.write(c.toString()+"\n");
 		}
 		cFileWrite.close();
 
@@ -54,7 +53,7 @@ public class InventoryHandler {
 		// read reservations in
 		File reservationFile = new File("reservations.txt");
 		Scanner rScanner = new Scanner(reservationFile);
-		rScanner.useDelimiter("/");
+		rScanner.useDelimiter("/|\\n");
 		while (rScanner.hasNextLine()) {
 			//creating timeslot from line
 			int startMonth = rScanner.nextInt();
@@ -90,14 +89,14 @@ public class InventoryHandler {
 		// read cars
 		File carFile = new File("cars.txt");
 		Scanner cScanner = new Scanner(carFile);
-		cScanner.useDelimiter("/");
-		while (cScanner.hasNextLine()) {
+		cScanner.useDelimiter("/|\\n"); // notation for "use both / and \n as delimiters"
+		while (cScanner.hasNext()) {
 			//Creating car from line
-			int mpg = cScanner.nextInt();
-			int capacity = cScanner.nextInt();
-			String model = cScanner.next();
-			Location location = new Location(cScanner.next());
-			double pricePerHour = cScanner.nextInt();
+			String model =        cScanner.next();
+			Location location =   new Location(cScanner.next());
+			int mpg =             cScanner.nextInt();
+			int capacity =        cScanner.nextInt();
+			double pricePerHour = cScanner.nextDouble();
 			//adding car to list 
 			Cars.add(new Car(mpg, capacity, model, location, pricePerHour));
 		}
@@ -106,7 +105,7 @@ public class InventoryHandler {
 		// read in users
 		File usersFile = new File("users.txt");
 		Scanner uScanner = new Scanner(usersFile);
-		uScanner.useDelimiter("/");
+		uScanner.useDelimiter("/|\\n");
 		while (uScanner.hasNextLine()) {
 			//creating user from line
 			String firstName = uScanner.next();
@@ -131,7 +130,7 @@ public class InventoryHandler {
 		 */// Will not be commented in final version, but without manager window there will
 			// never be cars at any location
 		Reservations.add(new Reservation(timeSlot, car, user));
-		// temporary printing out of reservations
+
 		if (valid) {
 			for (Reservation r : Reservations)
 				System.out.println(r.toString());
@@ -178,17 +177,14 @@ public class InventoryHandler {
 		}
 		return tempArray;
 	}
-	public String[] getLocationsArray() { //prolly inneficient
-		ArrayList<String> tempArray = new ArrayList<String>();
-		for (Car c : Cars) {
-			tempArray.add(c.location.toString());
-		}
-		String[] list = new String[tempArray.size()];
+	public String[] getLocationsArray() {
+		String[] list = new String[Cars.size()];
 		for(int i = 0; i<Cars.size();i++) {
-			list[i]=tempArray.get(i);
+			list[i]=Cars.get(i).location.toString();
 		}
 		return list;
 	}
+	
 	public String getReservations() {
 		String list="";
 		for (Reservation c : Reservations) {
@@ -197,7 +193,7 @@ public class InventoryHandler {
 		return list;
 	}
 
-	public void Info() { // gives all of the information of all the items in the store
+	/*public void Info() { // gives all of the information of all the items in the store
 		ArrayList<String> out = new ArrayList<String>();
 		for (User c : Users) {
 			out.add(c.getFirstName());
@@ -205,5 +201,5 @@ public class InventoryHandler {
 			out.add(c.getPassword());
 			out.add(c.getUsername());
 		}
-	}
+	}*/
 }

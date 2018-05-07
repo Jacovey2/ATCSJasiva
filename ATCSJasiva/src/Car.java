@@ -16,4 +16,17 @@ public class Car {
 	public String toString() {
 		return model + "/" + location + "/" + mpg + "/" + capacity + "/" + pricePerHour;
 	}
+	
+	public boolean Equals(Car c) {
+		if (
+				mpg==c.mpg && 
+				capacity == c.capacity && 
+				model.equals(c.model) && 
+				location.toString().equals(c.location.toString()) && 
+				pricePerHour==c.pricePerHour
+			) 
+			return true;
+		else
+			return false;
+	}
 }
