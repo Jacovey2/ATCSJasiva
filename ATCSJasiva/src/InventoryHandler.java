@@ -117,11 +117,11 @@ public class InventoryHandler {
 
 	public double addReservation(Car car, Location location, TimeSlot timeSlot, User user) {
 		boolean valid = true;
-		/*for (Reservation r : Reservations) { //this gives the booking issues
-			if (r.getTimeSlot().Conflict(timeSlot))
+		for (Reservation r : Reservations) { //this gives the booking issues
+			if (r.getTimeSlot().Conflict(timeSlot) || !r.getCar().Equals(car))
 				valid = false;
 		}
-		*/
+		
 		/*
 		 * if (!location.Cars.contains(car)) valid = false;
 		 */// Will not be commented in final version, but without manager window there will
