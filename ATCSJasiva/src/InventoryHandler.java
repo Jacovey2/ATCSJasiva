@@ -26,7 +26,7 @@ public class InventoryHandler {
 		// Write Reservations to file
 		FileWriter rFileWrite = new FileWriter(reservationFile);
 		for (Reservation r : Reservations) {
-			rFileWrite.write(r.toString());
+			rFileWrite.write(r.toString() + "\n");
 		}
 		rFileWrite.close();
 
@@ -40,7 +40,7 @@ public class InventoryHandler {
 		// Write users to file
 		FileWriter uFileWrite = new FileWriter(usersFile);
 		for (User u : Users) {
-			uFileWrite.write(u.toString());
+			uFileWrite.write(u.toString() +"\n");
 		}
 		uFileWrite.close();
 	}
@@ -50,7 +50,7 @@ public class InventoryHandler {
 		File reservationFile = new File("reservations.txt");
 		Scanner rScanner = new Scanner(reservationFile);
 		rScanner.useDelimiter("/|\\n");
-		while (rScanner.hasNextLine()) {
+		while (rScanner.hasNext()) {
 			// creating timeslot from line
 			int startMonth = rScanner.nextInt();
 			int startDay = rScanner.nextInt();
@@ -104,7 +104,7 @@ public class InventoryHandler {
 		File usersFile = new File("users.txt");
 		Scanner uScanner = new Scanner(usersFile);
 		uScanner.useDelimiter("/|\\n");
-		while (uScanner.hasNextLine()) {
+		while (uScanner.hasNext()) {
 			// creating user from line
 			String firstName = uScanner.next();
 			String lastName = uScanner.next();
@@ -117,21 +117,20 @@ public class InventoryHandler {
 	}
 
 	public double addReservation(Car car, Location loc1, Location loc2, TimeSlot timeSlot, User user) {
-		ArrayList<Car> validCarsAtLocation = new ArrayList<Car>();
-		for (Car c : Cars) {//Seems to work -NEED TO TEST
-			if (c.location.toString().equals(loc1.toString()) && c.model.equals(car.model)) {
-				boolean addCar = true; 
-				for (Reservation r : Reservations) {
-					System.out.println(r.getCar().Equals(c) +": ("+c.toNiceString() +") == ("+r.getCar().toNiceString()+")");
-					if ( r.getCar().Equals(c) && r.getTimeSlot().Conflict(timeSlot)) 
-						addCar=false;
-				}
-				if (addCar)
-					validCarsAtLocation.add(c);
-			}
+		int numValidCars = 0; 
+		int numInvalidCars =0;
+		for (Car c : Cars) //Seems to work -NEED TO TEST
+			if (c.location.toString().equals(loc1.toString()) && c.model.equals(car.model))
+				numValidCars++;
+
+		for (Reservation r : Reservations) {
+			System.out.println(r.getCar().Equals(car) +": ("+car.toNiceString() +") == ("+r.getCar().toNiceString()+")");
+			if (r.getCar().Equals(car) && r.getTimeSlot().Conflict(timeSlot)) 
+				numInvalidCars++;
 		}
 
-		if (validCarsAtLocation.size()>0) {
+
+		if (numValidCars-numInvalidCars>0) {
 			Reservations.add(new Reservation(timeSlot, car, user));
 			double durationDiscountRate = 0.15 / 30;
 			double maxDiscount = 0.5;

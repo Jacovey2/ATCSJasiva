@@ -3,3 +3,4 @@ mediumCar/Orlando/15/4/20.0
 highEndCar/Newark/15/7/28.0
 highEndCar/Atlanta/15/7/28.0
 cheapCar/Seattle/25/4/12.5
+cheapCar/NYC/25/4/12.5
