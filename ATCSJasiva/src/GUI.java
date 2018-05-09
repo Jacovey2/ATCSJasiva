@@ -737,7 +737,8 @@ public class GUI implements ActionListener {
 		}
 		if (evtString.equals("Remove User")) { //only allows for q reservations per user or does not work
 			int index = binarySearch(IH.getUsernames(), searchUserField.getText());
-			try {
+			try {	
+				//FIX THIS !!!!!!!!!!!!!!!!!!!!!!!!
 				IH.Reservations.remove(index);//this needs to be changed to remove all reservations done by the same user
 				managerReservationsList.setText(IH.getReservationsString());
 			} catch (IndexOutOfBoundsException e) {
