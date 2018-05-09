@@ -314,7 +314,7 @@ public class GUI implements ActionListener {
 		JLabel startTLabel = new JLabel("Start time:");
 		JLabel endTLabelInstruction = new JLabel("MM/DD/YYYY/TTTT");
 		JLabel endTLabel = new JLabel("End time:");
-		JCheckBox checkField = new JCheckBox();
+		
 		JButton pickCarButton = new JButton("Pick a Car!");
 		JButton carViewerAboutButton2 = new JButton("JASIVA");
 		JButton backButton2 = new JButton("back");
@@ -541,6 +541,7 @@ public class GUI implements ActionListener {
 			});
 		}
 	}
+
 
 	public void actionPerformed(ActionEvent evt) {
 
@@ -810,6 +811,9 @@ public class GUI implements ActionListener {
 							"Car Info\n " + bookedCar.toNiceString() );
 			}
 		}
+		
+		//System.out.println(checkField.isSelected());
+		
 		if (evtString.equals("checked")) {
 			System.out.println(checkField.isSelected());
 			if (checkField.isSelected()) {
@@ -821,6 +825,7 @@ public class GUI implements ActionListener {
 				dropLocationsDropDown.setEnabled(true);
 			}
 		}
+	
 	}
 
 	public TimeSlot TSfromDateString(String startDateString, String endDateString) {
