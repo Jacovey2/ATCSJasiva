@@ -117,16 +117,8 @@ public class InventoryHandler {
 	}
 
 	public double addReservation(Car car, Location loc1, Location loc2, TimeSlot timeSlot, User user) {
-		int numValidCars = 0; 
-		int numInvalidCars =0;
-		for (Car c : Cars) //TODO TEST!!!!
-			if (c.location.toString().equals(loc1.toString()) && c.model.equals(car.model))
-				numValidCars++;
-		for (Reservation r : Reservations) {
-			if (r.getCar().Equals(car) && r.getTimeSlot().Conflict(timeSlot)) 
-				numInvalidCars++;
-		}
-		if (numValidCars-numInvalidCars>0) {
+		
+		if (checkReservation(car,loc1,timeSlot)) {
 			Reservations.add(new Reservation(timeSlot, car, user));
 			double durationDiscountRate = 0.15 / 30;
 			double maxDiscount = 0.5;
@@ -146,6 +138,18 @@ public class InventoryHandler {
 		} else {
 			return -1;
 		}
+	}
+	public boolean checkReservation(Car car, Location loc1, TimeSlot timeSlot) {
+		int numValidCars = 0; 
+		int numInvalidCars =0;
+		for (Car c : Cars) //TODO TEST!!!!
+			if (c.location.toString().equals(loc1.toString()) && c.model.equals(car.model))
+				numValidCars++;
+		for (Reservation r : Reservations) {
+			if (r.getCar().Equals(car) && r.getTimeSlot().Conflict(timeSlot)) 
+				numInvalidCars++;
+		}
+		return numValidCars-numInvalidCars>0;
 	}
 
 	public void add(User c) { // adds to array list

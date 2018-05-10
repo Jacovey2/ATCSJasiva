@@ -617,11 +617,14 @@ public class GUI implements ActionListener {
 			switchToFrame(welcomeFrame);
 		if (evtString.equals("Pick a Car!")) {
 			String pickupLocation = pickupLocationsDropDown.getSelectedItem().toString();
+			TimeSlot timeSlot = TSfromDateString(
+					new SimpleDateFormat("MM/dd/yyyy/HHmm").format(bookingPickupDateSpinner.getValue()),
+					new SimpleDateFormat("MM/dd/yyyy/HHmm").format(bookingDropDateSpinner.getValue()));
 			ArrayList<Car> Cars = IH.Cars;
 			boolean[] available = { false, false, false, false, false };
 			JButton[] carImageButtons = { cheapButton, lowEndButton, mediumButton, highEndButton, premiumButton };
 			for (int i = 0; i < Cars.size(); i++) {
-				if (Cars.get(i).location.toString().equals(pickupLocation)) {
+				if (IH.checkReservation(Cars.get(i), new Location(pickupLocation), timeSlot)) {
 					if (Cars.get(i).model.equals(carArray[0].model))
 						available[0] = true;
 					if (Cars.get(i).model.equals(carArray[1].model))
