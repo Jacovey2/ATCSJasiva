@@ -637,9 +637,7 @@ public class GUI implements ActionListener {
 					carImageButtons[i].setIcon(new ImageIcon(((new ImageIcon(carArray[i].model + ".jpg")).getImage())
 							.getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
 				} else {
-					carImageButtons[i].setEnabled(false); //setting enabled to false greys out the buttons automatically
-					//carImageButtons[i].setIcon(new ImageIcon(((new ImageIcon(carArray[i].model + "Greyed.jpg")).getImage())
-									//.getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+					carImageButtons[i].setEnabled(false);
 				}
 			}
 			switchToFrame(carFrame);
