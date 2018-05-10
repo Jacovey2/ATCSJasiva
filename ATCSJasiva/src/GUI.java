@@ -634,8 +634,7 @@ public class GUI implements ActionListener {
 			}
 			for (int i = 0; i < carImageButtons.length; i++) {
 				if (available[i]) {
-					carImageButtons[i].setIcon(new ImageIcon(((new ImageIcon(carArray[i].model + ".jpg")).getImage())
-							.getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+					carImageButtons[i].setEnabled(true);
 				} else {
 					carImageButtons[i].setEnabled(false);
 				}
@@ -727,7 +726,7 @@ public class GUI implements ActionListener {
 			int index = binarySearch(IH.getUsernames(), searchUserField.getText());
 			if (index >= 0) {
 				try {
-					searchResultField.setText(IH.getUsernames().get(index) + IH.Reservations.get(index));
+					searchResultField.setText(IH.Users.get(index).toString() );//+ IH.Reservations.get(index)
 				} catch (IndexOutOfBoundsException e) { // in case user does not have a reservation
 					searchResultField.setText(IH.getUsernames().get(index));
 				}
@@ -735,16 +734,24 @@ public class GUI implements ActionListener {
 				JOptionPane.showMessageDialog(managerFrame, "User Does Not Exist", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		if (evtString.equals("Remove User")) { //only allows for q reservations per user or does not work
-			int index = binarySearch(IH.getUsernames(), searchUserField.getText());
-			try {	
-				//FIX THIS !!!!!!!!!!!!!!!!!!!!!!!!
-				IH.Reservations.remove(index);//this needs to be changed to remove all reservations done by the same user
-				managerReservationsList.setText(IH.getReservationsString());
-			} catch (IndexOutOfBoundsException e) {
-				managerReservationsList.setText(IH.getReservationsString());
+			ArrayList<Reservation> tempRezs = IH.Reservations;
+			ArrayList<Reservation> removeRezs = new ArrayList<Reservation>();
+			for (Reservation r: tempRezs) {
+				if (r.getUser().toString().equals(searchResultField.getText()))
+					removeRezs.add(r);
 			}
-			IH.Users.remove(index);
+			for (Reservation r:removeRezs) 
+				IH.Reservations.remove(r);
+			ArrayList<User> tempUsrs = IH.Users;
+			ArrayList<User> removeUsrs = new ArrayList<User>();
+			for (User u:tempUsrs) {
+				if (u.toString().equals(searchResultField.getText()))
+					removeUsrs.add(u);
+			}
+			for (User u:removeUsrs) 
+				IH.Users.remove(u);
 			searchResultField.setText("");
+			managerReservationsList.setText(IH.getReservationsString());
 			managerUsersList.setText(IH.getUsernames().toString());
 		}
 		if (evtString.equals("Manager Interface")) {
