@@ -119,16 +119,13 @@ public class InventoryHandler {
 	public double addReservation(Car car, Location loc1, Location loc2, TimeSlot timeSlot, User user) {
 		int numValidCars = 0; 
 		int numInvalidCars =0;
-		for (Car c : Cars) //Seems to work -NEED TO TEST
+		for (Car c : Cars) //TODO TEST!!!!
 			if (c.location.toString().equals(loc1.toString()) && c.model.equals(car.model))
 				numValidCars++;
-
 		for (Reservation r : Reservations) {
 			if (r.getCar().Equals(car) && r.getTimeSlot().Conflict(timeSlot)) 
 				numInvalidCars++;
 		}
-
-
 		if (numValidCars-numInvalidCars>0) {
 			Reservations.add(new Reservation(timeSlot, car, user));
 			double durationDiscountRate = 0.15 / 30;
@@ -143,7 +140,8 @@ public class InventoryHandler {
 																			// by 4 to counteract)
 			double dx = 1 - fx;
 			double price = car.pricePerHour * x * dx;// TODO: add multiple location pricing
-			price += loc1.distanceFrom(loc2) * 0.5;
+			if (!loc1.toString().equals(loc2.toString()))
+				price += 100; //100 dollar flat fee for not dropping off at the same location as pickup
 			return price;
 		} else {
 			return -1;
