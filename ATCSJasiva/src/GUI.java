@@ -324,6 +324,7 @@ public class GUI implements ActionListener {
 		carViewerAboutButton2.addActionListener(this);
 		backButton2.addActionListener(this);
 		checkField.addActionListener(this);
+		pickupLocationsDropDown.addActionListener(this);
 
 		// appearance changes
 		checkLabel.setFont(new Font("Arial", Font.PLAIN, 9));
@@ -354,6 +355,7 @@ public class GUI implements ActionListener {
 		// setting action commands
 		backButton2.setActionCommand("back to signIN");
 		checkField.setActionCommand("checked");
+		pickupLocationsDropDown.setActionCommand("Selecting Pickup Location");
 
 		// adding components to frame and finalizing
 		bookFrame.add(backButton2);
@@ -816,11 +818,8 @@ public class GUI implements ActionListener {
 							"Car Info\n " + bookedCar.toNiceString() );
 			}
 		}
-		
-		//System.out.println(checkField.isSelected());
-		
+				
 		if (evtString.equals("checked")) {
-			System.out.println(checkField.isSelected());
 			if (checkField.isSelected()) {
 				String selectedLocation = (String) pickupLocationsDropDown.getSelectedItem();
 				dropLocationsDropDown.setSelectedItem(selectedLocation);
@@ -828,6 +827,12 @@ public class GUI implements ActionListener {
 			} else {
 				dropLocationsDropDown.setSelectedItem(0);
 				dropLocationsDropDown.setEnabled(true);
+			}
+		}
+		if (evtString.equals("Selecting Pickup Location")) {
+			if (checkField.isSelected()) {
+				String selectedLocation = (String) pickupLocationsDropDown.getSelectedItem();
+				dropLocationsDropDown.setSelectedItem(selectedLocation);
 			}
 		}
 	

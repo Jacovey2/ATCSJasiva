@@ -124,7 +124,6 @@ public class InventoryHandler {
 				numValidCars++;
 
 		for (Reservation r : Reservations) {
-			System.out.println(r.getCar().Equals(car) +": ("+car.toNiceString() +") == ("+r.getCar().toNiceString()+")");
 			if (r.getCar().Equals(car) && r.getTimeSlot().Conflict(timeSlot)) 
 				numInvalidCars++;
 		}
