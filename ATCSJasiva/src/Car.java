@@ -34,8 +34,7 @@ public class Car {
 	}
 
 	public boolean Equals(Car c) {
-		if (mpg == c.mpg && capacity == c.capacity && model.equals(c.model)
-				&& location.toString().equals(c.location.toString()) && pricePerHour == c.pricePerHour)
+		if (mpg == c.mpg && capacity == c.capacity && model.equals(c.model) && location.toString().equals(c.location.toString()) && pricePerHour == c.pricePerHour)
 			return true;
 		else
 			return false;

@@ -233,21 +233,21 @@ public class GUI implements ActionListener {
 		carFrame.setLayout(null);
 
 		// car viewer setup
-		JLabel cheapLabel = new JLabel("$100");
-		JLabel lowEndLabel = new JLabel("$200");
-		JLabel mediumLabel = new JLabel("$300");
-		JLabel highEndLabel = new JLabel("$400");
-		JLabel premiumLabel = new JLabel("$1000");
+		JLabel cheapLabel = new JLabel("$12.50/hr");
+		JLabel lowEndLabel = new JLabel("$15.00/hr");
+		JLabel mediumLabel = new JLabel("$20.00/hr");
+		JLabel highEndLabel = new JLabel("28.00/hr");
+		JLabel premiumLabel = new JLabel("35.00/hr");
 		cheapButton = new JButton(new ImageIcon(
 				((new ImageIcon("cheapCar.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
-		lowEndButton = new JButton(new ImageIcon(
-				((new ImageIcon("lowendCar.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
-		mediumButton = new JButton(new ImageIcon(
-				((new ImageIcon("mediumCar.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
-		highEndButton = new JButton(new ImageIcon(
-				((new ImageIcon("highendCar.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
-		premiumButton = new JButton(new ImageIcon(
-				((new ImageIcon("premiumCar.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
+		lowEndButton = new JButton(new ImageIcon(((new ImageIcon("lowendCar.jpg")).getImage()).getScaledInstance(150,
+				130, java.awt.Image.SCALE_SMOOTH)));
+		mediumButton = new JButton(new ImageIcon(((new ImageIcon("mediumCar.jpg")).getImage()).getScaledInstance(150,
+				130, java.awt.Image.SCALE_SMOOTH)));
+		highEndButton = new JButton(new ImageIcon(((new ImageIcon("highendCar.jpg")).getImage()).getScaledInstance(150,
+				130, java.awt.Image.SCALE_SMOOTH)));
+		premiumButton = new JButton(new ImageIcon(((new ImageIcon("premiumCar.jpg")).getImage()).getScaledInstance(150,
+				130, java.awt.Image.SCALE_SMOOTH)));
 		JButton backButton = new JButton("back");
 		JButton carViewerAboutButton = new JButton("JASIVA");
 
@@ -314,7 +314,7 @@ public class GUI implements ActionListener {
 		JLabel startTLabel = new JLabel("Start time:");
 		JLabel endTLabelInstruction = new JLabel("MM/DD/YYYY/TTTT");
 		JLabel endTLabel = new JLabel("End time:");
-		
+
 		JButton pickCarButton = new JButton("Pick a Car!");
 		JButton carViewerAboutButton2 = new JButton("JASIVA");
 		JButton backButton2 = new JButton("back");
@@ -544,7 +544,6 @@ public class GUI implements ActionListener {
 		}
 	}
 
-
 	public void actionPerformed(ActionEvent evt) {
 
 		String evtString = evt.getActionCommand();
@@ -616,38 +615,43 @@ public class GUI implements ActionListener {
 		if (evtString.equals("JASIVA"))
 			switchToFrame(welcomeFrame);
 		if (evtString.equals("Pick a Car!")) {
+			// locations
 			String pickupLocation = pickupLocationsDropDown.getSelectedItem().toString();
+			Location loc1 = new Location(pickupLocation);
 			TimeSlot timeSlot = TSfromDateString(
-					new SimpleDateFormat("MM/dd/yyyy/HHmm").format(bookingPickupDateSpinner.getValue()),
+					new SimpleDateFormat("MM/dd/yyyy/HHmm").format(bookingPickupDateSpinner.getValue()), // formats the
+																											// date and
+																											// gets the
+																											// value
 					new SimpleDateFormat("MM/dd/yyyy/HHmm").format(bookingDropDateSpinner.getValue()));
-			ArrayList<Car> Cars = IH.Cars;
+
+			// Arrays for multiple handling
 			boolean[] available = { false, false, false, false, false };
 			JButton[] carImageButtons = { cheapButton, lowEndButton, mediumButton, highEndButton, premiumButton };
+
+			ArrayList<Car> Cars = IH.Cars;
 			for (int i = 0; i < Cars.size(); i++) {
-				if (IH.checkReservation(Cars.get(i), new Location(pickupLocation), timeSlot)) {
-					if (Cars.get(i).model.equals(carArray[0].model))
-						available[0] = true;
-					if (Cars.get(i).model.equals(carArray[1].model))
-						available[1] = true;
-					if (Cars.get(i).model.equals(carArray[2].model))
-						available[2] = true;
-					if (Cars.get(i).model.equals(carArray[3].model))
-						available[3] = true;
-					if (Cars.get(i).model.equals(carArray[4].model))
-						available[4] = true;
-				}
+				Car car = Cars.get(i);
+				for (int y = 0; y < available.length; y++)
+					if (car.model.equals(carArray[y].model))
+						available[y] = true;
+				if (IH.checkReservation(car, loc1, timeSlot));//NONFUNCTIONAL RN
+					
 			}
 			for (int i = 0; i < carImageButtons.length; i++) {
-				if (available[i]) {
+				if (available[i])
 					carImageButtons[i].setEnabled(true);
-				} else {
+				else
 					carImageButtons[i].setEnabled(false);
-				}
 			}
 			switchToFrame(carFrame);
 		}
-		if (evtString.equals("back"))
-			switchToFrame(bookFrame);
+		if (evtString.equals("back")) {
+			if (signedIn)
+				switchToFrame(bookFrame);
+			else
+				switchToFrame(welcomeFrame);
+		}
 		if (evtString.equals("back to signIN"))
 			switchToFrame(loginFrame);
 		if (evtString.equals("About"))
@@ -731,29 +735,29 @@ public class GUI implements ActionListener {
 			int index = binarySearch(IH.getUsernames(), searchUserField.getText());
 			if (index >= 0) {
 				try {
-					searchResultField.setText(IH.Users.get(index).toString() );//+ IH.Reservations.get(index)
+					searchResultField.setText(IH.Users.get(index).toString());// + IH.Reservations.get(index)
 				} catch (IndexOutOfBoundsException e) { // in case user does not have a reservation
 					searchResultField.setText(IH.getUsernames().get(index));
 				}
 			} else
 				JOptionPane.showMessageDialog(managerFrame, "User Does Not Exist", "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		if (evtString.equals("Remove User")) { //only allows for q reservations per user or does not work
+		if (evtString.equals("Remove User")) { // only allows for q reservations per user or does not work
 			ArrayList<Reservation> tempRezs = IH.Reservations;
 			ArrayList<Reservation> removeRezs = new ArrayList<Reservation>();
-			for (Reservation r: tempRezs) {
+			for (Reservation r : tempRezs) {
 				if (r.getUser().toString().equals(searchResultField.getText()))
 					removeRezs.add(r);
 			}
-			for (Reservation r:removeRezs) 
+			for (Reservation r : removeRezs)
 				IH.Reservations.remove(r);
 			ArrayList<User> tempUsrs = IH.Users;
 			ArrayList<User> removeUsrs = new ArrayList<User>();
-			for (User u:tempUsrs) {
+			for (User u : tempUsrs) {
 				if (u.toString().equals(searchResultField.getText()))
 					removeUsrs.add(u);
 			}
-			for (User u:removeUsrs) 
+			for (User u : removeUsrs)
 				IH.Users.remove(u);
 			searchResultField.setText("");
 			managerReservationsList.setText(IH.getReservationsString());
@@ -780,9 +784,8 @@ public class GUI implements ActionListener {
 				Object[] options = { "Book!", "Cancel" };
 				// Confirm Booking Message
 				int returnValue = JOptionPane.showOptionDialog(carFrame,
-						"Would you like book this car?\n" + bookedCar.toNiceString(),
-						null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
-						options[1]);
+						"Would you like book this car?\n" + bookedCar.toNiceString(), null,
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
 				if (returnValue == JOptionPane.YES_OPTION) {
 					// Create car and TS for booking
@@ -809,7 +812,7 @@ public class GUI implements ActionListener {
 					managerReservationsList.setText(IH.getReservationsString());
 					switchToFrame(bookFrame);
 				}
-			} else if (!signedIn){
+			} else if (!signedIn) {
 				Object[] options = { "Sign In", "See Car Info", "Cancel" };
 				// Confirm Booking Message
 				int returnValue = JOptionPane.showOptionDialog(carFrame, "You are not signed in", null,
@@ -817,11 +820,10 @@ public class GUI implements ActionListener {
 				if (returnValue == JOptionPane.YES_OPTION)
 					switchToFrame(loginFrame);
 				if (returnValue == JOptionPane.NO_OPTION)
-					JOptionPane.showMessageDialog(carFrame,
-							"Car Info\n " + bookedCar.toNiceString() );
+					JOptionPane.showMessageDialog(carFrame, "Car Info\n " + bookedCar.toNiceString());
 			}
 		}
-				
+
 		if (evtString.equals("checked")) {
 			if (checkField.isSelected()) {
 				String selectedLocation = (String) pickupLocationsDropDown.getSelectedItem();
@@ -838,7 +840,7 @@ public class GUI implements ActionListener {
 				dropLocationsDropDown.setSelectedItem(selectedLocation);
 			}
 		}
-	
+
 	}
 
 	public TimeSlot TSfromDateString(String startDateString, String endDateString) {

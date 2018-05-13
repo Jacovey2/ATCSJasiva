@@ -142,16 +142,19 @@ public class InventoryHandler {
 	public boolean checkReservation(Car car, Location loc1, TimeSlot timeSlot) {
 		int numValidCars = 0; 
 		int numInvalidCars =0;
-		for (Car c : Cars) //TODO TEST!!!!
-			if (c.location.toString().equals(loc1.toString()) && c.model.equals(car.model))
+		for (Car c : Cars) {//TODO TEST!!!!
+			if (c.model.equals(car.model) && c.location.locationName.equals(car.location.locationName)) {
 				numValidCars++;
+			}
+			System.out.println(c+" && "+car+" = " + (c.model.equals(car.model) && c.location.locationName.equals(car.location.locationName)));
+		}
 		for (Reservation r : Reservations) {
 			if (r.getCar().Equals(car) && r.getTimeSlot().Conflict(timeSlot)) 
 				numInvalidCars++;
 		}
 		return numValidCars-numInvalidCars>0;
 	}
-
+	
 	public void add(User c) { // adds to array list
 		Users.add(c);
 	}
