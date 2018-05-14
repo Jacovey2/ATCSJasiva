@@ -25,6 +25,7 @@ public class InventoryHandler {
 
 		// Write Reservations to file
 		FileWriter rFileWrite = new FileWriter(reservationFile);
+		rFileWrite.write("startMonth/startDay/startYear/startTime/endMonth/endDay/endYear/endTime/model/location/mpg/capacity/pricePerHour/firstName/lastName/username/password\n");
 		for (Reservation r : Reservations) {
 			rFileWrite.write(r.toString() + "\n");
 		}
@@ -32,6 +33,7 @@ public class InventoryHandler {
 
 		// Write Cars
 		FileWriter cFileWrite = new FileWriter(carFile);
+		cFileWrite.write("model/location/mpg/capacity/pricePerHour\n");
 		for (Car c : Cars) {
 			cFileWrite.write(c.toString() + "\n");
 		}
@@ -39,6 +41,7 @@ public class InventoryHandler {
 
 		// Write users to file
 		FileWriter uFileWrite = new FileWriter(usersFile);
+		uFileWrite.write("firstName/lastName/username/password\n");
 		for (User u : Users) {
 			uFileWrite.write(u.toString() +"\n");
 		}
@@ -50,6 +53,7 @@ public class InventoryHandler {
 		File reservationFile = new File("reservations.txt");
 		Scanner rScanner = new Scanner(reservationFile);
 		rScanner.useDelimiter("/|\\n");
+		rScanner.nextLine();
 		while (rScanner.hasNext()) {
 			// creating timeslot from line
 			int startMonth = rScanner.nextInt();
@@ -88,6 +92,7 @@ public class InventoryHandler {
 		File carFile = new File("cars.txt");
 		Scanner cScanner = new Scanner(carFile);
 		cScanner.useDelimiter("/|\\n"); // notation for "use both / and \n as delimiters"
+		cScanner.nextLine();
 		while (cScanner.hasNext()) {
 			// Creating car from line
 			String model = cScanner.next();
@@ -104,6 +109,7 @@ public class InventoryHandler {
 		File usersFile = new File("users.txt");
 		Scanner uScanner = new Scanner(usersFile);
 		uScanner.useDelimiter("/|\\n");
+		uScanner.nextLine();
 		while (uScanner.hasNext()) {
 			// creating user from line
 			String firstName = uScanner.next();
