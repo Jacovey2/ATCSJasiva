@@ -656,11 +656,11 @@ public class GUI implements ActionListener {
 			managerReservationsList.setText(IH.getUsernames().toString());
 		}
 		if (evtString.equals("Enter")) { 
-			// set availableCars text area to all selected types of cars at location
+			//checks if cars exist in "inventory" at specified location
 			String carComboBoxValue = (String) checkAvailableCarsDropDown.getSelectedItem();
 			String LocationComboBoxValue = (String) availableLocationsDropDown.getSelectedItem();
 			boolean found = false;
-			for (int i = 0; i < IH.Cars.size(); i++) //checks if cars exist in "inventory"
+			for (int i = 0; i < IH.Cars.size(); i++) 
 				if (IH.Cars.get(i).model.equals(carComboBoxValue)
 						&& IH.Cars.get(i).location.toString().equals(LocationComboBoxValue))
 					found = true;
@@ -671,7 +671,7 @@ public class GUI implements ActionListener {
 			checkAvailableCarsDropDown.setSelectedIndex(0);
 			availableLocationsDropDown.setSelectedIndex(0);
 		}
-		if (evtString.equals("Add Vehicle")) { //adds a vehicle and updates the other lists
+		if (evtString.equals("Add Vehicle")) { //adds a vehicle at a location and updates the other lists
 			String locationName = addRemoveCarLocations.getText();
 			if (!IH.getLocations().contains(locationName)) {
 				availableLocationsDropDown.addItem(locationName);
@@ -689,7 +689,7 @@ public class GUI implements ActionListener {
 			managerAvailableCarsList.setText(IH.getCarsString());
 			managerLocationsList.setText(IH.getLocationsString());
 		}
-		if (evtString.equals("Remove Vehicle")) { //removes a vehicle at location
+		if (evtString.equals("Remove Vehicle")) { //removes a vehicle at location and updates other lists
 			Car removeCar = new Car(carArray, (String) addRemoveCarDropDown.getSelectedItem(),
 					addRemoveCarLocations.getText());
 			String removeLocation = addRemoveCarLocations.getText();
@@ -706,11 +706,11 @@ public class GUI implements ActionListener {
 						first = false;
 					}
 			}
-			if (!IH.getLocations().contains(removeLocation) && numCarsAtRemoveLocation == 1) {//if there are no cars at a location it will  update the other lists
-				availableLocationsDropDown.removeItem(removeLocation);
+			if (!IH.getLocations().contains(removeLocation) && numCarsAtRemoveLocation == 1) {//the location is only removed if no cars are left there, otherwise just the car is removed
+				availableLocationsDropDown.removeItem(removeLocation);							
 				pickupLocationsDropDown.removeItem(removeLocation);
 				dropLocationsDropDown.removeItem(removeLocation);
-			} else if (!IH.getLocations().contains(removeLocation))
+			} else if (!IH.getLocations().contains(removeLocation)) 
 				JOptionPane.showMessageDialog(managerFrame, "ERROR: Car Does Not Exist", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			addRemoveCarLocations.setText("");
@@ -718,7 +718,7 @@ public class GUI implements ActionListener {
 			managerAvailableCarsList.setText(IH.getCarsString());
 			managerLocationsList.setText(IH.getLocationsString());
 		}
-		if (evtString.equals("Search")) {
+		if (evtString.equals("Search")) { //searches through the users to see if they exist
 			int index = binarySearch(IH.getUsernames(), searchUserField.getText());
 			if (index >= 0) {
 				searchResultField.setText(IH.Users.get(index).toString()); 
@@ -746,7 +746,7 @@ public class GUI implements ActionListener {
 			managerReservationsList.setText(IH.getReservationsString());
 			managerUsersList.setText(IH.getUsernames().toString());
 		}
-		if (evtString.equals("Manager Interface")) {
+		if (evtString.equals("Manager Interface")) { //takes you to the manager interface
 			String s = (String) JOptionPane.showInputDialog(welcomeFrame, "Enter Code for Access", "Input",
 					JOptionPane.WARNING_MESSAGE, null, null, null);
 			// If a string was returned, say so.
@@ -890,7 +890,7 @@ public class GUI implements ActionListener {
 				errors.add("Password does not have a special character");
 			if (!namecon)
 				errors.add("Password contains your name");
-			String allErrors = errors.toString()+"\n";
+			String allErrors = errors.toString();
 			JOptionPane.showMessageDialog(loginFrame, allErrors);
 			return false;
 		}
@@ -908,7 +908,7 @@ public class GUI implements ActionListener {
 		return ((c >= 33 && c <= 47) || (c >= 58 && c <= 64) || (c >= 91 && c <= 96) || (c >= 123 && c <= 126));
 	}
 
-	public int binarySearch(ArrayList<String> users, String userName) {
+	public int binarySearch(ArrayList<String> users, String userName) { //efficient search algorithm
 		Collections.sort(users); // sorts array list because it is not sorted
 		int first = 0;// first position in array
 		int last = users.size() - 1; // last position in array
