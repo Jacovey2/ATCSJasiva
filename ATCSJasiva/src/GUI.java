@@ -56,9 +56,9 @@ public class GUI implements ActionListener {
 	JComboBox<String> availableLocationsDropDown = new JComboBox<>(IH.getLocationsArray());
 
 	// creating calendar selection tool
-	SpinnerDateModel bookingPickupdate = new SpinnerDateModel();
+	SpinnerDateModel bookingPickupdate = new SpinnerDateModel(); //creates the date options
 	SpinnerDateModel bookingDropdate = new SpinnerDateModel();
-	JSpinner bookingPickupDateSpinner = new JSpinner(bookingPickupdate);
+	JSpinner bookingPickupDateSpinner = new JSpinner(bookingPickupdate); //creates the physical field containing the date options
 	JSpinner bookingDropDateSpinner = new JSpinner(bookingDropdate);
 
 	// CarViewer Images (must be global so they can be greyed out)
@@ -238,7 +238,7 @@ public class GUI implements ActionListener {
 		JLabel mediumLabel = new JLabel("$20.00/hr");
 		JLabel highEndLabel = new JLabel("28.00/hr");
 		JLabel premiumLabel = new JLabel("35.00/hr");
-		cheapButton = new JButton(new ImageIcon(
+		cheapButton = new JButton(new ImageIcon( //adding images to the buttons
 				((new ImageIcon("cheapCar.jpg")).getImage()).getScaledInstance(150, 130, java.awt.Image.SCALE_SMOOTH)));
 		lowEndButton = new JButton(new ImageIcon(((new ImageIcon("lowendCar.jpg")).getImage()).getScaledInstance(150,
 				130, java.awt.Image.SCALE_SMOOTH)));
@@ -418,7 +418,6 @@ public class GUI implements ActionListener {
 		managerFrame.setLayout(null);
 
 		// creating button/labels
-		// adding and removing buttons
 		JLabel removeAddCarLabel = new JLabel("Add/Remove Car at Location");
 		JLabel searchUserLabel = new JLabel("Search User");
 		JLabel resultLabel = new JLabel("Result");
@@ -438,8 +437,6 @@ public class GUI implements ActionListener {
 		JButton searchUserButton = new JButton("Search");
 		JButton removeUserButton = new JButton("Remove User");
 		JButton removeAllUsersButton = new JButton("Remove All Users");
-
-		// Changing functionalities
 
 		// appearance changes
 		managerAboutHomeButton.setForeground(Color.RED);
@@ -483,7 +480,7 @@ public class GUI implements ActionListener {
 		// setting text fields
 		managerLocationsList.setText(IH.getLocationsString());
 		managerUsersList.setText(IH.getUsersString());
-		managerReservationsList.setText(IH.getReservationsString());// !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!~~~~~~~~~~~~~~~~~~~!~~~~~~~~~~~~~~!~!~~!
+		managerReservationsList.setText(IH.getReservationsString());
 		managerAvailableCarsList.setText(IH.getCarsString());
 
 		// adding action listener
@@ -557,19 +554,19 @@ public class GUI implements ActionListener {
 			ArrayList<String> usernames = IH.getUsernames();
 			ArrayList<String> passwords = IH.getPasswords();
 			if (!usernames.isEmpty() && usernames.indexOf(signInUsernameField.getText()) == passwords
-					.indexOf(new String(signInPasswordField.getPassword()))) {
+					.indexOf(new String(signInPasswordField.getPassword()))) { //checks username against password
 				System.out.println("success");
 				valid = true;
-				signedIn = true;
-				IH.CurrentUser = IH.Users.get(IH.getUsernames().indexOf(signInUsernameField.getText()));
+				signedIn = true; //sets user to signed in
+				IH.CurrentUser = IH.Users.get(IH.getUsernames().indexOf(signInUsernameField.getText())); //sets the current user
 			}
 			if (valid == false) {
 				System.out.println("Incorrect Username or Password");
-				JOptionPane.showMessageDialog(loginFrame, "Incorrect Username or Password");
+				JOptionPane.showMessageDialog(loginFrame, "Incorrect Username or Password"); //error popup window
 				signInUsernameField.setText("");
 				signInPasswordField.setText("");
 			} else
-				switchToFrame(bookFrame);
+				switchToFrame(bookFrame); 
 		}
 
 		// register with jasiva
@@ -577,10 +574,7 @@ public class GUI implements ActionListener {
 			// Getting the User names for checking validity
 			ArrayList<String> usernames = IH.getUsernames();
 			// checks if password meets requirements
-
-			// !!!!!!!!!!! TEMPORARY DEBUGG COMMENTING !!!!!!!!!!
-			boolean validPassword = true; // passwordChecker(new String(registerPasswordField.getPassword()),
-											// registerFirstNameField.getText());
+			boolean validPassword = passwordChecker(new String(registerPasswordField.getPassword()),registerFirstNameField.getText());
 			// checks if user name is already taken
 			boolean validUser = usernames.isEmpty() || !usernames.contains(registerUsernameField.getText());
 			// if the password is invalid, print that and why
@@ -627,13 +621,13 @@ public class GUI implements ActionListener {
 			JButton[] carImageButtons = { cheapButton, lowEndButton, mediumButton, highEndButton, premiumButton };
 
 			ArrayList<Car> Cars = IH.Cars;
-			for (int i = 0; i < Cars.size(); i++) {
+			for (int i = 0; i < Cars.size(); i++) { //checks which cars are available
 				Car car = Cars.get(i);
 				for (int y = 0; y < available.length; y++)
 					if (car.model.equals(carArray[y].model) && car.location.locationName.equals(loc1.locationName) && IH.checkReservation(car, loc1, timeSlot))
 						available[y] = true;					
 			}
-			for (int i = 0; i < carImageButtons.length; i++) {
+			for (int i = 0; i < carImageButtons.length; i++) { //greys out unavailable car buttons
 				if (available[i])
 					carImageButtons[i].setEnabled(true);
 				else
@@ -651,22 +645,22 @@ public class GUI implements ActionListener {
 			switchToFrame(loginFrame);
 		if (evtString.equals("About"))
 			switchToFrame(aboutFrame);
-		if (evtString.equals("Remove All Reservations")) {
+		if (evtString.equals("Remove All Reservations")) {//clears all reservations
 			IH.Reservations.clear();
 			managerReservationsList.setText(IH.getReservationsString());
 		}
-		if (evtString.equals("Remove All Users")) {
+		if (evtString.equals("Remove All Users")) {//removes all users
 			IH.Users.clear();
 			IH.Reservations.clear();
 			managerUsersList.setText(IH.getUsernames().toString());
 			managerReservationsList.setText(IH.getUsernames().toString());
 		}
-		if (evtString.equals("Enter")) { // NEEDS WORK
+		if (evtString.equals("Enter")) { 
 			// set availableCars text area to all selected types of cars at location
 			String carComboBoxValue = (String) checkAvailableCarsDropDown.getSelectedItem();
 			String LocationComboBoxValue = (String) availableLocationsDropDown.getSelectedItem();
 			boolean found = false;
-			for (int i = 0; i < IH.Cars.size(); i++)
+			for (int i = 0; i < IH.Cars.size(); i++) //checks if cars exist in "inventory"
 				if (IH.Cars.get(i).model.equals(carComboBoxValue)
 						&& IH.Cars.get(i).location.toString().equals(LocationComboBoxValue))
 					found = true;
@@ -677,10 +671,9 @@ public class GUI implements ActionListener {
 			checkAvailableCarsDropDown.setSelectedIndex(0);
 			availableLocationsDropDown.setSelectedIndex(0);
 		}
-		if (evtString.equals("Add Vehicle")) {
-			// HERE IS WHERE I MEAN
+		if (evtString.equals("Add Vehicle")) { //adds a vehicle and updates the other lists
 			String locationName = addRemoveCarLocations.getText();
-			if (!IH.getLocations().contains(locationName)) {// the if statement doesnt work
+			if (!IH.getLocations().contains(locationName)) {
 				availableLocationsDropDown.addItem(locationName);
 				pickupLocationsDropDown.addItem(locationName);
 				dropLocationsDropDown.addItem(locationName);
@@ -696,7 +689,7 @@ public class GUI implements ActionListener {
 			managerAvailableCarsList.setText(IH.getCarsString());
 			managerLocationsList.setText(IH.getLocationsString());
 		}
-		if (evtString.equals("Remove Vehicle")) {
+		if (evtString.equals("Remove Vehicle")) { //removes a vehicle at location
 			Car removeCar = new Car(carArray, (String) addRemoveCarDropDown.getSelectedItem(),
 					addRemoveCarLocations.getText());
 			String removeLocation = addRemoveCarLocations.getText();
@@ -713,7 +706,7 @@ public class GUI implements ActionListener {
 						first = false;
 					}
 			}
-			if (!IH.getLocations().contains(removeLocation) && numCarsAtRemoveLocation == 1) {
+			if (!IH.getLocations().contains(removeLocation) && numCarsAtRemoveLocation == 1) {//if there are no cars at a location it will  update the other lists
 				availableLocationsDropDown.removeItem(removeLocation);
 				pickupLocationsDropDown.removeItem(removeLocation);
 				dropLocationsDropDown.removeItem(removeLocation);
@@ -728,15 +721,11 @@ public class GUI implements ActionListener {
 		if (evtString.equals("Search")) {
 			int index = binarySearch(IH.getUsernames(), searchUserField.getText());
 			if (index >= 0) {
-				try {
-					searchResultField.setText(IH.Users.get(index).toString());// + IH.Reservations.get(index)
-				} catch (IndexOutOfBoundsException e) { // in case user does not have a reservation
-					searchResultField.setText(IH.getUsernames().get(index));
-				}
+				searchResultField.setText(IH.Users.get(index).toString()); 
 			} else
 				JOptionPane.showMessageDialog(managerFrame, "User Does Not Exist", "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		if (evtString.equals("Remove User")) { // only allows for q reservations per user or does not work
+		if (evtString.equals("Remove User")) { //removes specific user and all associated reservations
 			ArrayList<Reservation> tempRezs = IH.Reservations;
 			ArrayList<Reservation> removeRezs = new ArrayList<Reservation>();
 			for (Reservation r : tempRezs) {
@@ -751,22 +740,21 @@ public class GUI implements ActionListener {
 				if (u.toString().equals(searchResultField.getText()))
 					removeUsrs.add(u);
 			}
-			for (User u : removeUsrs)
+			for (User u : removeUsrs) 
 				IH.Users.remove(u);
 			searchResultField.setText("");
 			managerReservationsList.setText(IH.getReservationsString());
 			managerUsersList.setText(IH.getUsernames().toString());
 		}
 		if (evtString.equals("Manager Interface")) {
-			// need to make password field
 			String s = (String) JOptionPane.showInputDialog(welcomeFrame, "Enter Code for Access", "Input",
 					JOptionPane.WARNING_MESSAGE, null, null, null);
 			// If a string was returned, say so.
-			if ((s != null) && (s.length() > 0) && s.equals("1234")) {
+			if ((s != null) && (s.length() > 0) && s.equals("1234")) {//checks password
 				switchToFrame(managerFrame);
 				return;
 			}
-			if ((s != null) && s != "1234" && (s.length() > 0))
+			if ((s != null) && s != "1234" && (s.length() > 0)) //checks password
 				JOptionPane.showMessageDialog(welcomeFrame, "Wrong Code", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
@@ -792,11 +780,11 @@ public class GUI implements ActionListener {
 							new Location((String) pickupLocationsDropDown.getSelectedItem()),
 							new Location((String) dropLocationsDropDown.getSelectedItem()), bookedTimeSlot,
 							IH.CurrentUser);
-					if (price == -1) {
+					if (price == -1) { //if reservation is bad, pop up windows pops up
 						System.out.println("ThatS not a very good boy of a reservatIon :(");
 						JOptionPane.showMessageDialog(carFrame, "Invalid Reservation", "Error",
 								JOptionPane.ERROR_MESSAGE);
-					} else {
+					} else { //gives confirmation window
 						System.out.println("Price of Reservation is: " + price);
 						JOptionPane.showMessageDialog(carFrame,
 								"Confirm Booking: \n Car: " + bookedCar.toNiceString() + "\n TimeSlot: "
@@ -806,7 +794,7 @@ public class GUI implements ActionListener {
 					managerReservationsList.setText(IH.getReservationsString());
 					switchToFrame(bookFrame);
 				}
-			} else if (!signedIn) {
+			} else if (!signedIn) { //if not signed in gives redirection options
 				Object[] options = { "Sign In", "See Car Info", "Cancel" };
 				// Confirm Booking Message
 				int returnValue = JOptionPane.showOptionDialog(carFrame, "You are not signed in", null,
@@ -817,7 +805,7 @@ public class GUI implements ActionListener {
 					JOptionPane.showMessageDialog(carFrame, "Car Info\n " + bookedCar.toNiceString());
 			}
 		}
-		if (evtString.equals("checked")) {
+		if (evtString.equals("checked")) { //greys out a drop down menu if checked (if pickup is the same as drop off)
 			if (checkField.isSelected()) {
 				String selectedLocation = (String) pickupLocationsDropDown.getSelectedItem();
 				dropLocationsDropDown.setSelectedItem(selectedLocation);
@@ -827,7 +815,7 @@ public class GUI implements ActionListener {
 				dropLocationsDropDown.setEnabled(true);
 			}
 		}
-		if (evtString.equals("Selecting Pickup Location")) {
+		if (evtString.equals("Selecting Pickup Location")) { //sets the greyed out drop down value to the first drop down menu value
 			if (checkField.isSelected()) {
 				String selectedLocation = (String) pickupLocationsDropDown.getSelectedItem();
 				dropLocationsDropDown.setSelectedItem(selectedLocation);
@@ -836,7 +824,7 @@ public class GUI implements ActionListener {
 
 	}
 
-	public TimeSlot TSfromDateString(String startDateString, String endDateString) {
+	public TimeSlot TSfromDateString(String startDateString, String endDateString) { //creates time
 		Scanner startDateScanner = new Scanner(startDateString);
 		Scanner endDateScanner = new Scanner(endDateString);
 		startDateScanner.useDelimiter("/");
@@ -855,7 +843,7 @@ public class GUI implements ActionListener {
 		return ts;
 	}
 
-	public void switchToFrame(JFrame frame) {
+	public void switchToFrame(JFrame frame) { //method to easily switch between frames
 		for (int i = 0; i < frames.length; i++) {
 			if (frame == frames[i])
 				frames[i].setVisible(true);
@@ -864,7 +852,7 @@ public class GUI implements ActionListener {
 		}
 	}
 
-	public boolean passwordChecker(String password, String name1) {
+	public boolean passwordChecker(String password, String name1) { //checks to see if the password is valid
 		boolean length = false; // check variable for password length
 		boolean capital = false; // check variable for if there is a capital
 		boolean number = false; // check variable for if there is a number
@@ -902,7 +890,7 @@ public class GUI implements ActionListener {
 				errors.add("Password does not have a special character");
 			if (!namecon)
 				errors.add("Password contains your name");
-			String allErrors = errors.toString();
+			String allErrors = errors.toString()+"\n";
 			JOptionPane.showMessageDialog(loginFrame, allErrors);
 			return false;
 		}
