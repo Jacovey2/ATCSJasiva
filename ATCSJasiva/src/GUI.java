@@ -619,24 +619,19 @@ public class GUI implements ActionListener {
 			String pickupLocation = pickupLocationsDropDown.getSelectedItem().toString();
 			Location loc1 = new Location(pickupLocation);
 			TimeSlot timeSlot = TSfromDateString(
-					new SimpleDateFormat("MM/dd/yyyy/HHmm").format(bookingPickupDateSpinner.getValue()), // formats the
-																											// date and
-																											// gets the
-																											// value
+					new SimpleDateFormat("MM/dd/yyyy/HHmm").format(bookingPickupDateSpinner.getValue()),
 					new SimpleDateFormat("MM/dd/yyyy/HHmm").format(bookingDropDateSpinner.getValue()));
 
 			// Arrays for multiple handling
-			boolean[] available = { false, false, false, false, false };
+			boolean[] available =       { false,       false,        false,        false,         false };
 			JButton[] carImageButtons = { cheapButton, lowEndButton, mediumButton, highEndButton, premiumButton };
 
 			ArrayList<Car> Cars = IH.Cars;
 			for (int i = 0; i < Cars.size(); i++) {
 				Car car = Cars.get(i);
 				for (int y = 0; y < available.length; y++)
-					if (car.model.equals(carArray[y].model))
-						available[y] = true;
-				if (IH.checkReservation(car, loc1, timeSlot));//NONFUNCTIONAL RN
-					
+					if (car.model.equals(carArray[y].model) && car.location.locationName.equals(loc1.locationName) && IH.checkReservation(car, loc1, timeSlot))
+						available[y] = true;					
 			}
 			for (int i = 0; i < carImageButtons.length; i++) {
 				if (available[i])
@@ -700,7 +695,6 @@ public class GUI implements ActionListener {
 			addRemoveCarLocations.setText("");
 			managerAvailableCarsList.setText(IH.getCarsString());
 			managerLocationsList.setText(IH.getLocationsString());
-
 		}
 		if (evtString.equals("Remove Vehicle")) {
 			Car removeCar = new Car(carArray, (String) addRemoveCarDropDown.getSelectedItem(),
@@ -823,7 +817,6 @@ public class GUI implements ActionListener {
 					JOptionPane.showMessageDialog(carFrame, "Car Info\n " + bookedCar.toNiceString());
 			}
 		}
-
 		if (evtString.equals("checked")) {
 			if (checkField.isSelected()) {
 				String selectedLocation = (String) pickupLocationsDropDown.getSelectedItem();
