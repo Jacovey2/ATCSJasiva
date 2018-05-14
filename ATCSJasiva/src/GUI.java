@@ -87,10 +87,10 @@ public class GUI implements ActionListener {
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage() + " FILE NOT FOUND");
 		}
-		new GUI(IH);
+		new GUI();
 	}
 
-	public GUI(InventoryHandler c) {
+	public GUI() {
 
 		// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// LOGIN FRAME
